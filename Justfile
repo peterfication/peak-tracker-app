@@ -1,9 +1,9 @@
-# List availabel commands
+# List available commands
 default:
   just --list
 
 # Run all checks from CI
-ci: format lint typecheck test
+ci: spellcheck format lint typecheck test
 
 # Format files with Prettier
 format:
@@ -16,6 +16,14 @@ lint:
 # Install iOS Cocoa Pods
 pod-install:
   (cd ios && pod install)
+
+# Run the spellchecker
+spellcheck:
+  yarn spellcheck
+
+# List all unknown words to add them to .cspell.dictionary.txt
+spellcheck-list:
+  yarn spellcheck:list
 
 # Start the iOS simulator and run the app
 start:
