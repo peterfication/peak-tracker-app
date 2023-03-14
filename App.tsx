@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextField, Text, Button} from 'react-native-ui-lib';
+import { View, TextField, Text, Button } from 'react-native-ui-lib';
 
 const Home = () => {
   return (
