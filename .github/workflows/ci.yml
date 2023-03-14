@@ -20,6 +20,25 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
+  spellcheck:
+    needs: [yarn-cache]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: module-${{ hashFiles('yarn.lock') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+      - run: yarn spellcheck
+
   format:
     needs: [yarn-cache]
     runs-on: ubuntu-latest
