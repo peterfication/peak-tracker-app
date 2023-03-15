@@ -55,6 +55,7 @@ swiperefreshlayout
 testables
 turbomodule
 typecheck
+typeof
 xcconfig
 xcodeproj
 xctest
