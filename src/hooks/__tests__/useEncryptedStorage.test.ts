@@ -1,5 +1,5 @@
-import { act, renderHook } from '@testing-library/react-hooks';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 import { useEncryptedStorage } from '../useEncryptedStorage';
 

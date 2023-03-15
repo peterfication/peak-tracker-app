@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native-ui-lib';
+import { Button, Text, View } from 'react-native-ui-lib';
 
 /**
  * The login screen is a simple screen with a button that calls the login

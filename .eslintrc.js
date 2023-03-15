@@ -1,18 +1,38 @@
 module.exports = {
   root: true,
   extends: [
-    '@react-native-community',
     'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
     'alloy',
     'alloy/react',
+    'plugin:jest/recommended',
+    'plugin:promise/recommended',
+    'plugin:react/recommended',
+    'plugin:testing-library/react',
+    'plugin:import/recommended',
+    'plugin:jsx-a11y/recommended',
+    '@react-native-community',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: [
+    'import',
+    'jsx-a11y',
+    'promise',
+    'testing-library',
+    '@typescript-eslint',
+  ],
   rules: {
     'prettier/prettier': 0,
     '@typescript-eslint/no-empty-function': 0,
+    'import/no-unresolved': 0,
+    'sort-imports': [
+      'error',
+      {
+        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
+        allowSeparatedGroups: true,
+      },
+    ],
   },
   overrides: [
     // Ignore some rules for test files
@@ -23,5 +43,12 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['node_modules/', 'cache/', 'coverage/', 'dist/', 'build/'],
+  ignorePatterns: [
+    'node_modules/',
+    'cache/',
+    'coverage/',
+    'dist/',
+    'build/',
+    'index.js',
+  ],
 };

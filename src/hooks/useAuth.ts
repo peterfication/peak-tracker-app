@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { AuthContextInterface } from '../contexts/AuthContext';
-import { useAuthState, AuthState, MaybeAuthState } from './useAuthState';
+import { AuthState, MaybeAuthState, useAuthState } from './useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is

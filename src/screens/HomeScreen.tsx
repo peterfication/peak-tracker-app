@@ -1,5 +1,5 @@
+import { Button, Text, View } from 'react-native-ui-lib';
 import React, { useContext } from 'react';
-import { View, Text, Button } from 'react-native-ui-lib';
 
 import { AuthContext } from '../contexts/AuthContext';
 
