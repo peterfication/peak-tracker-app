@@ -1,7 +1,7 @@
-import React, { createContext } from 'react';
+import React, { createContext, useMemo } from 'react';
 
 import { useAuth } from '../hooks/useAuth';
-import { LoginScreen, LoginLoadingScreen } from '../screens/LoginScreen';
+import { LoginLoadingScreen, LoginScreen } from '../screens/LoginScreen';
 
 export interface AuthContextInterface {
   /**
@@ -28,15 +28,27 @@ export type AuthProviderType = React.FC<{ children: React.ReactNode }>;
  * and is responsible for rendering the LoginScreen/LoginLoadingScreen
  * if the user is not authenticated.
  */
-export const AuthProvider: AuthProviderType = ({ children }) => {
+export const AuthProvider: AuthProviderType = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { login, logout, isAuthenticated } = useAuth();
+
+  const authContextValue = useMemo(
+    () => ({
+      logout,
+      isAuthenticated,
+    }),
+    [logout, isAuthenticated],
+  );
 
   if (isAuthenticated === null) {
     return <LoginLoadingScreen />;
   }
 
   return (
-    <AuthContext.Provider value={{ logout, isAuthenticated }}>
+    <AuthContext.Provider value={authContextValue}>
       {isAuthenticated ? children : <LoginScreen login={login} />}
     </AuthContext.Provider>
   );

@@ -12,6 +12,7 @@ jest.mock('../src/hooks/useAuth', () => ({
 }));
 
 describe('App', () => {
+  // eslint-disable-next-line jest/expect-expect
   it('renders', () => {
     render(<App />);
   });

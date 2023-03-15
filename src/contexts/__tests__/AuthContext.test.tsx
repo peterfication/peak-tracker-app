@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
 import { View } from 'react-native-ui-lib';
+import { render, screen } from '@testing-library/react-native';
 
-import { useAuth } from '../../hooks/useAuth';
 import { AuthProvider } from '../AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const mockedUseAuth = jest.mocked(useAuth);
 
@@ -24,15 +24,15 @@ describe('AuthProvider', () => {
       setIsAuthenticated(null);
     });
 
-    it('renders the LoginLoadingScreen if ', () => {
-      const { queryByTestId } = render(
+    it('renders the LoginLoadingScreen if', () => {
+      render(
         <AuthProvider>
           <View testID="child-component" />
         </AuthProvider>,
       );
-      expect(queryByTestId('login-loading-screen')).not.toBeNull();
-      expect(queryByTestId('child-component')).toBeNull();
-      expect(queryByTestId('login-screen')).toBeNull();
+      expect(screen.getByTestId('login-loading-screen')).not.toBeNull();
+      expect(screen.queryByTestId('child-component')).toBeNull();
+      expect(screen.queryByTestId('login-screen')).toBeNull();
     });
   });
 
@@ -42,14 +42,14 @@ describe('AuthProvider', () => {
     });
 
     it('renders the LoginScreen if isAuthenticated is false', () => {
-      const { queryByTestId } = render(
+      render(
         <AuthProvider>
           <View testID="child-component" />
         </AuthProvider>,
       );
-      expect(queryByTestId('login-screen')).not.toBeNull();
-      expect(queryByTestId('child-component')).toBeNull();
-      expect(queryByTestId('login-loading-screen')).toBeNull();
+      expect(screen.getByTestId('login-screen')).not.toBeNull();
+      expect(screen.queryByTestId('child-component')).toBeNull();
+      expect(screen.queryByTestId('login-loading-screen')).toBeNull();
     });
   });
 
@@ -59,14 +59,14 @@ describe('AuthProvider', () => {
     });
 
     it('renders the child components if isAuthenticated is true', () => {
-      const { queryByTestId } = render(
+      render(
         <AuthProvider>
           <View testID="child-component" />
         </AuthProvider>,
       );
-      expect(queryByTestId('child-component')).not.toBeNull();
-      expect(queryByTestId('login-screen')).toBeNull();
-      expect(queryByTestId('login-loading-screen')).toBeNull();
+      expect(screen.getByTestId('child-component')).not.toBeNull();
+      expect(screen.queryByTestId('login-screen')).toBeNull();
+      expect(screen.queryByTestId('login-loading-screen')).toBeNull();
     });
   });
 });

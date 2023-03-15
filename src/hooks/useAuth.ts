@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { AuthContextInterface } from '../contexts/AuthContext';
-import { useAuthState, AuthState, MaybeAuthState } from './useAuthState';
+import { AuthState, MaybeAuthState, useAuthState } from './useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is
@@ -46,6 +46,7 @@ export const useAuth = (): UseAuthReturnType => {
 
   const login = async () => {
     // Sleep for a second to simulate a network request.
+    // eslint-disable-next-line  no-promise-executor-return
     await new Promise(resolve => setTimeout(resolve, 100));
 
     const newAuthState: AuthState = {
@@ -58,6 +59,7 @@ export const useAuth = (): UseAuthReturnType => {
 
   const logout = async () => {
     // Sleep for a second to simulate a network request.
+    // eslint-disable-next-line  no-promise-executor-return
     await new Promise(resolve => setTimeout(resolve, 100));
 
     removeAuthState();
