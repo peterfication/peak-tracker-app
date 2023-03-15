@@ -46,6 +46,7 @@ export const useAuth = (): UseAuthReturnType => {
 
   const login = async () => {
     // Sleep for a second to simulate a network request.
+    // eslint-disable-next-line  no-promise-executor-return
     await new Promise(resolve => setTimeout(resolve, 100));
 
     const newAuthState: AuthState = {
@@ -58,6 +59,7 @@ export const useAuth = (): UseAuthReturnType => {
 
   const logout = async () => {
     // Sleep for a second to simulate a network request.
+    // eslint-disable-next-line  no-promise-executor-return
     await new Promise(resolve => setTimeout(resolve, 100));
 
     removeAuthState();
