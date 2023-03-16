@@ -38,7 +38,6 @@ const parseAuthStateFromStorage = (
 ): AuthState | null => {
   if (
     authStateFromStorageString === null ||
-    authStateFromStorageString === undefined ||
     authStateFromStorageString === ''
   ) {
     return null;
