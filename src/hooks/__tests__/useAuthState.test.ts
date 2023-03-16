@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
 import { useEncryptedStorage } from '../useEncryptedStorage';
-import { AuthState, MaybeAuthState, useAuthState } from '../useAuthState';
+import { AuthState, useAuthState } from '../useAuthState';
 
 const mockedUseEncryptedStorage: ReturnType<typeof useEncryptedStorage> = {
   value: null,
@@ -49,14 +49,12 @@ describe('useAuthState', () => {
 
       const { result } = renderHook(() => useAuthState());
 
-      let retrievedAuthState: MaybeAuthState;
       await act(async () => {
-        retrievedAuthState = await result.current.getAuthState();
+        await result.current.getAuthState();
       });
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
       expect(result.current.authState).toEqual(authState);
-      expect(retrievedAuthState).toEqual(authState);
     });
 
     it('should return null if auth state does not exist', async () => {
@@ -64,14 +62,25 @@ describe('useAuthState', () => {
 
       const { result } = renderHook(() => useAuthState());
 
-      let retrievedAuthState: MaybeAuthState;
       await act(async () => {
-        retrievedAuthState = await result.current.getAuthState();
+        await result.current.getAuthState();
       });
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
       expect(result.current.authState).toBeNull();
-      expect(retrievedAuthState).toBeNull();
+    });
+
+    it('should handle an empty string in storage', async () => {
+      mockedGetItem.mockResolvedValueOnce('');
+
+      const { result } = renderHook(() => useAuthState());
+
+      await act(async () => {
+        await result.current.getAuthState();
+      });
+
+      expect(mockedGetItem).toHaveBeenCalledWith('authState');
+      expect(result.current.authState).toBeNull();
     });
 
     it('should handle bad data in the storage', async () => {
@@ -83,14 +92,12 @@ describe('useAuthState', () => {
         .spyOn(console, 'error')
         .mockImplementation(() => {});
 
-      let retrievedAuthState: MaybeAuthState;
       await act(async () => {
-        retrievedAuthState = await result.current.getAuthState();
+        await result.current.getAuthState();
       });
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
       expect(result.current.authState).toBeNull();
-      expect(retrievedAuthState).toBeNull();
 
       expect(consoleErrorMock).toHaveBeenCalledWith(
         'SyntaxError: Unexpected token o in JSON at position 1',

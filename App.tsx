@@ -16,4 +16,8 @@ export const App = () => {
 
 const defaultExport = STORYBOOK_ENABLED === 'true' ? Storybook : App;
 
+if (STORYBOOK_ENABLED === 'true') {
+  console.log('Running Storybook ...');
+}
+
 export default defaultExport;
