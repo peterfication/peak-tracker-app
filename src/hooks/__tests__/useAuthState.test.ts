@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { useEncryptedStorage } from '../useEncryptedStorage';
 import { AuthState, useAuthState } from '../useAuthState';
+import { useEncryptedStorage } from '../useEncryptedStorage';
 
 const mockedUseEncryptedStorage: ReturnType<typeof useEncryptedStorage> = {
   value: null,

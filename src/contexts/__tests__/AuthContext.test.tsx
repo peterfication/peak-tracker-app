@@ -1,9 +1,9 @@
+import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 import { View } from 'react-native-ui-lib';
-import { render, screen } from '@testing-library/react-native';
 
-import { AuthProvider } from '../AuthContext';
 import { useAuth } from '../../hooks/useAuth';
+import { AuthProvider } from '../AuthContext';
 
 const mockedUseAuth = jest.mocked(useAuth);
 

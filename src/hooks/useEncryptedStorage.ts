@@ -1,5 +1,5 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { useState } from 'react';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 /**
  * This general hook is used to store, retrieve and remove values

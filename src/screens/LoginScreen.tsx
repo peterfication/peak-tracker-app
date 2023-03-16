@@ -7,7 +7,7 @@ import { Button, Colors, LoaderScreen, Text, View } from 'react-native-ui-lib';
  *
  * @param login The login function that triggers the OpenID Connect workflow.
  */
-export const LoginScreen = ({ login }: { login: () => void }) => {
+export const LoginScreen = ({ login }: { login: () => Promise<void> }) => {
   return (
     <View testID="login-screen" flex paddingH-25 paddingT-120>
       <Text blue50 text20>

@@ -1,12 +1,14 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { act, renderHook } from '@testing-library/react-hooks';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 import { useEncryptedStorage } from '../useEncryptedStorage';
 
+/* eslint-disable @typescript-eslint/unbound-method */
 const mockedSetItem = jest.mocked(EncryptedStorage.setItem);
 const mockedGetItem = jest.mocked(EncryptedStorage.getItem);
 const mockedRemoveItem = jest.mocked(EncryptedStorage.removeItem);
 const mockedClear = jest.mocked(EncryptedStorage.clear);
+/* eslint-enable @typescript-eslint/unbound-method */
 
 describe('useEncryptedStorage', () => {
   beforeEach(() => {
@@ -33,6 +35,7 @@ describe('useEncryptedStorage', () => {
       const newValue = 'testValue';
 
       const error = new Error('Something went wrong');
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       mockedSetItem.mockImplementation(() => Promise.reject(error));
 
       const consoleErrorMock = jest
@@ -56,6 +59,7 @@ describe('useEncryptedStorage', () => {
       const { result } = renderHook(() => useEncryptedStorage());
       const key = 'testKey';
       const storageValue = 'testValue';
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       mockedGetItem.mockImplementation(() => Promise.resolve(storageValue));
 
       let value;
@@ -73,6 +77,7 @@ describe('useEncryptedStorage', () => {
       const key = 'testKey';
 
       const error = new Error('Something went wrong');
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       mockedGetItem.mockImplementation(() => Promise.reject(error));
       const consoleErrorMock = jest
         .spyOn(console, 'error')
@@ -105,6 +110,7 @@ describe('useEncryptedStorage', () => {
       const key = 'testKey';
 
       const error = new Error('Something went wrong');
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       mockedRemoveItem.mockImplementation(() => Promise.reject(error));
       const consoleErrorMock = jest
         .spyOn(console, 'error')
@@ -134,6 +140,7 @@ describe('useEncryptedStorage', () => {
       const { result } = renderHook(() => useEncryptedStorage());
 
       const error = new Error('Something went wrong');
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       mockedClear.mockImplementation(() => Promise.reject(error));
       const consoleErrorMock = jest
         .spyOn(console, 'error')

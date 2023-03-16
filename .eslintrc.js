@@ -16,38 +16,50 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   plugins: [
+    '@typescript-eslint',
     'import',
     'jsx-a11y',
     'promise',
+    'simple-import-sort',
     'testing-library',
-    '@typescript-eslint',
+    'unused-imports',
   ],
   rules: {
     'prettier/prettier': 0,
     '@typescript-eslint/no-empty-function': 0,
     'import/no-unresolved': 0,
-    'sort-imports': [
-      'error',
+
+    // Configure simple-import-sort
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+
+    // Configure unused-imports
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
       {
-        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
-        allowSeparatedGroups: true,
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
       },
     ],
   },
   overrides: [
     // Needed to make plugin:@typescript-eslint/recommended-requiring-type-checking work
     // See https://stackoverflow.com/questions/58510287/parseroptions-project-has-been-set-for-typescript-eslint-parser
-    // TODO: Enable this and fix the errors
-    // {
-    //   files: ['*.ts', '*.tsx'],
-    //   extends: [
-    //     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    //   ],
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
 
-    //   parserOptions: {
-    //     project: ['./tsconfig.json'], // Specify it only for TypeScript files
-    //   },
-    // },
+      parserOptions: {
+        project: ['./tsconfig.json'], // Specify it only for TypeScript files
+      },
+    },
 
     // Ignore some rules for test files
     {

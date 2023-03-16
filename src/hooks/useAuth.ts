@@ -39,30 +39,39 @@ export const useAuth = (): UseAuthReturnType => {
 
   useEffect(() => {
     // Set initial auth state from storage if available.
-    getAuthState();
+    const setInitialAuthState = async () => {
+      await getAuthState();
+    };
+    setInitialAuthState().catch(error => {
+      if (error instanceof Error) {
+        console.error(error.toString());
+      }
+    });
     // We only want to run this effect once, hence the empty dependency array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const login = async () => {
     // Sleep for a second to simulate a network request.
-    // eslint-disable-next-line  no-promise-executor-return
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => {
+      setTimeout(resolve, 100);
+    });
 
     const newAuthState: AuthState = {
       accessToken: 'accessToken',
       idToken: 'idToken',
       refreshToken: 'refreshToken',
     };
-    storeAuthState(newAuthState);
+    await storeAuthState(newAuthState);
   };
 
   const logout = async () => {
     // Sleep for a second to simulate a network request.
-    // eslint-disable-next-line  no-promise-executor-return
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => {
+      setTimeout(resolve, 100);
+    });
 
-    removeAuthState();
+    await removeAuthState();
   };
 
   const isAuthenticated = getIsAuthenticated(authState);
