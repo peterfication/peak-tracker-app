@@ -37,17 +37,16 @@ module.exports = {
   overrides: [
     // Needed to make plugin:@typescript-eslint/recommended-requiring-type-checking work
     // See https://stackoverflow.com/questions/58510287/parseroptions-project-has-been-set-for-typescript-eslint-parser
-    // TODO: Enable this and fix the errors
-    // {
-    //   files: ['*.ts', '*.tsx'],
-    //   extends: [
-    //     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    //   ],
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
 
-    //   parserOptions: {
-    //     project: ['./tsconfig.json'], // Specify it only for TypeScript files
-    //   },
-    // },
+      parserOptions: {
+        project: ['./tsconfig.json'], // Specify it only for TypeScript files
+      },
+    },
 
     // Ignore some rules for test files
     {

@@ -17,6 +17,9 @@ export default LoginScreenMeta;
 export const Basic: ComponentStory<typeof LoginScreen> = () => (
   <LoginScreen
     login={async () => {
+      await new Promise(resolve => {
+        setTimeout(resolve, 1);
+      });
       Alert.alert('Login button clicked');
     }}
   />

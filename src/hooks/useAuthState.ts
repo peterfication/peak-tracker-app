@@ -31,7 +31,7 @@ const isAuthState = (authState: unknown): authState is AuthState =>
 /**
  * Parse the data from the encrypted storage.
  *
- * Returns null if the data in the encrypted storage is not a JSON or empty or empty.
+ * Returns null if the data in the encrypted storage is not a JSON or empty.
  */
 const parseAuthStateFromStorage = (
   authStateFromStorageString: string | null,
@@ -49,7 +49,9 @@ const parseAuthStateFromStorage = (
 
     return isAuthState(parsedAuthState) ? parsedAuthState : null;
   } catch (error) {
-    console.error(`${error}`);
+    if (error instanceof Error) {
+      console.error(error.toString());
+    }
     return null;
   }
 };
@@ -86,7 +88,9 @@ export const useAuthState = () => {
 
       setAuthState(authStateFromStorage);
     } catch (error) {
-      console.error(`${error}`);
+      if (error instanceof Error) {
+        console.error(error.toString());
+      }
       setAuthState(null);
     }
   };
