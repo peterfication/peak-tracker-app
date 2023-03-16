@@ -1,3 +1,15 @@
+const transformIgnorePatternsPackages = [
+  '(jest-)?@?react-native',
+  '@react-native(-community)?',
+  'react-native-ui-lib',
+  // The following packages are needed for the Storybook import to
+  // work when testing App.tsx
+  '@storybook',
+  'react-native-swipe-gestures',
+  'react-native-modal-selector',
+  'react-native-modal-datetime-picker',
+].join('|');
+
 module.exports = {
   preset: 'react-native',
   cacheDirectory: './cache',
@@ -9,6 +21,6 @@ module.exports = {
   },
   setupFiles: ['./node_modules/react-native-gesture-handler/jestSetup.js'],
   transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?@?react-native|@react-native(-community)?|react-native-ui-lib)/)',
+    `node_modules/(?!(${transformIgnorePatternsPackages})/)`,
   ],
 };

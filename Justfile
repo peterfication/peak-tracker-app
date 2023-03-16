@@ -29,9 +29,19 @@ spellcheck:
 spellcheck-list:
   yarn spellcheck:list
 
-# Start the iOS simulator and run the app
+# Start Metro
 start:
-  yarn ios
+  # NOTE: we can't do `yarn ios` because then dotenv won't work
+  # See https://github.com/goatandsheep/react-native-dotenv/issues/393#issuecomment-1380913100
+  yarn start
+
+# Run storybook app
+storybook:
+  yarn storybook:start
+
+# Run this command when new *.stories.tsx files have been created
+storybook-generate:
+  yarn storybook:generate
 
 # Typecheck the TS files
 typecheck:

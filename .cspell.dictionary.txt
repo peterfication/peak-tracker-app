@@ -14,11 +14,13 @@ cocoapods
 codegen
 cygpath
 cygwin
+datetime
 datetimepicker
 debuggable
 dfolly
 dists
 dorg
+dotenv
 endlocal
 errorlevel
 esac
