@@ -8,14 +8,6 @@ import {
   clearDecorators,
 } from '@storybook/react-native';
 
-import '@storybook/addon-ondevice-controls/register';
-import '@storybook/addon-ondevice-actions/register';
-
-import { argsEnhancers } from '@storybook/addon-actions/dist/modern/preset/addArgs';
-
-// eslint-disable-next-line import/named
-import { decorators, parameters } from './preview';
-
 global.STORIES = [
   {
     titlePrefix: '',
@@ -26,8 +18,14 @@ global.STORIES = [
   },
 ];
 
+import '@storybook/addon-ondevice-controls/register';
+import '@storybook/addon-ondevice-actions/register';
+
+import { argsEnhancers } from '@storybook/addon-actions/dist/modern/preset/addArgs';
+
+import { decorators, parameters } from './preview';
+
 if (decorators) {
-  // eslint-disable-next-line no-undef
   if (__DEV__) {
     // stops the warning from showing on every HMR
     require('react-native').LogBox.ignoreLogs([
@@ -36,7 +34,7 @@ if (decorators) {
   }
   // workaround for global decorators getting infinitely applied on HMR, see https://github.com/storybookjs/react-native/issues/185
   clearDecorators();
-  decorators.forEach((decorator) => addDecorator(decorator));
+  decorators.forEach(decorator => addDecorator(decorator));
 }
 
 if (parameters) {
@@ -44,10 +42,8 @@ if (parameters) {
 }
 
 try {
-  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
-} catch {
-  /* workaround for occasional crash */
-}
+  argsEnhancers.forEach(enhancer => addArgsEnhancer(enhancer));
+} catch {}
 
 const getStories = () => {
   return {

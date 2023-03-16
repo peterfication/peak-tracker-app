@@ -14,6 +14,7 @@ cocoapods
 codegen
 cygpath
 cygwin
+datetimepicker
 debuggable
 dfolly
 dists
@@ -40,6 +41,7 @@ millis
 msys
 nsurl
 okhttp
+ondevice
 peaktracker
 posix
 preact
@@ -47,6 +49,7 @@ proguard
 readarray
 recrawl
 redbox
+sbmodern
 setlocal
 squareup
 subview
