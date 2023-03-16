@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native-ui-lib';
+import { Button, Colors, LoaderScreen, Text, View } from 'react-native-ui-lib';
 
 /**
  * The login screen is a simple screen with a button that calls the login
@@ -11,7 +11,7 @@ export const LoginScreen = ({ login }: { login: () => void }) => {
   return (
     <View testID="login-screen" flex paddingH-25 paddingT-120>
       <Text blue50 text20>
-        Login
+        Peak Tracker
       </Text>
       <View marginT-100 center>
         <Button
@@ -34,10 +34,10 @@ export const LoginScreen = ({ login }: { login: () => void }) => {
  */
 export const LoginLoadingScreen = () => {
   return (
-    <View testID="login-loading-screen" flex paddingH-25 paddingT-120>
-      <Text marginT-100 blue50 text20>
-        Loading
-      </Text>
-    </View>
+    <LoaderScreen
+      testID="login-loading-screen"
+      message="Loading ..."
+      color={Colors.grey40}
+    />
   );
 };

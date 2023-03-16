@@ -13,6 +13,10 @@ format:
 lint:
   yarn lint
 
+# Auto-fix ESLint errors
+lint-fix:
+  yarn lint --fix
+
 # Install iOS Cocoa Pods
 pod-install:
   (cd ios && pod install)

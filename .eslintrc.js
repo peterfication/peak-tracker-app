@@ -42,6 +42,15 @@ module.exports = {
         'max-nested-callbacks': 0,
       },
     },
+    // Ignore some rules for stories files
+    {
+      files: ['src/**/*.stories.[jt]s?(x)'],
+      rules: {
+        // Because of "ComponentStory not found in '@storybook/react-native'"
+        'import/named': 0,
+        'react-native/no-inline-styles': 0,
+      },
+    },
   ],
   ignorePatterns: [
     'node_modules/',
@@ -51,4 +60,8 @@ module.exports = {
     'build/',
     'index.js',
   ],
+  settings: {
+    // See https://github.com/facebook/react-native/issues/28549#issuecomment-657249702
+    'import/ignore': ['node_modules/react-native/index\\.js$'],
+  },
 };
