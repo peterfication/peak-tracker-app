@@ -16,8 +16,8 @@
     "test:coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html",
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit",
-    "storybook-generate": "sb-rn-get-stories",
-    "storybook-watch": "sb-rn-watcher"
+    "storybook:generate": "sb-rn-get-stories",
+    "storybook:watch": "sb-rn-watcher"
   },
   "dependencies": {
     "react": "18.2.0",
