@@ -21,18 +21,21 @@ module.exports = {
     'promise',
     'testing-library',
     '@typescript-eslint',
+    'simple-import-sort',
   ],
   rules: {
     'prettier/prettier': 0,
     '@typescript-eslint/no-empty-function': 0,
     'import/no-unresolved': 0,
-    'sort-imports': [
-      'error',
-      {
-        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
-        allowSeparatedGroups: true,
-      },
-    ],
+    // 'sort-imports': [
+    //   'error',
+    //   {
+    //     memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
+    //     allowSeparatedGroups: true,
+    //   },
+    // ],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
   },
   overrides: [
     // Needed to make plugin:@typescript-eslint/recommended-requiring-type-checking work

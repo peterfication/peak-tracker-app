@@ -1,10 +1,9 @@
+import { STORYBOOK_ENABLED } from '@env';
 import React from 'react';
 
-import { STORYBOOK_ENABLED } from '@env';
-
+import Storybook from './.storybook/Storybook';
 import { AuthProvider } from './src/contexts/AuthContext';
 import { HomeScreen } from './src/screens/HomeScreen';
-import Storybook from './.storybook/Storybook';
 
 export const App = () => {
   return (

@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { AuthState, useAuthState } from '../useAuthState';
 import { getIsAuthenticated, useAuth } from '../useAuth';
+import { AuthState, useAuthState } from '../useAuthState';
 
 const mockedAuthState: ReturnType<typeof useAuthState> = {
   authState: null,
