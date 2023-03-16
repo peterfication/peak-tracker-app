@@ -19,6 +19,42 @@ export interface AuthState {
 export type MaybeAuthState = AuthState | null | undefined;
 
 /**
+ * Type guard to check if the auth state is an AuthState.
+ */
+const isAuthState = (authState: unknown): authState is AuthState =>
+  typeof authState === 'object' &&
+  authState !== null &&
+  'accessToken' in authState &&
+  'idToken' in authState &&
+  'refreshToken' in authState;
+
+/**
+ * Parse the data from the encrypted storage.
+ *
+ * Returns null if the data in the encrypted storage is not a JSON or empty or empty.
+ */
+const parseAuthStateFromStorage = (
+  authStateFromStorageString: string | null,
+): AuthState | null => {
+  if (
+    authStateFromStorageString === null ||
+    authStateFromStorageString === undefined ||
+    authStateFromStorageString === ''
+  ) {
+    return null;
+  }
+
+  try {
+    const parsedAuthState = JSON.parse(authStateFromStorageString) as unknown;
+
+    return isAuthState(parsedAuthState) ? parsedAuthState : null;
+  } catch (error) {
+    console.error(`${error}`);
+    return null;
+  }
+};
+
+/**
  * This hook is used to store, retrieve and remove the auth state from the encrypted storage.
  */
 export const useAuthState = () => {
@@ -41,22 +77,17 @@ export const useAuthState = () => {
    *
    * @returns The auth state or undefined if it doesn't exist.
    */
-  const getAuthState = async (): Promise<MaybeAuthState> => {
+  const getAuthState = async (): Promise<void> => {
     try {
       const authStateFromStorageString = await getItem('authState');
+      const authStateFromStorage = parseAuthStateFromStorage(
+        authStateFromStorageString,
+      );
 
-      const parsedAuthState =
-        authStateFromStorageString &&
-        authStateFromStorageString !== '' &&
-        JSON.parse(authStateFromStorageString);
-
-      setAuthState(parsedAuthState);
-
-      return parsedAuthState;
+      setAuthState(authStateFromStorage);
     } catch (error) {
       console.error(`${error}`);
       setAuthState(null);
-      return null;
     }
   };
 

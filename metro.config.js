@@ -6,6 +6,11 @@
  */
 
 module.exports = {
+  resolver: {
+    resolverMainFields: ['sbmodern', 'react-native', 'browser', 'main'],
+  },
+  // Needed for dotenv to work (even though it should work without it according to the README)
+  resetCache: true,
   transformer: {
     getTransformOptions: async () => ({
       transform: {

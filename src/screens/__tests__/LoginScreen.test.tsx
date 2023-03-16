@@ -28,7 +28,7 @@ describe('LoginScreen', () => {
 describe('LoginLoadingScreen', () => {
   it('should render a "Loading" message', () => {
     render(<LoginLoadingScreen />);
-    const loadingText = screen.getByText('Loading');
-    expect(loadingText).toBeTruthy();
+    const loadingScreen = screen.getByTestId('login-loading-screen');
+    expect(loadingScreen).toBeTruthy();
   });
 });

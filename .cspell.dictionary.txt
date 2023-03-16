@@ -14,10 +14,13 @@ cocoapods
 codegen
 cygpath
 cygwin
+datetime
+datetimepicker
 debuggable
 dfolly
 dists
 dorg
+dotenv
 endlocal
 errorlevel
 esac
@@ -40,6 +43,7 @@ millis
 msys
 nsurl
 okhttp
+ondevice
 peaktracker
 posix
 preact
@@ -47,6 +51,7 @@ proguard
 readarray
 recrawl
 redbox
+sbmodern
 setlocal
 squareup
 subview

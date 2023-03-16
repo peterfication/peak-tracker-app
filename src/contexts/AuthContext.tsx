@@ -16,6 +16,12 @@ export interface AuthContextInterface {
   isAuthenticated: boolean | null;
 }
 
+/**
+ * For more information, check the docs of the return values of
+ * `useContext(AuthContext)`, e.g.:
+ *
+ *   `const { logout, ... } = useContext(AuthContext)`
+ */
 export const AuthContext = createContext<AuthContextInterface>({
   logout: async () => {},
   isAuthenticated: false,
