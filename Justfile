@@ -3,7 +3,7 @@ default:
   just --list
 
 # Run all checks from CI
-ci: spellcheck format lint typecheck test
+ci: spellcheck format lint typecheck test-coverage
 
 # Format files with Prettier
 format:
@@ -51,8 +51,12 @@ typecheck:
 test:
   yarn test
 
-# Run Jest and open the coverage report
+# Run Jest with coverage
 test-coverage:
+  yarn test:coverage
+
+# Run Jest with coverage and open the coverage report
+test-coverage-open:
   yarn test:coverage
 
 # Run the tests in watch mode

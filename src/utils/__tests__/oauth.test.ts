@@ -14,8 +14,8 @@ const mockRefreshToken = 'refresh-token';
 const mockIdToken = 'id-token';
 
 describe('authorize', () => {
-  describe('when OAUTH_USE_LOCALHOST is set', () => {
-    it('calls RNAuthorize with production config', async () => {
+  describe('when OAUTH_USE_LOCALHOST is true', () => {
+    it('calls RNAuthorize with local config', async () => {
       await authorize();
       expect(RNAuthorize).toHaveBeenCalledWith({
         redirectUrl: 'com.peak-tracker.auth://callback/',
@@ -28,8 +28,8 @@ describe('authorize', () => {
 });
 
 describe('refresh', () => {
-  describe('when OAUTH_USE_LOCALHOST is not set', () => {
-    it('calls RNRefresh with production config and correct parameters', async () => {
+  describe('when OAUTH_USE_LOCALHOST is true', () => {
+    it('calls RNRefresh with local config and correct parameters', async () => {
       await refresh(mockRefreshToken);
       expect(RNRefresh).toHaveBeenCalledWith(
         {
@@ -47,8 +47,8 @@ describe('refresh', () => {
 });
 
 describe('logout', () => {
-  describe('when OAUTH_USE_LOCALHOST is not set', () => {
-    it('calls RNLogout with production config and correct parameters', async () => {
+  describe('when OAUTH_USE_LOCALHOST is true', () => {
+    it('calls RNLogout with local config and correct parameters', async () => {
       await logout(mockIdToken);
       expect(RNLogout).toHaveBeenCalledWith(
         {
@@ -67,8 +67,8 @@ describe('logout', () => {
 });
 
 describe('revoke', () => {
-  describe('when OAUTH_USE_LOCALHOST is not set', () => {
-    it('calls RNRevoke with production config and correct parameters', async () => {
+  describe('when OAUTH_USE_LOCALHOST is true', () => {
+    it('calls RNRevoke with local config and correct parameters', async () => {
       await revoke(mockAccessToken);
       expect(RNRevoke).toHaveBeenCalledWith(
         {

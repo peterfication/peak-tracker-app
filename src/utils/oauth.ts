@@ -51,7 +51,9 @@ const config = (): AuthConfiguration => {
     console.log('Using localhost as OAuth issuer.');
 
   /* istanbul ignore next */
-  return OAUTH_USE_LOCALHOST === 'true' ? configLocalhost() : configProduction();
+  return OAUTH_USE_LOCALHOST === 'true'
+    ? configLocalhost()
+    : configProduction();
 };
 
 /**

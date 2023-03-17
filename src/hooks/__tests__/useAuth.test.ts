@@ -78,7 +78,7 @@ describe('useAuth', () => {
 
         const consoleErrorMock = jest
           .spyOn(console, 'error')
-          .mockImplementation(() => { });
+          .mockImplementation(() => {});
 
         renderHook(() => useAuth());
 
@@ -131,7 +131,7 @@ describe('useAuth', () => {
 
         const consoleErrorMock = jest
           .spyOn(console, 'error')
-          .mockImplementation(() => { });
+          .mockImplementation(() => {});
 
         await act(async () => {
           await result.current.login();
@@ -158,7 +158,7 @@ describe('useAuth', () => {
 
         const consoleErrorMock = jest
           .spyOn(console, 'error')
-          .mockImplementation(() => { });
+          .mockImplementation(() => {});
 
         await act(async () => {
           await result.current.logout();
