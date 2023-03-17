@@ -49,7 +49,10 @@ describe('useEncryptedStorage', () => {
       expect(mockedSetItem).toHaveBeenCalledWith(key, newValue);
       expect(result.current.value).toBeNull();
 
-      expect(consoleErrorMock).toHaveBeenCalledWith(error);
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        'useEncryptedStorage.setItem',
+        error,
+      );
       consoleErrorMock.mockRestore();
     });
   });
@@ -89,7 +92,10 @@ describe('useEncryptedStorage', () => {
       expect(result.current.value).toBeNull();
       expect(value).toBeNull();
 
-      expect(consoleErrorMock).toHaveBeenCalledWith(error);
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        'useEncryptedStorage.getItem',
+        error,
+      );
       consoleErrorMock.mockRestore();
     });
   });
@@ -121,7 +127,10 @@ describe('useEncryptedStorage', () => {
       expect(mockedRemoveItem).toHaveBeenCalledWith(key);
       expect(result.current.value).toBeNull();
 
-      expect(consoleErrorMock).toHaveBeenCalledWith(error);
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        'useEncryptedStorage.removeItem',
+        error,
+      );
       consoleErrorMock.mockRestore();
     });
   });
@@ -151,7 +160,10 @@ describe('useEncryptedStorage', () => {
       expect(mockedClear).toHaveBeenCalled();
       expect(result.current.value).toBeNull();
 
-      expect(consoleErrorMock).toHaveBeenCalledWith(error);
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        'useEncryptedStorage.clear',
+        error,
+      );
       consoleErrorMock.mockRestore();
     });
   });

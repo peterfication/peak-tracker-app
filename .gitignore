@@ -2,6 +2,11 @@
 #
 .DS_Store
 
+# DotEnv
+*.env
+!/.env.development
+.env*.local
+
 # Xcode
 #
 build/

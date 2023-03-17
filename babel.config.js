@@ -5,7 +5,11 @@ module.exports = {
       'module:react-native-dotenv',
       {
         // verbose: true,
-        allowlist: ['STORYBOOK_ENABLED'],
+        allowlist: [
+          'OAUTH_CLIENT_ID',
+          'OAUTH_USE_LOCALHOST',
+          'STORYBOOK_ENABLED',
+        ],
       },
     ],
     'react-native-reanimated/plugin',

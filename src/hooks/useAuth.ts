@@ -1,14 +1,31 @@
 import { useEffect } from 'react';
 
 import { AuthContextInterface } from '../contexts/AuthContext';
-import { AuthState, MaybeAuthState, useAuthState } from './useAuthState';
+import {
+  authorize,
+  // logout as oauthLogout,
+  revoke,
+} from '../utils/oauth';
+import {
+  AuthState,
+  isAuthState,
+  MaybeAuthState,
+  useAuthState,
+} from './useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is
  * only needed in the login screen and there it can be passed as a prop in
  * the AuthProvider.
  */
-type UseAuthReturnType = AuthContextInterface & { login: () => Promise<void> };
+type UseAuthReturnType = AuthContextInterface & {
+  /**
+   * This function is used to login the user in the app
+   * via the OAuth flow. After the user has logged in, the auth state is
+   * set and stored in storage.
+   */
+  login: () => Promise<void>;
+};
 
 /**
  * This function is used to determine if the user is authenticated.
@@ -37,39 +54,49 @@ export const useAuth = (): UseAuthReturnType => {
   const { authState, getAuthState, storeAuthState, removeAuthState } =
     useAuthState();
 
-  useEffect(() => {
-    // Set initial auth state from storage if available.
-    const setInitialAuthState = async () => {
-      await getAuthState();
-    };
-    setInitialAuthState().catch(error => {
-      if (error instanceof Error) {
-        console.error(error.toString());
-      }
-    });
+  useEffect(
+    () => {
+      // Set initial auth state from storage if available.
+      const setInitialAuthState = async () => {
+        await getAuthState();
+      };
+      setInitialAuthState().catch(error => {
+        error instanceof Error &&
+          console.error('setInitialAuthState', error.toString());
+      });
+    },
     // We only want to run this effect once, hence the empty dependency array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [],
+  );
 
   const login = async () => {
-    // Sleep for a second to simulate a network request.
-    await new Promise(resolve => {
-      setTimeout(resolve, 100);
-    });
+    try {
+      const result = await authorize();
 
-    const newAuthState: AuthState = {
-      accessToken: 'accessToken',
-      idToken: 'idToken',
-      refreshToken: 'refreshToken',
-    };
-    await storeAuthState(newAuthState);
+      const newAuthState: AuthState = {
+        accessToken: result.accessToken,
+        idToken: result.idToken,
+        refreshToken: result.refreshToken,
+        expiresAt: result.accessTokenExpirationDate,
+      };
+
+      await storeAuthState(newAuthState);
+    } catch (error) {
+      error instanceof Error &&
+        console.error('useAuth.login', error.toString());
+    }
   };
 
   const logout = async () => {
-    // Sleep for a second to simulate a network request.
-    await new Promise(resolve => {
-      setTimeout(resolve, 100);
-    });
+    try {
+      // FIXME: The logout is crashing, see oauthLogout
+      // isAuthState(authState) && await oauthLogout(authState.idToken);
+      isAuthState(authState) && (await revoke(authState.accessToken));
+    } catch (error) {
+      error instanceof Error &&
+        console.error('useAuth.logout', error.toString());
+    }
 
     await removeAuthState();
   };

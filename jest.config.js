@@ -8,6 +8,8 @@ const transformIgnorePatternsPackages = [
   'react-native-swipe-gestures',
   'react-native-modal-selector',
   'react-native-modal-datetime-picker',
+  'react-native-app-auth',
+  'react-native-base64',
 ].join('|');
 
 module.exports = {
