@@ -60,10 +60,11 @@ export const useAuth = (): UseAuthReturnType => {
       const setInitialAuthState = async () => {
         await getAuthState();
       };
-      setInitialAuthState().catch(error => {
-        error instanceof Error &&
-          console.error('setInitialAuthState', error.toString());
-      });
+      setInitialAuthState().catch(
+        error =>
+          error instanceof Error &&
+          console.error('setInitialAuthState', error.toString()),
+      );
     },
     // We only want to run this effect once, hence the empty dependency array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
