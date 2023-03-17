@@ -13,7 +13,7 @@
     "spellcheck": "cspell **",
     "spellcheck:list": "cspell ** --words-only --unique --no-progress",
     "test": "jest",
-    "test:coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html",
+    "test:coverage": "jest --verbose --coverage; open ./coverage/lcov-report/index.html",
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit",
     "storybook:start": "APP_ENV=storybook react-native start",

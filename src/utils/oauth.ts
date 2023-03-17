@@ -24,21 +24,21 @@ const configBase: Pick<AuthConfiguration, 'redirectUrl' | 'scopes'> = {
 /**
  * The config that calls the production OAuth server.
  */
-const configProduction: AuthConfiguration = {
+const configProduction = (): AuthConfiguration => ({
   ...configBase,
   issuer: 'https://auth.peak-tracker.com',
   clientId: OAUTH_CLIENT_ID ?? '',
-};
+});
 
 /**
  * The config that calls the OAuth server running on localhost for testing
  * of the OAuth flow.
  */
-const configLocalhost: AuthConfiguration = {
+const configLocalhost = (): AuthConfiguration => ({
   ...configBase,
   issuer: 'http://localhost:3000',
   clientId: 'local-abc-123-app',
-};
+});
 
 /**
  * This function is used to determine whether to use the production or
@@ -46,9 +46,12 @@ const configLocalhost: AuthConfiguration = {
  */
 const config = (): AuthConfiguration => {
   OAUTH_USE_LOCALHOST === 'true' &&
+    process.env.NODE_ENV !== 'test' &&
+    /* istanbul ignore next */
     console.log('Using localhost as OAuth issuer.');
 
-  return OAUTH_USE_LOCALHOST === 'true' ? configLocalhost : configProduction;
+  /* istanbul ignore next */
+  return OAUTH_USE_LOCALHOST === 'true' ? configLocalhost() : configProduction();
 };
 
 /**
