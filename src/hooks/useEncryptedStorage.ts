@@ -23,7 +23,7 @@ export const useEncryptedStorage = () => {
       await EncryptedStorage.setItem(key, newValue);
       setValue(newValue);
     } catch (error) {
-      console.error(error);
+      console.error('useEncryptedStorage.setItem', error);
     }
   };
 
@@ -40,7 +40,7 @@ export const useEncryptedStorage = () => {
       setValue(storageValue);
       return storageValue;
     } catch (error) {
-      console.error(error);
+      console.error('useEncryptedStorage.getItem', error);
       return null;
     }
   };
@@ -56,7 +56,7 @@ export const useEncryptedStorage = () => {
       await EncryptedStorage.removeItem(key);
       setValue(null);
     } catch (error) {
-      console.error(error);
+      console.error('useEncryptedStorage.removeItem', error);
     }
   };
 
@@ -70,7 +70,7 @@ export const useEncryptedStorage = () => {
       await EncryptedStorage.clear();
       setValue(null);
     } catch (error) {
-      console.error(error);
+      console.error('useEncryptedStorage.clear', error);
     }
   };
 

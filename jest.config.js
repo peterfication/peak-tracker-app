@@ -8,6 +8,8 @@ const transformIgnorePatternsPackages = [
   'react-native-swipe-gestures',
   'react-native-modal-selector',
   'react-native-modal-datetime-picker',
+  'react-native-app-auth',
+  'react-native-base64',
 ].join('|');
 
 module.exports = {
@@ -16,9 +18,13 @@ module.exports = {
   coveragePathIgnorePatterns: ['./app/utils/vendor'],
   coverageThreshold: {
     global: {
-      statements: 80,
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90,
     },
   },
+  collectCoverageFrom: ['src/**/{!(*.stories),}.(ts|tsx)'],
   setupFiles: ['./node_modules/react-native-gesture-handler/jestSetup.js'],
   transformIgnorePatterns: [
     `node_modules/(?!(${transformIgnorePatternsPackages})/)`,

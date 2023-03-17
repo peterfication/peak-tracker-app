@@ -9,6 +9,7 @@ export interface AuthState {
   accessToken: string;
   idToken: string;
   refreshToken: string;
+  expiresAt: string;
 }
 /**
  * This state is used to store the auth state in memory.
@@ -21,17 +22,20 @@ export type MaybeAuthState = AuthState | null | undefined;
 /**
  * Type guard to check if the auth state is an AuthState.
  */
-const isAuthState = (authState: unknown): authState is AuthState =>
+export const isAuthState = (authState: unknown): authState is AuthState =>
   typeof authState === 'object' &&
   authState !== null &&
   'accessToken' in authState &&
   'idToken' in authState &&
-  'refreshToken' in authState;
+  'refreshToken' in authState &&
+  'expiresAt' in authState;
 
 /**
  * Parse the data from the encrypted storage.
  *
  * Returns null if the data in the encrypted storage is not a JSON or empty.
+ *
+ * @throws If the data in the encrypted storage is not a JSON. This has to be handled by the caller.
  */
 const parseAuthStateFromStorage = (
   authStateFromStorageString: string | null,
@@ -43,16 +47,9 @@ const parseAuthStateFromStorage = (
     return null;
   }
 
-  try {
-    const parsedAuthState = JSON.parse(authStateFromStorageString) as unknown;
+  const parsedAuthState = JSON.parse(authStateFromStorageString) as unknown;
 
-    return isAuthState(parsedAuthState) ? parsedAuthState : null;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.toString());
-    }
-    return null;
-  }
+  return isAuthState(parsedAuthState) ? parsedAuthState : null;
 };
 
 /**
@@ -87,9 +84,12 @@ export const useAuthState = () => {
 
       setAuthState(authStateFromStorage);
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.toString());
-      }
+      error instanceof Error && console.error('getAuthState', error.toString());
+
+      // If there was an error getting the auth state from the encrypted storage,
+      // we remove it from the encrypted storage.
+      await setItem('authState', '');
+
       setAuthState(null);
     }
   };

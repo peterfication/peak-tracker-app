@@ -11,6 +11,7 @@ const mockedUseEncryptedStorage: ReturnType<typeof useEncryptedStorage> = {
   clear: jest.fn(),
 };
 const mockedGetItem = jest.mocked(mockedUseEncryptedStorage.getItem);
+const mockedSetItem = jest.mocked(mockedUseEncryptedStorage.setItem);
 
 jest.mock('../useEncryptedStorage', () => ({
   useEncryptedStorage: () => mockedUseEncryptedStorage,
@@ -25,6 +26,7 @@ describe('useAuthState', () => {
     accessToken: 'mockAccessToken',
     idToken: 'mockIdToken',
     refreshToken: 'mockRefreshToken',
+    expiresAt: '2020-01-01T00:00:00.000Z',
   };
 
   describe('storeAuthState', () => {
@@ -98,8 +100,10 @@ describe('useAuthState', () => {
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
       expect(result.current.authState).toBeNull();
+      expect(mockedSetItem).toHaveBeenCalledWith('authState', '');
 
       expect(consoleErrorMock).toHaveBeenCalledWith(
+        'getAuthState',
         'SyntaxError: Unexpected token o in JSON at position 1',
       );
       consoleErrorMock.mockRestore();

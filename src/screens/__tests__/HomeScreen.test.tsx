@@ -4,6 +4,14 @@ import React from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { HomeScreen } from '../HomeScreen';
 
+jest.mock('../../hooks/useAuth', () => ({
+  useAuth: () => ({
+    login: jest.fn(),
+    logout: jest.fn(),
+    isAuthenticated: true,
+  }),
+}));
+
 describe('HomeScreen', () => {
   const logout = jest.fn();
 
