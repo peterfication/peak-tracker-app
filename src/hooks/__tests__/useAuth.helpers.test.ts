@@ -3,6 +3,7 @@ import {
   getIsAuthenticated,
   isExpired,
   shouldRefresh,
+  shouldRefreshComplex,
   updateRefreshToken,
 } from '../useAuth';
 import { AuthState } from '../useAuthState';
@@ -97,6 +98,61 @@ describe('shouldRefresh', () => {
 
   it('should return false if authState is not expired', () => {
     const result = shouldRefresh(authState, false);
+    expect(result).toBe(true);
+  });
+});
+
+describe('shouldRefreshComplex', () => {
+  const authState: AuthState = {
+    accessToken: 'access_token',
+    idToken: 'id_token',
+    refreshToken: 'refresh_token',
+    expiresAt: new Date(Date.now() + 60 * 1000).toISOString(),
+  };
+
+  it('should return false if authState is undefined', () => {
+    const result = shouldRefreshComplex(undefined, undefined);
+    expect(result).toBe(false);
+  });
+
+  it('should return false if authState is null', () => {
+    const result = shouldRefreshComplex(null, undefined);
+    expect(result).toBe(false);
+  });
+
+  it('should return false if refreshToken is null', () => {
+    const authStateWithNullRefreshToken: AuthState = {
+      ...authState,
+      refreshToken: null,
+    };
+    const result = shouldRefreshComplex(
+      authStateWithNullRefreshToken,
+      undefined,
+    );
+    expect(result).toBe(false);
+  });
+
+  it('should return false if authLoading is true', () => {
+    const result = shouldRefreshComplex(authState, true);
+    expect(result).toBe(false);
+  });
+
+  it('should return true if authLoading is undefined', () => {
+    const result = shouldRefreshComplex(authState, undefined);
+    expect(result).toBe(true);
+  });
+
+  it('should return true if authState is expired', () => {
+    const authStateWithExpiredToken: AuthState = {
+      ...authState,
+      expiresAt: new Date().toISOString(),
+    };
+    const result = shouldRefreshComplex(authStateWithExpiredToken, false);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if authState is not expired', () => {
+    const result = shouldRefreshComplex(authState, false);
     expect(result).toBe(true);
   });
 });

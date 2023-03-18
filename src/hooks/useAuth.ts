@@ -63,6 +63,9 @@ export const isExpired = (expiresAt: string): boolean => {
 
 /**
  * This function is used to determine if the auth state should be refreshed.
+ *
+ * NOTE: This function could be written in a single line but then it would
+ * be way harder to reason about. It would look like shouldRefreshComplex then.
  */
 export const shouldRefresh = (
   authState: MaybeAuthState,
@@ -99,6 +102,32 @@ export const shouldRefresh = (
   // By default, we don't want to refresh the auth state.
   return false;
 };
+
+/**
+ * This function ist just for demonstration purposes. It is the same as
+ * shouldRefresh but written in a single line and IMO in a more complex way.
+ */
+export const shouldRefreshComplex = (
+  authState: MaybeAuthState,
+  authLoading: boolean | undefined,
+): boolean =>
+  !(
+    // If the auth state is not present yet, we don't want to trigger a refresh
+    (
+      !isAuthState(authState) ||
+      // If the auth state is present, but the refresh token is null, we don't
+      // want to trigger a refresh.
+      authState.refreshToken === null ||
+      // If the auth state is present, but the authLoading is true, we don't
+      // want to trigger another refresh.
+      authLoading
+    )
+  ) &&
+  // If the auth state is present, but the authLoading is undefined, we
+  // want to trigger a refresh just to be sure
+  (authLoading === undefined ||
+    // If the auth state is expired, we want to refresh it.
+    isExpired(authState.expiresAt));
 
 /**
  * This function is used to refresh the auth state.
