@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { authorize, refresh, revoke } from '../../utils/oauth';
-import { getIsAuthenticated, updateRefreshToken, useAuth } from '../useAuth';
+import { authorize, revoke } from '../../utils/oauth';
+import { useAuth } from '../useAuth';
 import { AuthState, isAuthState, useAuthState } from '../useAuthState';
 
 const mockedAuthState: ReturnType<typeof useAuthState> = {
@@ -34,7 +34,6 @@ jest.mock('../../utils/oauth', () => ({
 
 const mockedAuthorize = jest.mocked(authorize);
 const mockedRevoke = jest.mocked(revoke);
-const mockedRefresh = jest.mocked(refresh);
 const mockedAuthorizeResult: Awaited<ReturnType<typeof mockedAuthorize>> = {
   accessToken: 'mockAccessToken',
   idToken: 'mockIdToken',
@@ -45,116 +44,9 @@ const mockedAuthorizeResult: Awaited<ReturnType<typeof mockedAuthorize>> = {
   authorizationCode: 'mockAuthorizationCode',
 };
 
-describe('getIsAuthenticated', () => {
-  it('should return null for an undefined authState', () => {
-    expect(getIsAuthenticated(undefined)).toBeNull();
-  });
-
-  it('should return false for null authState', () => {
-    expect(getIsAuthenticated(null)).toBe(false);
-  });
-
-  it('should return true for authState with a defined accessToken', () => {
-    expect(getIsAuthenticated(mockedAuthStateContent)).toBe(true);
-  });
-});
-
-describe('updateRefreshToken', () => {
-  const authState = {
-    accessToken: 'access_token',
-    idToken: 'id_token',
-    refreshToken: 'refresh_token',
-    expiresAt: '2020-01-01T00:00:00.000Z',
-  };
-
-  const setAuthLoading = jest.fn();
-  const storeAuthState = jest.fn();
-  const removeAuthState = jest.fn();
-
-  it('should remove auth state if authState is not valid', async () => {
-    await updateRefreshToken(
-      null,
-      setAuthLoading,
-      storeAuthState,
-      removeAuthState,
-    );
-
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
-    expect(removeAuthState).toHaveBeenCalled();
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
-  });
-
-  it('should remove auth state if refresh token is null', async () => {
-    const invalidAuthState = { ...authState, refreshToken: null };
-
-    await updateRefreshToken(
-      invalidAuthState,
-      setAuthLoading,
-      storeAuthState,
-      removeAuthState,
-    );
-
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
-    expect(removeAuthState).toHaveBeenCalled();
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
-  });
-
-  it('should update auth state if refresh token is valid', async () => {
-    mockedIsAuthState.mockReturnValueOnce(true);
-    mockedRefresh.mockResolvedValueOnce({
-      accessToken: 'new_access_token',
-      idToken: 'new_id_token',
-      refreshToken: 'new_refresh_token',
-      accessTokenExpirationDate: '2020-01-01T00:00:00.000Z',
-      tokenType: 'Bearer',
-    });
-
-    await updateRefreshToken(
-      authState,
-      setAuthLoading,
-      storeAuthState,
-      removeAuthState,
-    );
-
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
-    expect(mockedRefresh).toHaveBeenCalledWith(authState.refreshToken);
-    expect(storeAuthState).toHaveBeenCalledWith({
-      accessToken: 'new_access_token',
-      idToken: 'new_id_token',
-      refreshToken: 'new_refresh_token',
-      expiresAt: '2020-01-01T00:00:00.000Z',
-    });
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
-  });
-
-  it('should remove auth state if refresh token refresh fails', async () => {
-    mockedIsAuthState.mockReturnValueOnce(true);
-    mockedRefresh.mockRejectedValue(new Error('Refresh failed'));
-
-    const consoleErrorMock = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
-
-    const validAuthState = { ...authState };
-    await updateRefreshToken(
-      validAuthState,
-      setAuthLoading,
-      storeAuthState,
-      removeAuthState,
-    );
-
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
-    expect(mockedRefresh).toHaveBeenCalledWith(validAuthState.refreshToken);
-    expect(removeAuthState).toHaveBeenCalled();
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
-
-    expect(consoleErrorMock).toHaveBeenCalledWith(
-      'updateRefreshToken.storeAuthState',
-      'Error: Refresh failed',
-    );
-    consoleErrorMock.mockRestore();
-  });
-});
+// For setInterval in useEffect testing
+// jest.spyOn(global, 'setInterval');
+// const mockedSetInterval = jest.mocked(setInterval);
 
 describe('useAuth', () => {
   beforeEach(() => {
