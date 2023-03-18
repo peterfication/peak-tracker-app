@@ -17,6 +17,7 @@
     "test:coverage:open": "jest --verbose --coverage; open ./coverage/lcov-report/index.html",
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch",
     "storybook:start": "APP_ENV=storybook react-native start",
     "storybook:generate": "sb-rn-get-stories",
     "storybook:watch": "sb-rn-watcher"

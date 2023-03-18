@@ -43,10 +43,6 @@ storybook:
 storybook-generate:
   yarn storybook:generate
 
-# Typecheck the TS files
-typecheck:
-  yarn typecheck
-
 # Run the unit and integration tests with Jest
 test:
   yarn test
@@ -62,6 +58,14 @@ test-coverage-open:
 # Run the tests in watch mode
 test-watch:
   yarn test:watch
+
+# Typecheck the TS files
+typecheck:
+  yarn typecheck
+
+# Typecheck the TS files in watch mode
+typecheck-watch:
+  yarn typecheck:watch
 
 # Run this if you have watchman recrawl issues
 watchman-reset:

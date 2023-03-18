@@ -8,7 +8,7 @@ import { useEncryptedStorage } from './useEncryptedStorage';
 export interface AuthState {
   accessToken: string;
   idToken: string;
-  refreshToken: string;
+  refreshToken: string | null;
   expiresAt: string;
 }
 /**

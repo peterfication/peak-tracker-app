@@ -11,6 +11,7 @@ const setIsAuthenticated = (isAuthenticated: boolean | null) =>
   mockedUseAuth.mockReturnValue({
     login: jest.fn(),
     logout: jest.fn(),
+    authLoading: false,
     isAuthenticated,
   });
 
