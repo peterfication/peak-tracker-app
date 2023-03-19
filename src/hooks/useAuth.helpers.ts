@@ -68,12 +68,7 @@ export const shouldRefresh = (
   }
 
   // If the auth state is expired, we want to refresh it.
-  if (isExpired(authState.expiresAt)) {
-    return true;
-  }
-
-  // By default, we don't want to refresh the auth state.
-  return false;
+  return isExpired(authState.expiresAt);
 };
 
 /**

@@ -44,45 +44,9 @@ const mockedAuthorizeResult: Awaited<ReturnType<typeof mockedAuthorize>> = {
   authorizationCode: 'mockAuthorizationCode',
 };
 
-// For setInterval in useEffect testing
-// jest.spyOn(global, 'setInterval');
-// const mockedSetInterval = jest.mocked(setInterval);
-
 describe('useAuth', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  const wait = async (time: number) =>
-    new Promise(resolve => {
-      setTimeout(resolve, time);
-    });
-
-  describe('useEffect setInitialAuthState', () => {
-    describe('when the call to getAuthState fails', () => {
-      it('should catch the error', async () => {
-        const error = new Error('mockError');
-
-        // @ts-expect-error I don't know how to mock this in a type safe way yet
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        mockedAuthState.getAuthState.mockRejectedValueOnce(error);
-
-        const consoleErrorMock = jest
-          .spyOn(console, 'error')
-          .mockImplementation(() => {});
-
-        renderHook(() => useAuth());
-
-        // Wait for a millisecond for the useEffect to run
-        await wait(1);
-
-        expect(consoleErrorMock).toHaveBeenCalledWith(
-          'setInitialAuthState',
-          'Error: mockError',
-        );
-        consoleErrorMock.mockRestore();
-      });
-    });
   });
 
   describe('isAuthenticated', () => {

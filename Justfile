@@ -53,7 +53,7 @@ test-coverage:
 
 # Run Jest with coverage and open the coverage report
 test-coverage-open:
-  yarn test:coverage
+  yarn test:coverage:open
 
 # Run the tests in watch mode
 test-watch:
