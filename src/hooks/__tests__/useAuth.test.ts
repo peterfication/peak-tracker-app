@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 
 import { authorize, revoke } from '../../utils/oauth';
 import { useAuth } from '../useAuth';
+import { effectUpdateRefreshToken } from '../useAuth.useEffect';
 import { AuthState, isAuthState, useAuthState } from '../useAuthState';
 
 const mockedAuthState: ReturnType<typeof useAuthState> = {
@@ -44,9 +45,48 @@ const mockedAuthorizeResult: Awaited<ReturnType<typeof mockedAuthorize>> = {
   authorizationCode: 'mockAuthorizationCode',
 };
 
+jest.mock('../useAuth.useEffect');
+const mockedEffectUpdateRefreshToken = jest.mocked(effectUpdateRefreshToken);
+
 describe('useAuth', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('useEffect setInitialAuthState', () => {
+    describe('when the call to getAuthState fails', () => {
+      it('should catch the error', async () => {
+        const error = new Error('mockError');
+
+        // @ts-expect-error I don't know how to mock this in a type safe way yet
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        mockedAuthState.getAuthState.mockRejectedValueOnce(error);
+
+        const consoleErrorMock = jest
+          .spyOn(console, 'error')
+          .mockImplementation(() => {});
+
+        renderHook(() => useAuth());
+
+        await new Promise(process.nextTick);
+
+        expect(consoleErrorMock).toHaveBeenCalledWith(
+          'setInitialAuthState',
+          'Error: mockError',
+        );
+        consoleErrorMock.mockRestore();
+      });
+    });
+  });
+
+  describe('useEffect updateRefreshToken', () => {
+    it('calls effectUpdateRefreshToken', async () => {
+      renderHook(() => useAuth());
+
+      await new Promise(process.nextTick);
+
+      expect(mockedEffectUpdateRefreshToken).toHaveBeenCalled();
+    });
   });
 
   describe('isAuthenticated', () => {
@@ -106,8 +146,6 @@ describe('useAuth', () => {
     describe('when revoke throws an error', () => {
       it('should call removeAuthState', async () => {
         mockedAuthState.authState = mockedAuthStateContent;
-        // For useEffect to prevent a change in the auth state
-        mockedIsAuthState.mockReturnValueOnce(false);
         // For logout
         mockedIsAuthState.mockReturnValueOnce(true);
 
@@ -135,8 +173,6 @@ describe('useAuth', () => {
 
     describe('when an auth state is present', () => {
       it('should call revoke and removeAuthState', async () => {
-        // For useEffect to prevent a change in the auth state
-        mockedIsAuthState.mockReturnValueOnce(false);
         // For logout
         mockedIsAuthState.mockReturnValueOnce(true);
 

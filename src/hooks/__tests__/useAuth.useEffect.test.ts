@@ -1,7 +1,5 @@
-import { renderHook } from '@testing-library/react-hooks';
-
-import { effectUpdateRefreshToken, useAuth } from '../useAuth';
 import { shouldRefresh, updateRefreshToken } from '../useAuth.helpers';
+import { effectUpdateRefreshToken } from '../useAuth.useEffect';
 import { AuthState, useAuthState } from '../useAuthState';
 
 const mockedAuthState: ReturnType<typeof useAuthState> = {
@@ -33,19 +31,24 @@ describe('effectUpdateRefreshToken', () => {
   const mockedStoreAuthState = jest.fn();
   const mockedRemoveAuthState = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('when shouldRefresh returns false', () => {
     beforeEach(() => {
       mockedShouldRefresh.mockReturnValueOnce(false);
     });
 
     it('should not call updateRefreshToken', () => {
-      effectUpdateRefreshToken(
+      const clear = effectUpdateRefreshToken(
         mockedAuthStateContent,
         undefined,
         mockedSetAuthLoading,
         mockedStoreAuthState,
         mockedRemoveAuthState,
       );
+      clear();
 
       expect(mockedUpdateRefreshToken).not.toHaveBeenCalled();
     });
@@ -54,17 +57,19 @@ describe('effectUpdateRefreshToken', () => {
   describe('when shouldRefresh returns true', () => {
     beforeEach(() => {
       mockedShouldRefresh.mockReturnValueOnce(true);
-      mockedUpdateRefreshToken.mockResolvedValueOnce();
     });
 
     it('should call updateRefreshToken with the authState', () => {
-      effectUpdateRefreshToken(
+      mockedUpdateRefreshToken.mockResolvedValueOnce();
+      const clear = effectUpdateRefreshToken(
         mockedAuthStateContent,
         undefined,
         mockedSetAuthLoading,
         mockedStoreAuthState,
         mockedRemoveAuthState,
       );
+
+      clear();
 
       expect(mockedUpdateRefreshToken).toHaveBeenCalledWith(
         mockedAuthStateContent,
@@ -74,10 +79,41 @@ describe('effectUpdateRefreshToken', () => {
       );
     });
 
+    describe('when updateRefreshToken fails', () => {
+      it('should log the error', async () => {
+        const error = new Error('mockError');
+        mockedShouldRefresh.mockReturnValue(true);
+        mockedUpdateRefreshToken.mockRejectedValue(error);
+
+        const consoleErrorMock = jest
+          .spyOn(console, 'error')
+          .mockImplementation(() => {});
+
+        const clear = effectUpdateRefreshToken(
+          mockedAuthStateContent,
+          undefined,
+          mockedSetAuthLoading,
+          mockedStoreAuthState,
+          mockedRemoveAuthState,
+        );
+
+        await new Promise(process.nextTick);
+
+        clear();
+
+        expect(consoleErrorMock).toHaveBeenCalledWith(
+          'updateRefreshTokenWrapper',
+          'Error: mockError',
+        );
+        consoleErrorMock.mockRestore();
+      });
+    });
+
     it('should set an interval to call updateRefreshToken', () => {
+      mockedUpdateRefreshToken.mockResolvedValueOnce();
       const setIntervalSpy = jest.spyOn(global, 'setInterval');
 
-      effectUpdateRefreshToken(
+      const clear = effectUpdateRefreshToken(
         mockedAuthStateContent,
         undefined,
         mockedSetAuthLoading,
@@ -86,9 +122,12 @@ describe('effectUpdateRefreshToken', () => {
       );
 
       expect(setIntervalSpy).toHaveBeenCalled();
+
+      clear();
     });
 
     it('should return a function that clears the interval', () => {
+      mockedUpdateRefreshToken.mockResolvedValueOnce();
       const clearIntervalSpy = jest.spyOn(global, 'clearInterval');
 
       const clear = effectUpdateRefreshToken(
@@ -103,49 +142,57 @@ describe('effectUpdateRefreshToken', () => {
 
       expect(clearIntervalSpy).toHaveBeenCalled();
     });
-  });
-});
 
-describe('useAuth', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+    describe('when the interval is executed', () => {
+      beforeEach(() => {
+        mockedUpdateRefreshToken.mockResolvedValueOnce();
+        jest.useFakeTimers();
+      });
 
-  const wait = async (time: number) =>
-    new Promise(resolve => {
-      setTimeout(resolve, time);
-    });
+      describe('when shouldRefresh returns true', () => {
+        beforeEach(() => {
+          mockedShouldRefresh.mockReturnValueOnce(true);
+        });
 
-  describe('useEffect setInitialAuthState', () => {
-    describe('when the call to getAuthState fails', () => {
-      it('should catch the error', async () => {
-        const error = new Error('mockError');
+        it('should call updateRefreshToken', () => {
+          mockedUpdateRefreshToken.mockResolvedValueOnce();
+          const clear = effectUpdateRefreshToken(
+            mockedAuthStateContent,
+            undefined,
+            mockedSetAuthLoading,
+            mockedStoreAuthState,
+            mockedRemoveAuthState,
+          );
 
-        // @ts-expect-error I don't know how to mock this in a type safe way yet
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        mockedAuthState.getAuthState.mockRejectedValueOnce(error);
+          jest.advanceTimersByTime(2000);
 
-        const consoleErrorMock = jest
-          .spyOn(console, 'error')
-          .mockImplementation(() => {});
+          clear();
 
-        renderHook(() => useAuth());
+          expect(mockedUpdateRefreshToken).toHaveBeenCalledTimes(2);
+        });
+      });
 
-        // Wait for a millisecond for the useEffect to run
-        await wait(1);
+      describe('when shouldRefresh returns false', () => {
+        beforeEach(() => {
+          mockedShouldRefresh.mockReturnValueOnce(false);
+        });
 
-        expect(consoleErrorMock).toHaveBeenCalledWith(
-          'setInitialAuthState',
-          'Error: mockError',
-        );
-        consoleErrorMock.mockRestore();
+        it('should call updateRefreshToken', () => {
+          const clear = effectUpdateRefreshToken(
+            mockedAuthStateContent,
+            undefined,
+            mockedSetAuthLoading,
+            mockedStoreAuthState,
+            mockedRemoveAuthState,
+          );
+
+          jest.advanceTimersByTime(2000);
+
+          clear();
+
+          expect(mockedUpdateRefreshToken).toHaveBeenCalledTimes(1);
+        });
       });
     });
   });
-
-  // describe('useEffect updateRefreshToken', () => {
-  //   it('calls effectUpdateRefreshToken', () => {
-
-  //   });
-  // });
 });
