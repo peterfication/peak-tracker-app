@@ -5,7 +5,7 @@ import {
   shouldRefresh,
   shouldRefreshComplex,
   updateRefreshToken,
-} from '../useAuth';
+} from '../useAuth.helpers';
 import { AuthState } from '../useAuthState';
 
 jest.mock('../../utils/oauth', () => ({
