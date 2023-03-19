@@ -3,12 +3,10 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 import { useEncryptedStorage } from '../useEncryptedStorage';
 
-/* eslint-disable @typescript-eslint/unbound-method */
 const mockedSetItem = jest.mocked(EncryptedStorage.setItem);
 const mockedGetItem = jest.mocked(EncryptedStorage.getItem);
 const mockedRemoveItem = jest.mocked(EncryptedStorage.removeItem);
 const mockedClear = jest.mocked(EncryptedStorage.clear);
-/* eslint-enable @typescript-eslint/unbound-method */
 
 describe('useEncryptedStorage', () => {
   beforeEach(() => {

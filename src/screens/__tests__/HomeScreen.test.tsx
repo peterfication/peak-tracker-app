@@ -28,7 +28,8 @@ describe('HomeScreen', () => {
 
   it('should call the logout function when the Login button is pressed', () => {
     render(
-      <AuthContext.Provider value={{ logout, isAuthenticated: true }}>
+      <AuthContext.Provider
+        value={{ logout, authLoading: false, isAuthenticated: true }}>
         <HomeScreen />
       </AuthContext.Provider>,
     );

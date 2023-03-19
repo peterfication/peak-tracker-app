@@ -69,6 +69,9 @@ module.exports = {
       files: ['**/__tests__/**/*.[jt]s?(x)'],
       rules: {
         'max-nested-callbacks': 0,
+        // For awaiting Promises in tests to work
+        // `await new Promise(process.nextTick);`
+        '@typescript-eslint/unbound-method': 0,
       },
     },
     // Ignore some rules for stories files

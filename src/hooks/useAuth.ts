@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { AuthContextInterface } from '../contexts/AuthContext';
 import {
@@ -6,12 +6,9 @@ import {
   // logout as oauthLogout,
   revoke,
 } from '../utils/oauth';
-import {
-  AuthState,
-  isAuthState,
-  MaybeAuthState,
-  useAuthState,
-} from './useAuthState';
+import { getIsAuthenticated } from './useAuth.helpers';
+import { effectUpdateRefreshToken } from './useAuth.useEffect';
+import { AuthState, isAuthState, useAuthState } from './useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is
@@ -28,25 +25,6 @@ type UseAuthReturnType = AuthContextInterface & {
 };
 
 /**
- * This function is used to determine if the user is authenticated.
- *
- * It returns null if the auth state is not present yet. This is useful
- * to prevent the app from rendering the LoginScreen shortly before the
- * authenticated auth state is retrieved.
- */
-export const getIsAuthenticated = (
-  authState: MaybeAuthState,
-): boolean | null => {
-  // Undefined means that the auth state is not present yet.
-  if (authState === undefined) {
-    return null;
-  }
-
-  // Null means that the user is not authenticated.
-  return authState !== null;
-};
-
-/**
  * This hook is used to login and logout and interacting with the
  * auth state via the useAuthState hook.
  */
@@ -54,6 +32,12 @@ export const useAuth = (): UseAuthReturnType => {
   const { authState, getAuthState, storeAuthState, removeAuthState } =
     useAuthState();
 
+  // Undefined means it's the first run
+  const [authLoading, setAuthLoading] = useState<boolean | undefined>(
+    undefined,
+  );
+
+  // This effect is used to set the initial auth state from storage.
   useEffect(
     () => {
       // Set initial auth state from storage if available.
@@ -71,8 +55,23 @@ export const useAuth = (): UseAuthReturnType => {
     [],
   );
 
+  // This effect is used to refresh the auth state if needed.
+  useEffect(
+    () =>
+      effectUpdateRefreshToken(
+        authState,
+        authLoading,
+        setAuthLoading,
+        storeAuthState,
+        removeAuthState,
+      ),
+    [authState, authLoading, storeAuthState, removeAuthState],
+  );
+
   const login = async () => {
     try {
+      setAuthLoading(true);
+
       const result = await authorize();
 
       const newAuthState: AuthState = {
@@ -80,9 +79,15 @@ export const useAuth = (): UseAuthReturnType => {
         idToken: result.idToken,
         refreshToken: result.refreshToken,
         expiresAt: result.accessTokenExpirationDate,
+        // Expire in 10 seconds for refresh testing (also change it in updateRefreshToken)
+        // expiresAt: new Date(Date.now() + 60 * 1000 + 10 * 1000).toISOString(),
       };
 
       await storeAuthState(newAuthState);
+
+      // We need to set authLoading to false after the auth state is stored
+      // so that we don't immediately trigger a refresh because it might be undefined
+      setAuthLoading(false);
     } catch (error) {
       error instanceof Error &&
         console.error('useAuth.login', error.toString());
@@ -104,5 +109,12 @@ export const useAuth = (): UseAuthReturnType => {
 
   const isAuthenticated = getIsAuthenticated(authState);
 
-  return { isAuthenticated, login, logout };
+  return {
+    // To the outside of this hook we only want authLoading to expose a
+    // boolean value, so we cast undefined to false.
+    authLoading: !!authLoading,
+    isAuthenticated,
+    login,
+    logout,
+  };
 };

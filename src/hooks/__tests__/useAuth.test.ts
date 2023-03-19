@@ -1,7 +1,8 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
 import { authorize, revoke } from '../../utils/oauth';
-import { getIsAuthenticated, useAuth } from '../useAuth';
+import { useAuth } from '../useAuth';
+import { effectUpdateRefreshToken } from '../useAuth.useEffect';
 import { AuthState, isAuthState, useAuthState } from '../useAuthState';
 
 const mockedAuthState: ReturnType<typeof useAuthState> = {
@@ -29,6 +30,7 @@ jest.mock('../../utils/oauth', () => ({
   authorize: jest.fn(),
   logout: jest.fn(),
   revoke: jest.fn(),
+  refresh: jest.fn(),
 }));
 
 const mockedAuthorize = jest.mocked(authorize);
@@ -43,31 +45,15 @@ const mockedAuthorizeResult: Awaited<ReturnType<typeof mockedAuthorize>> = {
   authorizationCode: 'mockAuthorizationCode',
 };
 
-describe('getIsAuthenticated', () => {
-  it('should return null for an undefined authState', () => {
-    expect(getIsAuthenticated(undefined)).toBeNull();
-  });
-
-  it('should return false for null authState', () => {
-    expect(getIsAuthenticated(null)).toBe(false);
-  });
-
-  it('should return true for authState with a defined accessToken', () => {
-    expect(getIsAuthenticated(mockedAuthStateContent)).toBe(true);
-  });
-});
+jest.mock('../useAuth.useEffect');
+const mockedEffectUpdateRefreshToken = jest.mocked(effectUpdateRefreshToken);
 
 describe('useAuth', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  const wait = async (time: number) =>
-    new Promise(resolve => {
-      setTimeout(resolve, time);
-    });
-
-  describe('useEffect', () => {
+  describe('useEffect setInitialAuthState', () => {
     describe('when the call to getAuthState fails', () => {
       it('should catch the error', async () => {
         const error = new Error('mockError');
@@ -82,8 +68,7 @@ describe('useAuth', () => {
 
         renderHook(() => useAuth());
 
-        // Wait for a millisecond for the useEffect to run
-        await wait(1);
+        await new Promise(process.nextTick);
 
         expect(consoleErrorMock).toHaveBeenCalledWith(
           'setInitialAuthState',
@@ -91,6 +76,16 @@ describe('useAuth', () => {
         );
         consoleErrorMock.mockRestore();
       });
+    });
+  });
+
+  describe('useEffect updateRefreshToken', () => {
+    it('calls effectUpdateRefreshToken', async () => {
+      renderHook(() => useAuth());
+
+      await new Promise(process.nextTick);
+
+      expect(mockedEffectUpdateRefreshToken).toHaveBeenCalled();
     });
   });
 
@@ -150,7 +145,9 @@ describe('useAuth', () => {
   describe('logout', () => {
     describe('when revoke throws an error', () => {
       it('should call removeAuthState', async () => {
+        mockedAuthState.authState = mockedAuthStateContent;
         mockedIsAuthState.mockReturnValueOnce(true);
+
         const error = new Error('mockError');
         mockedRevoke.mockRejectedValueOnce(error);
 
@@ -175,12 +172,15 @@ describe('useAuth', () => {
 
     describe('when an auth state is present', () => {
       it('should call revoke and removeAuthState', async () => {
-        mockedIsAuthState.mockReturnValueOnce(true);
+        mockedAuthState.authState = mockedAuthStateContent;
+        mockedIsAuthState.mockReturnValue(true);
+
         const { result } = renderHook(() => useAuth());
 
         await act(async () => {
           await result.current.logout();
         });
+
         expect(mockedRevoke).toHaveBeenCalled();
         expect(mockedAuthState.removeAuthState).toHaveBeenCalled();
       });
