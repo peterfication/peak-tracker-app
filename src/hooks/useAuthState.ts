@@ -8,6 +8,9 @@ import { useEncryptedStorage } from './useEncryptedStorage';
 export interface AuthState {
   accessToken: string;
   idToken: string;
+  /**
+   * It's not guaranteed that the refresh token is available, hence it can be null.
+   */
   refreshToken: string | null;
   expiresAt: string;
 }

@@ -79,6 +79,8 @@ export const useAuth = (): UseAuthReturnType => {
         idToken: result.idToken,
         refreshToken: result.refreshToken,
         expiresAt: result.accessTokenExpirationDate,
+        // Expire in 10 seconds for refresh testing (also change it in updateRefreshToken)
+        // expiresAt: new Date(Date.now() + 60 * 1000 + 10 * 1000).toISOString(),
       };
 
       await storeAuthState(newAuthState);

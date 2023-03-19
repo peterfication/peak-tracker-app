@@ -126,6 +126,8 @@ export const updateRefreshToken = async (
       idToken: result.idToken,
       refreshToken: result.refreshToken,
       expiresAt: result.accessTokenExpirationDate,
+      // Expire in 10 seconds for refresh testing (also change it in useAuth.login)
+      // expiresAt: new Date(Date.now() + 60 * 1000 + 10 * 1000).toISOString(),
     };
 
     await storeAuthState(newAuthState);

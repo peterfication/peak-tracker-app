@@ -146,7 +146,6 @@ describe('useAuth', () => {
     describe('when revoke throws an error', () => {
       it('should call removeAuthState', async () => {
         mockedAuthState.authState = mockedAuthStateContent;
-        // For logout
         mockedIsAuthState.mockReturnValueOnce(true);
 
         const error = new Error('mockError');
@@ -173,14 +172,15 @@ describe('useAuth', () => {
 
     describe('when an auth state is present', () => {
       it('should call revoke and removeAuthState', async () => {
-        // For logout
-        mockedIsAuthState.mockReturnValueOnce(true);
+        mockedAuthState.authState = mockedAuthStateContent;
+        mockedIsAuthState.mockReturnValue(true);
 
         const { result } = renderHook(() => useAuth());
 
         await act(async () => {
           await result.current.logout();
         });
+
         expect(mockedRevoke).toHaveBeenCalled();
         expect(mockedAuthState.removeAuthState).toHaveBeenCalled();
       });

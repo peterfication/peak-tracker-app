@@ -17,23 +17,24 @@ export const effectUpdateRefreshToken = (
    * so that we can use it in the setInterval in the useEffect hook.
    */
   const updateRefreshTokenWrapper = () => {
-    updateRefreshToken(
-      authState,
-      setAuthLoading,
-      storeAuthState,
-      removeAuthState,
-    ).catch(
-      error =>
-        error instanceof Error &&
-        console.error('updateRefreshTokenWrapper', error.toString()),
-    );
+    shouldRefresh(authState, authLoading) &&
+      updateRefreshToken(
+        authState,
+        setAuthLoading,
+        storeAuthState,
+        removeAuthState,
+      ).catch(
+        error =>
+          error instanceof Error &&
+          console.error('updateRefreshTokenWrapper', error.toString()),
+      );
   };
 
   // Execute it immediately because setInterval doesn't execute it immediately
-  shouldRefresh(authState, authLoading) && updateRefreshTokenWrapper();
+  updateRefreshTokenWrapper();
 
   const refreshInterval = setInterval(() => {
-    shouldRefresh(authState, authLoading) && updateRefreshTokenWrapper();
+    updateRefreshTokenWrapper();
   }, 2000);
 
   // The setInterval needs to be cleared when the component unmounts

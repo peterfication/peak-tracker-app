@@ -8,12 +8,8 @@ import {
 } from '../useAuth.helpers';
 import { AuthState } from '../useAuthState';
 
-jest.mock('../../utils/oauth', () => ({
-  authorize: jest.fn(),
-  logout: jest.fn(),
-  revoke: jest.fn(),
-  refresh: jest.fn(),
-}));
+jest.mock('../../utils/oauth');
+const mockedRefresh = jest.mocked(refresh);
 
 describe('getIsAuthenticated', () => {
   it('should return null for an undefined authState', () => {
@@ -168,8 +164,6 @@ describe('updateRefreshToken', () => {
   const setAuthLoading = jest.fn();
   const storeAuthState = jest.fn();
   const removeAuthState = jest.fn();
-
-  const mockedRefresh = jest.mocked(refresh);
 
   it('should remove auth state if authState is not valid', async () => {
     await updateRefreshToken(
