@@ -11,7 +11,12 @@ import {
   shouldRefresh,
   updateRefreshToken,
 } from './useAuth.helpers';
-import { AuthState, MaybeAuthState, isAuthState, useAuthState } from './useAuthState';
+import {
+  AuthState,
+  isAuthState,
+  MaybeAuthState,
+  useAuthState,
+} from './useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is
@@ -30,9 +35,9 @@ type UseAuthReturnType = AuthContextInterface & {
 export const effectUpdateRefreshToken = (
   authState: MaybeAuthState | null,
   authLoading: boolean | undefined,
+  setAuthLoading: (authLoading: boolean) => void,
   storeAuthState: (authState: AuthState) => Promise<void>,
   removeAuthState: () => Promise<void>,
-  setAuthLoading: (authLoading: boolean) => void,
 ) => {
   /**
    * This function is just a synchronous wrapper around the updateRefreshToken
@@ -101,9 +106,9 @@ export const useAuth = (): UseAuthReturnType => {
       effectUpdateRefreshToken(
         authState,
         authLoading,
+        setAuthLoading,
         storeAuthState,
         removeAuthState,
-        setAuthLoading,
       ),
     [authState, authLoading, storeAuthState, removeAuthState],
   );
