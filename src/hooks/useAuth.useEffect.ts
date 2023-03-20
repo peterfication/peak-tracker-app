@@ -1,8 +1,5 @@
-import {
-  shouldRefresh,
-  updateRefreshToken,
-} from '@peak-tracker/hooks/useAuth.helpers';
-import { AuthState, MaybeAuthState } from '@peak-tracker/hooks/useAuthState';
+import { shouldRefresh, updateRefreshToken } from '@app/hooks/useAuth.helpers';
+import { AuthState, MaybeAuthState } from '@app/hooks/useAuthState';
 
 /**
  * This function is the effect in useAuth that sets up the refresh functionality

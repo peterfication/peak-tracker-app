@@ -1,4 +1,4 @@
-import { LoginLoadingScreen } from '@peak-tracker/screens/LoginScreen';
+import { LoginLoadingScreen } from '@app/screens/LoginScreen';
 
 const LoginLoadingScreenMeta = {
   title: 'Login Loading Screen',

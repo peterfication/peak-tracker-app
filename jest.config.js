@@ -33,6 +33,6 @@ module.exports = {
   ],
   moduleDirectories: ['node_modules', path.join(__dirname, 'src')],
   moduleNameMapper: {
-    '^@peak-tracker(.*)$': '<rootDir>/src$1',
+    '^@app(.*)$': '<rootDir>/src$1',
   },
 };

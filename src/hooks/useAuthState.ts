@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useEncryptedStorage } from '@peak-tracker/hooks/useEncryptedStorage';
+import { useEncryptedStorage } from '@app/hooks/useEncryptedStorage';
 
 /**
  * @see MaybeAuthState

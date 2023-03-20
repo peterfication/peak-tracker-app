@@ -5,7 +5,7 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          '@peak-tracker': './src',
+          '@app': './src',
         },
       },
     ],

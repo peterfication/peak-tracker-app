@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@peak-tracker/*": ["src/*"]
+      "@app/*": ["src/*"]
     },
     "strict": true,
     "noUncheckedIndexedAccess": true

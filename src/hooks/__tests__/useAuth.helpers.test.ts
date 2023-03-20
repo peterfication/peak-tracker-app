@@ -6,9 +6,9 @@ import {
   shouldRefresh,
   shouldRefreshComplex,
   updateRefreshToken,
-} from '@peak-tracker/hooks/useAuth.helpers';
-import { AuthState } from '@peak-tracker/hooks/useAuthState';
-import { authorize, refresh, revoke } from '@peak-tracker/utils/oauth';
+} from '@app/hooks/useAuth.helpers';
+import { AuthState } from '@app/hooks/useAuthState';
+import { authorize, refresh, revoke } from '@app/utils/oauth';
 
 jest.mock('../../utils/oauth');
 const mockedAuthorize = jest.mocked(authorize);

@@ -1,9 +1,6 @@
-import {
-  shouldRefresh,
-  updateRefreshToken,
-} from '@peak-tracker/hooks/useAuth.helpers';
-import { effectUpdateRefreshToken } from '@peak-tracker/hooks/useAuth.useEffect';
-import { AuthState } from '@peak-tracker/hooks/useAuthState';
+import { shouldRefresh, updateRefreshToken } from '@app/hooks/useAuth.helpers';
+import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
+import { AuthState } from '@app/hooks/useAuthState';
 
 jest.mock('../useAuth.helpers');
 const mockedShouldRefresh = jest.mocked(shouldRefresh);

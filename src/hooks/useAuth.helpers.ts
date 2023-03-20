@@ -2,13 +2,13 @@ import {
   AuthState,
   isAuthState,
   MaybeAuthState,
-} from '@peak-tracker/hooks/useAuthState';
+} from '@app/hooks/useAuthState';
 import {
   authorize,
   // logout as oauthLogout,
   refresh,
   revoke,
-} from '@peak-tracker/utils/oauth';
+} from '@app/utils/oauth';
 
 /**
  * This function is used to determine if the user is authenticated.

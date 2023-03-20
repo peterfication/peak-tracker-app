@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { ComponentStory } from '@storybook/react-native';
 
-import { LoginScreen } from '@peak-tracker/screens/LoginScreen';
+import { LoginScreen } from '@app/screens/LoginScreen';
 
 const LoginScreenMeta = {
   title: 'Login Screen',
