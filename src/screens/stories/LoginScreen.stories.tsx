@@ -1,8 +1,8 @@
-import { ComponentStory } from '@storybook/react-native';
 import React from 'react';
 import { Alert } from 'react-native';
+import { ComponentStory } from '@storybook/react-native';
 
-import { LoginScreen } from '../LoginScreen';
+import { LoginScreen } from '@app/screens/LoginScreen';
 
 const LoginScreenMeta = {
   title: 'Login Screen',

@@ -1,10 +1,14 @@
 import {
+  AuthState,
+  isAuthState,
+  MaybeAuthState,
+} from '@app/hooks/useAuthState';
+import {
   authorize,
   // logout as oauthLogout,
   refresh,
   revoke,
-} from '../utils/oauth';
-import { AuthState, isAuthState, MaybeAuthState } from './useAuthState';
+} from '@app/utils/oauth';
 
 /**
  * This function is used to determine if the user is authenticated.

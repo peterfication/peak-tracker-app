@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import { AuthContextInterface } from '../contexts/AuthContext';
+import { AuthContextInterface } from '@app/contexts/AuthContext';
 import {
   getIsAuthenticated,
   performLogin,
   performLogout,
-} from './useAuth.helpers';
-import { effectUpdateRefreshToken } from './useAuth.useEffect';
-import { useAuthState } from './useAuthState';
+} from '@app/hooks/useAuth.helpers';
+import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
+import { useAuthState } from '@app/hooks/useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is

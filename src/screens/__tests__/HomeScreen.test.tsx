@@ -1,9 +1,9 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { AuthContext } from '../../contexts/AuthContext';
-import { useAuth } from '../../hooks/useAuth';
-import { HomeScreen } from '../HomeScreen';
+import { AuthContext } from '@app/contexts/AuthContext';
+import { useAuth } from '@app/hooks/useAuth';
+import { HomeScreen } from '@app/screens/HomeScreen';
 
 jest.mock('../../hooks/useAuth');
 const mockedUseAuth = jest.mocked(useAuth);

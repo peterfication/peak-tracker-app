@@ -1,3 +1,5 @@
+const path = require('path');
+
 const transformIgnorePatternsPackages = [
   '(jest-)?@?react-native',
   '@react-native(-community)?',
@@ -29,4 +31,8 @@ module.exports = {
   transformIgnorePatterns: [
     `node_modules/(?!(${transformIgnorePatternsPackages})/)`,
   ],
+  moduleDirectories: ['node_modules', path.join(__dirname, 'src')],
+  moduleNameMapper: {
+    '^@app(.*)$': '<rootDir>/src$1',
+  },
 };

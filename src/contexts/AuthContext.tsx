@@ -1,7 +1,7 @@
 import React, { createContext, useMemo } from 'react';
 
-import { useAuth } from '../hooks/useAuth';
-import { LoginLoadingScreen, LoginScreen } from '../screens/LoginScreen';
+import { useAuth } from '@app/hooks/useAuth';
+import { LoginLoadingScreen, LoginScreen } from '@app/screens/LoginScreen';
 
 export interface AuthContextInterface {
   /**
