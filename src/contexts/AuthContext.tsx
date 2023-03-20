@@ -1,7 +1,10 @@
 import React, { createContext, useMemo } from 'react';
 
-import { useAuth } from '../hooks/useAuth';
-import { LoginLoadingScreen, LoginScreen } from '../screens/LoginScreen';
+import { useAuth } from '@peak-tracker/hooks/useAuth';
+import {
+  LoginLoadingScreen,
+  LoginScreen,
+} from '@peak-tracker/screens/LoginScreen';
 
 export interface AuthContextInterface {
   /**

@@ -1,7 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { LoginLoadingScreen, LoginScreen } from '../LoginScreen';
+import {
+  LoginLoadingScreen,
+  LoginScreen,
+} from '@peak-tracker/screens/LoginScreen';
 
 describe('LoginScreen', () => {
   const login = jest.fn();

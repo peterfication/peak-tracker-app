@@ -1,14 +1,14 @@
-import { act, renderHook } from '@testing-library/react-hooks';
 import React from 'react';
+import { act, renderHook } from '@testing-library/react-hooks';
 
-import { useAuth } from '../useAuth';
+import { useAuth } from '@peak-tracker/hooks/useAuth';
 import {
   getIsAuthenticated,
   performLogin,
   performLogout,
-} from '../useAuth.helpers';
-import { effectUpdateRefreshToken } from '../useAuth.useEffect';
-import { AuthState, useAuthState } from '../useAuthState';
+} from '@peak-tracker/hooks/useAuth.helpers';
+import { effectUpdateRefreshToken } from '@peak-tracker/hooks/useAuth.useEffect';
+import { AuthState, useAuthState } from '@peak-tracker/hooks/useAuthState';
 
 jest.mock('../useAuthState');
 const mockedUseAuthState = jest.mocked(useAuthState);

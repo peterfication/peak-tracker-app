@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { AuthState, useAuthState } from '../useAuthState';
-import { useEncryptedStorage } from '../useEncryptedStorage';
+import { AuthState, useAuthState } from '@peak-tracker/hooks/useAuthState';
+import { useEncryptedStorage } from '@peak-tracker/hooks/useEncryptedStorage';
 
 jest.mock('../useEncryptedStorage');
 const mockedUseEncryptedStorage = jest.mocked(useEncryptedStorage);

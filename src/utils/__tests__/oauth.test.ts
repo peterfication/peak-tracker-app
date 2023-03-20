@@ -5,7 +5,7 @@ import {
   revoke as RNRevoke,
 } from 'react-native-app-auth';
 
-import { authorize, logout, refresh, revoke } from '../oauth';
+import { authorize, logout, refresh, revoke } from '@peak-tracker/utils/oauth';
 
 jest.mock('react-native-app-auth');
 

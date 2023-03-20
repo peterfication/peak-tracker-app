@@ -1,6 +1,10 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@peak-tracker/*": ["src/*"]
+    },
     "strict": true,
     "noUncheckedIndexedAccess": true
   },
