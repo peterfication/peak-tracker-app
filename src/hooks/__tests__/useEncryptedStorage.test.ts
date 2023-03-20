@@ -3,6 +3,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 import { useEncryptedStorage } from '../useEncryptedStorage';
 
+jest.mock('react-native-encrypted-storage');
 const mockedSetItem = jest.mocked(EncryptedStorage.setItem);
 const mockedGetItem = jest.mocked(EncryptedStorage.getItem);
 const mockedRemoveItem = jest.mocked(EncryptedStorage.removeItem);

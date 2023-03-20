@@ -3,23 +3,22 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { AuthState, useAuthState } from '../useAuthState';
 import { useEncryptedStorage } from '../useEncryptedStorage';
 
-const mockedUseEncryptedStorage: ReturnType<typeof useEncryptedStorage> = {
-  value: null,
-  setItem: jest.fn(),
-  getItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-const mockedGetItem = jest.mocked(mockedUseEncryptedStorage.getItem);
-const mockedSetItem = jest.mocked(mockedUseEncryptedStorage.setItem);
-
-jest.mock('../useEncryptedStorage', () => ({
-  useEncryptedStorage: () => mockedUseEncryptedStorage,
-}));
+jest.mock('../useEncryptedStorage');
+const mockedUseEncryptedStorage = jest.mocked(useEncryptedStorage);
 
 describe('useAuthState', () => {
+  const mockedGetItem = jest.fn();
+  const mockedSetItem = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
+    mockedUseEncryptedStorage.mockReturnValue({
+      value: null,
+      setItem: mockedSetItem,
+      getItem: mockedGetItem,
+      removeItem: jest.fn(),
+      clear: jest.fn(),
+    });
   });
 
   const authState: AuthState = {
@@ -37,7 +36,7 @@ describe('useAuthState', () => {
         await result.current.storeAuthState(authState);
       });
 
-      expect(mockedUseEncryptedStorage.setItem).toHaveBeenCalledWith(
+      expect(mockedSetItem).toHaveBeenCalledWith(
         'authState',
         JSON.stringify(authState),
       );
@@ -132,10 +131,7 @@ describe('useAuthState', () => {
       await act(async () => {
         await result.current.removeAuthState();
       });
-      expect(mockedUseEncryptedStorage.setItem).toHaveBeenCalledWith(
-        'authState',
-        '',
-      );
+      expect(mockedSetItem).toHaveBeenCalledWith('authState', '');
       expect(result.current.authState).toBeNull();
     });
   });
