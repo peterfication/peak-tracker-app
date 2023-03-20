@@ -1,67 +1,62 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import React from 'react';
 
-import { authorize, revoke } from '../../utils/oauth';
 import { useAuth } from '../useAuth';
+import {
+  getIsAuthenticated,
+  performLogin,
+  performLogout,
+} from '../useAuth.helpers';
 import { effectUpdateRefreshToken } from '../useAuth.useEffect';
-import { AuthState, isAuthState, useAuthState } from '../useAuthState';
+import { AuthState, useAuthState } from '../useAuthState';
 
-const mockedAuthState: ReturnType<typeof useAuthState> = {
-  authState: null,
-  getAuthState: jest.fn(),
-  storeAuthState: jest.fn(),
-  removeAuthState: jest.fn(),
-};
+jest.mock('../useAuthState');
+const mockedUseAuthState = jest.mocked(useAuthState);
 
-jest.mock('../useAuthState', () => ({
-  useAuthState: () => mockedAuthState,
-  isAuthState: jest.fn(),
-}));
-
-const mockedIsAuthState = jest.mocked(isAuthState);
-
-const mockedAuthStateContent: AuthState = {
-  accessToken: 'mockAccessToken',
-  idToken: 'mockIdToken',
-  refreshToken: 'mockRefreshToken',
-  expiresAt: '2020-01-01T00:00:00.000Z',
-};
-
-jest.mock('../../utils/oauth', () => ({
-  authorize: jest.fn(),
-  logout: jest.fn(),
-  revoke: jest.fn(),
-  refresh: jest.fn(),
-}));
-
-const mockedAuthorize = jest.mocked(authorize);
-const mockedRevoke = jest.mocked(revoke);
-const mockedAuthorizeResult: Awaited<ReturnType<typeof mockedAuthorize>> = {
-  accessToken: 'mockAccessToken',
-  idToken: 'mockIdToken',
-  refreshToken: 'mockRefreshToken',
-  accessTokenExpirationDate: '2020-01-01T00:00:00.000Z',
-  tokenType: 'Bearer',
-  scopes: ['openid'],
-  authorizationCode: 'mockAuthorizationCode',
-};
+jest.mock('../useAuth.helpers');
+const mockedPerformLogin = jest.mocked(performLogin);
+const mockedPerformLogout = jest.mocked(performLogout);
+const mockedGetIsAuthenticated = jest.mocked(getIsAuthenticated);
 
 jest.mock('../useAuth.useEffect');
 const mockedEffectUpdateRefreshToken = jest.mocked(effectUpdateRefreshToken);
 
 describe('useAuth', () => {
+  const mockedAuthLoading = undefined;
+  const mockedSetAuthLoading = jest.fn();
+  const mockedAuthState: AuthState = {
+    accessToken: 'accessToken',
+    idToken: 'idToken',
+    refreshToken: 'refreshToken',
+    expiresAt: 'expiresAt',
+  };
+  const mockedGetAuthState = jest.fn();
+  const mockedStoreAuthState = jest.fn();
+  const mockedRemoveAuthState = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
+
+    jest
+      .spyOn(React, 'useState')
+      .mockImplementationOnce(() => [mockedAuthLoading, mockedSetAuthLoading]);
+
+    mockedUseAuthState.mockReturnValueOnce({
+      authState: mockedAuthState,
+      getAuthState: mockedGetAuthState,
+      storeAuthState: mockedStoreAuthState,
+      removeAuthState: mockedRemoveAuthState,
+    });
   });
 
   describe('useEffect setInitialAuthState', () => {
     describe('when the call to getAuthState fails', () => {
+      const error = new Error('mockError');
+      beforeEach(() => {
+        mockedGetAuthState.mockRejectedValueOnce(error);
+      });
+
       it('should catch the error', async () => {
-        const error = new Error('mockError');
-
-        // @ts-expect-error I don't know how to mock this in a type safe way yet
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        mockedAuthState.getAuthState.mockRejectedValueOnce(error);
-
         const consoleErrorMock = jest
           .spyOn(console, 'error')
           .mockImplementation(() => {});
@@ -85,117 +80,67 @@ describe('useAuth', () => {
 
       await new Promise(process.nextTick);
 
-      expect(mockedEffectUpdateRefreshToken).toHaveBeenCalled();
+      expect(mockedEffectUpdateRefreshToken).toHaveBeenCalledWith(
+        mockedAuthState,
+        mockedAuthLoading,
+        mockedSetAuthLoading,
+        mockedStoreAuthState,
+        mockedRemoveAuthState,
+      );
     });
   });
 
   describe('isAuthenticated', () => {
-    it('should be false when auth state is not present', () => {
-      mockedAuthState.authState = null;
-      const { result } = renderHook(() => useAuth());
-      expect(result.current.isAuthenticated).toBe(false);
+    describe('when getIsAuthenticated returns true', () => {
+      beforeEach(() => {
+        mockedGetIsAuthenticated.mockReturnValueOnce(true);
+      });
+
+      it('should be true', () => {
+        const { result } = renderHook(() => useAuth());
+        expect(result.current.isAuthenticated).toBe(true);
+      });
     });
 
-    it('should be true when auth state is present', () => {
-      mockedAuthState.authState = mockedAuthStateContent;
-      const { result } = renderHook(() => useAuth());
-      expect(result.current.isAuthenticated).toBe(true);
+    describe('when getIsAuthenticated returns false', () => {
+      beforeEach(() => {
+        mockedGetIsAuthenticated.mockReturnValueOnce(false);
+      });
+
+      it('should be false', () => {
+        const { result } = renderHook(() => useAuth());
+        expect(result.current.isAuthenticated).toBe(false);
+      });
     });
   });
 
   describe('login', () => {
-    describe('when the authorize call succeeds', () => {
-      it('should call storeAuthState', async () => {
-        mockedAuthorize.mockResolvedValueOnce(mockedAuthorizeResult);
-        const { result } = renderHook(() => useAuth());
+    it('calls performLogin', async () => {
+      const { result } = renderHook(() => useAuth());
 
-        await act(async () => {
-          await result.current.login();
-        });
-
-        expect(mockedAuthState.storeAuthState).toHaveBeenCalled();
+      await act(async () => {
+        await result.current.login();
       });
-    });
 
-    describe('when the authorize call fails', () => {
-      it('should call storeAuthState', async () => {
-        const error = new Error('mockError');
-        mockedAuthorize.mockRejectedValueOnce(error);
-
-        const { result } = renderHook(() => useAuth());
-
-        const consoleErrorMock = jest
-          .spyOn(console, 'error')
-          .mockImplementation(() => {});
-
-        await act(async () => {
-          await result.current.login();
-        });
-
-        expect(mockedAuthState.storeAuthState).not.toHaveBeenCalled();
-        expect(consoleErrorMock).toHaveBeenCalledWith(
-          'useAuth.login',
-          'Error: mockError',
-        );
-        consoleErrorMock.mockRestore();
-      });
+      expect(mockedPerformLogin).toHaveBeenCalledWith(
+        mockedSetAuthLoading,
+        mockedStoreAuthState,
+      );
     });
   });
 
   describe('logout', () => {
-    describe('when revoke throws an error', () => {
-      it('should call removeAuthState', async () => {
-        mockedAuthState.authState = mockedAuthStateContent;
-        mockedIsAuthState.mockReturnValueOnce(true);
+    it('calls performLogout', async () => {
+      const { result } = renderHook(() => useAuth());
 
-        const error = new Error('mockError');
-        mockedRevoke.mockRejectedValueOnce(error);
-
-        const { result } = renderHook(() => useAuth());
-
-        const consoleErrorMock = jest
-          .spyOn(console, 'error')
-          .mockImplementation(() => {});
-
-        await act(async () => {
-          await result.current.logout();
-        });
-
-        expect(mockedAuthState.removeAuthState).toHaveBeenCalled();
-        expect(consoleErrorMock).toHaveBeenCalledWith(
-          'useAuth.logout',
-          'Error: mockError',
-        );
-        consoleErrorMock.mockRestore();
+      await act(async () => {
+        await result.current.logout();
       });
-    });
 
-    describe('when an auth state is present', () => {
-      it('should call revoke and removeAuthState', async () => {
-        mockedAuthState.authState = mockedAuthStateContent;
-        mockedIsAuthState.mockReturnValue(true);
-
-        const { result } = renderHook(() => useAuth());
-
-        await act(async () => {
-          await result.current.logout();
-        });
-
-        expect(mockedRevoke).toHaveBeenCalled();
-        expect(mockedAuthState.removeAuthState).toHaveBeenCalled();
-      });
-    });
-
-    describe('when no auth state is present', () => {
-      it('should only call removeAuthState', async () => {
-        mockedIsAuthState.mockReturnValueOnce(false);
-        const { result } = renderHook(() => useAuth());
-
-        await act(async () => {
-          await result.current.logout();
-        });
-        expect(mockedAuthState.removeAuthState).toHaveBeenCalled();
-      });
+      expect(mockedPerformLogout).toHaveBeenCalledWith(
+        mockedAuthState,
+        mockedRemoveAuthState,
+      );
     });
   });
 });

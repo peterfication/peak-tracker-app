@@ -1,4 +1,9 @@
-import { refresh } from '../utils/oauth';
+import {
+  authorize,
+  // logout as oauthLogout,
+  refresh,
+  revoke,
+} from '../utils/oauth';
 import { AuthState, isAuthState, MaybeAuthState } from './useAuthState';
 
 /**
@@ -98,6 +103,20 @@ export const shouldRefreshComplex = (
     isExpired(authState.expiresAt));
 
 /**
+ * Transform the result for authorize and refresh into an AuthState.
+ */
+const authStateFromResult = (
+  result: Awaited<ReturnType<typeof refresh>>,
+): AuthState => ({
+  accessToken: result.accessToken,
+  idToken: result.idToken,
+  refreshToken: result.refreshToken,
+  expiresAt: result.accessTokenExpirationDate,
+  // Expire in 10 seconds for refresh testing (also change it in useAuth.login)
+  // expiresAt: new Date(Date.now() + 60 * 1000 + 10 * 1000).toISOString(),
+});
+
+/**
  * This function is used to refresh the auth state.
  *
  * If the refresh token is null or the auth state is not able to refresh
@@ -121,16 +140,7 @@ export const updateRefreshToken = async (
 
   try {
     const result = await refresh(authState.refreshToken);
-    const newAuthState: AuthState = {
-      accessToken: result.accessToken,
-      idToken: result.idToken,
-      refreshToken: result.refreshToken,
-      expiresAt: result.accessTokenExpirationDate,
-      // Expire in 10 seconds for refresh testing (also change it in useAuth.login)
-      // expiresAt: new Date(Date.now() + 60 * 1000 + 10 * 1000).toISOString(),
-    };
-
-    await storeAuthState(newAuthState);
+    await storeAuthState(authStateFromResult(result));
     setAuthLoading(false);
   } catch (error) {
     error instanceof Error &&
@@ -141,4 +151,48 @@ export const updateRefreshToken = async (
     await removeAuthState();
     setAuthLoading(false);
   }
+};
+
+/**
+ * This function is used to perform the login and store the auth state.
+ *
+ * @param setAuthLoading React useState function to set the authLoading state
+ * @param storeAuthState Function to permanently store the auth state
+ */
+export const performLogin = async (
+  setAuthLoading: (authLoading: boolean) => void,
+  storeAuthState: (authState: AuthState) => Promise<void>,
+) => {
+  try {
+    setAuthLoading(true);
+
+    const result = await authorize();
+    await storeAuthState(authStateFromResult(result));
+
+    // We need to set authLoading to false after the auth state is stored
+    // so that we don't immediately trigger a refresh because it might be undefined
+    setAuthLoading(false);
+  } catch (error) {
+    error instanceof Error && console.error('performLogin', error.toString());
+  }
+};
+
+/**
+ * This function is used to perform the logout and remove the auth state.
+ *
+ * @param removeAuthState Function to remove the auth state
+ */
+export const performLogout = async (
+  authState: MaybeAuthState,
+  removeAuthState: () => Promise<void>,
+) => {
+  try {
+    // FIXME: The logout is crashing, see oauthLogout
+    // isAuthState(authState) && await oauthLogout(authState.idToken);
+    isAuthState(authState) && (await revoke(authState.accessToken));
+  } catch (error) {
+    error instanceof Error && console.error('performLogout', error.toString());
+  }
+
+  await removeAuthState();
 };
