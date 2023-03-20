@@ -1,32 +1,19 @@
 import { shouldRefresh, updateRefreshToken } from '../useAuth.helpers';
 import { effectUpdateRefreshToken } from '../useAuth.useEffect';
-import { AuthState, useAuthState } from '../useAuthState';
-
-const mockedAuthState: ReturnType<typeof useAuthState> = {
-  authState: null,
-  getAuthState: jest.fn(),
-  storeAuthState: jest.fn(),
-  removeAuthState: jest.fn(),
-};
-
-jest.mock('../useAuthState', () => ({
-  useAuthState: () => mockedAuthState,
-  isAuthState: jest.fn(),
-}));
-
-const mockedAuthStateContent: AuthState = {
-  accessToken: 'mockAccessToken',
-  idToken: 'mockIdToken',
-  refreshToken: 'mockRefreshToken',
-  expiresAt: '2020-01-01T00:00:00.000Z',
-};
+import { AuthState } from '../useAuthState';
 
 jest.mock('../useAuth.helpers');
-
-const mockedUpdateRefreshToken = jest.mocked(updateRefreshToken);
 const mockedShouldRefresh = jest.mocked(shouldRefresh);
+const mockedUpdateRefreshToken = jest.mocked(updateRefreshToken);
 
 describe('effectUpdateRefreshToken', () => {
+  const mockedAuthState: AuthState = {
+    accessToken: 'mockAccessToken',
+    idToken: 'mockIdToken',
+    refreshToken: 'mockRefreshToken',
+    expiresAt: '2020-01-01T00:00:00.000Z',
+  };
+
   const mockedSetAuthLoading = jest.fn();
   const mockedStoreAuthState = jest.fn();
   const mockedRemoveAuthState = jest.fn();
@@ -42,7 +29,7 @@ describe('effectUpdateRefreshToken', () => {
 
     it('should not call updateRefreshToken', () => {
       const clear = effectUpdateRefreshToken(
-        mockedAuthStateContent,
+        mockedAuthState,
         undefined,
         mockedSetAuthLoading,
         mockedStoreAuthState,
@@ -62,7 +49,7 @@ describe('effectUpdateRefreshToken', () => {
     it('should call updateRefreshToken with the authState', () => {
       mockedUpdateRefreshToken.mockResolvedValueOnce();
       const clear = effectUpdateRefreshToken(
-        mockedAuthStateContent,
+        mockedAuthState,
         undefined,
         mockedSetAuthLoading,
         mockedStoreAuthState,
@@ -72,7 +59,7 @@ describe('effectUpdateRefreshToken', () => {
       clear();
 
       expect(mockedUpdateRefreshToken).toHaveBeenCalledWith(
-        mockedAuthStateContent,
+        mockedAuthState,
         mockedSetAuthLoading,
         mockedStoreAuthState,
         mockedRemoveAuthState,
@@ -90,7 +77,7 @@ describe('effectUpdateRefreshToken', () => {
           .mockImplementation(() => {});
 
         const clear = effectUpdateRefreshToken(
-          mockedAuthStateContent,
+          mockedAuthState,
           undefined,
           mockedSetAuthLoading,
           mockedStoreAuthState,
@@ -114,7 +101,7 @@ describe('effectUpdateRefreshToken', () => {
       const setIntervalSpy = jest.spyOn(global, 'setInterval');
 
       const clear = effectUpdateRefreshToken(
-        mockedAuthStateContent,
+        mockedAuthState,
         undefined,
         mockedSetAuthLoading,
         mockedStoreAuthState,
@@ -131,7 +118,7 @@ describe('effectUpdateRefreshToken', () => {
       const clearIntervalSpy = jest.spyOn(global, 'clearInterval');
 
       const clear = effectUpdateRefreshToken(
-        mockedAuthStateContent,
+        mockedAuthState,
         undefined,
         mockedSetAuthLoading,
         mockedStoreAuthState,
@@ -157,7 +144,7 @@ describe('effectUpdateRefreshToken', () => {
         it('should call updateRefreshToken', () => {
           mockedUpdateRefreshToken.mockResolvedValueOnce();
           const clear = effectUpdateRefreshToken(
-            mockedAuthStateContent,
+            mockedAuthState,
             undefined,
             mockedSetAuthLoading,
             mockedStoreAuthState,
@@ -179,7 +166,7 @@ describe('effectUpdateRefreshToken', () => {
 
         it('should call updateRefreshToken', () => {
           const clear = effectUpdateRefreshToken(
-            mockedAuthStateContent,
+            mockedAuthState,
             undefined,
             mockedSetAuthLoading,
             mockedStoreAuthState,

@@ -1,7 +1,9 @@
-import { refresh } from '../../utils/oauth';
+import { authorize, refresh, revoke } from '../../utils/oauth';
 import {
   getIsAuthenticated,
   isExpired,
+  performLogin,
+  performLogout,
   shouldRefresh,
   shouldRefreshComplex,
   updateRefreshToken,
@@ -9,7 +11,9 @@ import {
 import { AuthState } from '../useAuthState';
 
 jest.mock('../../utils/oauth');
+const mockedAuthorize = jest.mocked(authorize);
 const mockedRefresh = jest.mocked(refresh);
+const mockedRevoke = jest.mocked(revoke);
 
 describe('getIsAuthenticated', () => {
   it('should return null for an undefined authState', () => {
@@ -245,5 +249,111 @@ describe('updateRefreshToken', () => {
       'Error: Refresh failed',
     );
     consoleErrorMock.mockRestore();
+  });
+});
+
+describe('performLogin', () => {
+  const setAuthLoading = jest.fn();
+  const storeAuthState = jest.fn();
+
+  describe('when the call to authorize succeeds', () => {
+    beforeEach(() => {
+      mockedAuthorize.mockResolvedValueOnce({
+        accessToken: 'new_access_token',
+        idToken: 'new_id_token',
+        refreshToken: 'new_refresh_token',
+        accessTokenExpirationDate: '2020-01-01T00:00:00.000Z',
+        tokenType: 'Bearer',
+        scopes: ['openid'],
+        authorizationCode: 'auth_code',
+      });
+    });
+
+    it('should store the auth state if login is successful', async () => {
+      await performLogin(setAuthLoading, storeAuthState);
+
+      expect(setAuthLoading).toHaveBeenCalledWith(true);
+      expect(mockedAuthorize).toHaveBeenCalled();
+      expect(storeAuthState).toHaveBeenCalledWith({
+        accessToken: 'new_access_token',
+        idToken: 'new_id_token',
+        refreshToken: 'new_refresh_token',
+        expiresAt: '2020-01-01T00:00:00.000Z',
+      });
+      expect(setAuthLoading).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('when the call to authorize fails', () => {
+    const error = new Error('Authorize failed');
+
+    beforeEach(() => {
+      mockedAuthorize.mockRejectedValue(error);
+    });
+
+    it('should log the error', async () => {
+      const consoleErrorMock = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      await performLogin(setAuthLoading, storeAuthState);
+
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        'performLogin',
+        'Error: Authorize failed',
+      );
+      consoleErrorMock.mockRestore();
+    });
+  });
+});
+
+describe('performLogout', () => {
+  const removeAuthState = jest.fn();
+
+  describe('when isAuthState is true', () => {
+    const authState: AuthState = {
+      accessToken: 'access_token',
+      idToken: 'id_token',
+      refreshToken: 'refresh_token',
+      expiresAt: '3000-01-01T00:00:00.000Z',
+    };
+
+    describe('when the call to revoke succeeds', () => {
+      beforeEach(() => {
+        mockedRevoke.mockResolvedValueOnce();
+      });
+
+      it('should remove the auth state', async () => {
+        await performLogout(authState, removeAuthState);
+
+        expect(mockedRevoke).toHaveBeenCalledWith(authState.accessToken);
+        expect(removeAuthState).toHaveBeenCalled();
+      });
+    });
+
+    describe('when the call to revoke fails', () => {
+      const error = new Error('Revoke failed');
+
+      beforeEach(() => {
+        mockedRevoke.mockRejectedValueOnce(error);
+      });
+
+      it('should remove the auth state and log the error', async () => {
+        const consoleErrorMock = jest
+          .spyOn(console, 'error')
+          .mockImplementation(() => {});
+
+        await performLogout(authState, removeAuthState);
+
+        expect(mockedRevoke).toHaveBeenCalledWith(authState.accessToken);
+        expect(removeAuthState).toHaveBeenCalled();
+
+        expect(consoleErrorMock).toHaveBeenCalledWith(
+          'performLogout',
+          'Error: Revoke failed',
+        );
+        consoleErrorMock.mockRestore();
+      });
+    });
   });
 });

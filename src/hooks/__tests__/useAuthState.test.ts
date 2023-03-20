@@ -59,6 +59,21 @@ describe('useAuthState', () => {
       expect(result.current.authState).toEqual(authState);
     });
 
+    it('should return null if auth state is not an AuthState', async () => {
+      mockedGetItem.mockResolvedValueOnce(
+        JSON.stringify({ someToken: 'someToken' }),
+      );
+
+      const { result } = renderHook(() => useAuthState());
+
+      await act(async () => {
+        await result.current.getAuthState();
+      });
+
+      expect(mockedGetItem).toHaveBeenCalledWith('authState');
+      expect(result.current.authState).toBeNull();
+    });
+
     it('should return null if auth state does not exist', async () => {
       mockedGetItem.mockResolvedValueOnce(null);
 
