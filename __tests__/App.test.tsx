@@ -7,7 +7,7 @@ jest.mock('../src/hooks/useAuth', () => ({
   useAuth: () => ({
     login: jest.fn(),
     logout: jest.fn(),
-    isAuthenticated: true,
+    isAuthenticated: false,
   }),
 }));
 

@@ -1,14 +1,18 @@
 import React from 'react';
 import { STORYBOOK_ENABLED } from '@env';
 
+import { ApolloProvider } from '@app/contexts/ApolloProvider';
+import { AuthProvider } from '@app/contexts/AuthContext';
+import { HomeScreenWrapper } from '@app/screens/HomeScreen';
+
 import Storybook from './.storybook/Storybook';
-import { AuthProvider } from './src/contexts/AuthContext';
-import { HomeScreen } from './src/screens/HomeScreen';
 
 export const App = () => {
   return (
     <AuthProvider>
-      <HomeScreen />
+      <ApolloProvider>
+        <HomeScreenWrapper />
+      </ApolloProvider>
     </AuthProvider>
   );
 };

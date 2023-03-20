@@ -2,9 +2,36 @@ import React, { useContext } from 'react';
 import { Button, Text, View } from 'react-native-ui-lib';
 
 import { AuthContext } from '@app/contexts/AuthContext';
+import {
+  GetPeaksQueryHookResult,
+  useGetPeaksQuery,
+} from '@app/graphql/generated';
 
-export const HomeScreen = () => {
+export const HomeScreenWrapper = () => {
   const { logout } = useContext(AuthContext);
+  const useGetPeaksQueryResult = useGetPeaksQuery();
+
+  return (
+    <HomeScreen
+      logout={logout}
+      useGetPeaksQueryResult={useGetPeaksQueryResult}
+    />
+  );
+};
+
+export const HomeScreen = ({
+  logout,
+  useGetPeaksQueryResult,
+}: {
+  logout: () => Promise<void>;
+  useGetPeaksQueryResult: Pick<
+    GetPeaksQueryHookResult,
+    'data' | 'loading' | 'error'
+  >;
+}) => {
+  const { data, loading, error } = useGetPeaksQueryResult;
+
+  console.log({ data, loading, error });
 
   return (
     <View flex paddingH-25 paddingT-120>

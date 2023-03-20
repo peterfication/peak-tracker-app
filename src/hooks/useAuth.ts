@@ -75,6 +75,7 @@ export const useAuth = (): UseAuthReturnType => {
     // To the outside of this hook we only want authLoading to expose a
     // boolean value, so we cast undefined to false.
     authLoading: !!authLoading,
+    authState,
     isAuthenticated,
     login,
     logout,

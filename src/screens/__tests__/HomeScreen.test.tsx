@@ -1,31 +1,30 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { AuthContext } from '@app/contexts/AuthContext';
-import { useAuth } from '@app/hooks/useAuth';
 import { HomeScreen } from '@app/screens/HomeScreen';
 
 jest.mock('../../hooks/useAuth');
-const mockedUseAuth = jest.mocked(useAuth);
 
 describe('HomeScreen', () => {
   const mockedLogout = jest.fn();
 
-  beforeEach(() => {
-    mockedUseAuth.mockReturnValue({
-      login: jest.fn(),
-      logout: mockedLogout,
-      authLoading: false,
-      isAuthenticated: true,
-    });
-  });
+  const useGetPeaksQueryResult = {
+    data: undefined,
+    loading: false,
+    error: undefined,
+  };
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('should render the HomeScreen component', () => {
-    render(<HomeScreen />);
+    render(
+      <HomeScreen
+        logout={jest.fn()}
+        useGetPeaksQueryResult={useGetPeaksQueryResult}
+      />,
+    );
     const logoutButton = screen.getByTestId('logout-button');
     expect(logoutButton).toBeDefined();
     expect(logoutButton).not.toBeNull();
@@ -33,14 +32,10 @@ describe('HomeScreen', () => {
 
   it('should call the logout function when the Login button is pressed', () => {
     render(
-      <AuthContext.Provider
-        value={{
-          logout: mockedLogout,
-          authLoading: false,
-          isAuthenticated: true,
-        }}>
-        <HomeScreen />
-      </AuthContext.Provider>,
+      <HomeScreen
+        logout={mockedLogout}
+        useGetPeaksQueryResult={useGetPeaksQueryResult}
+      />,
     );
     const logoutButton = screen.getByTestId('logout-button');
     fireEvent.press(logoutButton);

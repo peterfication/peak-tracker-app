@@ -142,7 +142,7 @@ export enum SortOrder {
 export type GetPeaksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPeaksQuery = { __typename?: 'RootQueryType', peaks?: { __typename?: 'PeakConnection', edges?: Array<{ __typename?: 'PeakEdge', node?: { __typename?: 'Peak', id: string } | null } | null> | null } | null };
+export type GetPeaksQuery = { __typename?: 'RootQueryType', peaks?: { __typename?: 'PeakConnection', edges?: Array<{ __typename?: 'PeakEdge', node?: { __typename?: 'Peak', id: string, name: string } | null } | null> | null } | null };
 
 
 export const GetPeaksDocument = gql`
@@ -151,6 +151,7 @@ export const GetPeaksDocument = gql`
     edges {
       node {
         id
+        name
       }
     }
   }

@@ -3,6 +3,7 @@ query GetPeaks {
     edges {
       node {
         id
+        name
       }
     }
   }
