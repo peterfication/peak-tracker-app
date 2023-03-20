@@ -9,6 +9,10 @@ ci: spellcheck format lint typecheck test-coverage
 format:
   yarn format
 
+# Run the GraphQL code generation
+graphql-codegen:
+  yarn graphql:codegen
+
 # Lint the JS/TS files with ESLint
 lint:
   yarn lint

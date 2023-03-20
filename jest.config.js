@@ -17,7 +17,10 @@ const transformIgnorePatternsPackages = [
 module.exports = {
   preset: 'react-native',
   cacheDirectory: './cache',
-  coveragePathIgnorePatterns: ['./app/utils/vendor'],
+  coveragePathIgnorePatterns: [
+    './src/utils/vendor',
+    './src/graphql/generated.ts',
+  ],
   coverageThreshold: {
     global: {
       branches: 90,

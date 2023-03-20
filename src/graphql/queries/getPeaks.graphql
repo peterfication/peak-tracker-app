@@ -1,0 +1,9 @@
+query GetPeaks {
+  peaks {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}

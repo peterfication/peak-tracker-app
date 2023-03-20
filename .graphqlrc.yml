@@ -1,0 +1,2 @@
+# This config is for IDEs
+schema: src/graphql/schema.json
