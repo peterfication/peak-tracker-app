@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { AuthContextInterface } from '../contexts/AuthContext';
 import {
-  authorize,
-  // logout as oauthLogout,
-  revoke,
-} from '../utils/oauth';
-import { getIsAuthenticated } from './useAuth.helpers';
+  getIsAuthenticated,
+  performLogin,
+  performLogout,
+} from './useAuth.helpers';
 import { effectUpdateRefreshToken } from './useAuth.useEffect';
-import { AuthState, isAuthState, useAuthState } from './useAuthState';
+import { useAuthState } from './useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is
@@ -68,45 +67,8 @@ export const useAuth = (): UseAuthReturnType => {
     [authState, authLoading, storeAuthState, removeAuthState],
   );
 
-  const login = async () => {
-    try {
-      setAuthLoading(true);
-
-      const result = await authorize();
-
-      const newAuthState: AuthState = {
-        accessToken: result.accessToken,
-        idToken: result.idToken,
-        refreshToken: result.refreshToken,
-        expiresAt: result.accessTokenExpirationDate,
-        // Expire in 10 seconds for refresh testing (also change it in updateRefreshToken)
-        // expiresAt: new Date(Date.now() + 60 * 1000 + 10 * 1000).toISOString(),
-      };
-
-      await storeAuthState(newAuthState);
-
-      // We need to set authLoading to false after the auth state is stored
-      // so that we don't immediately trigger a refresh because it might be undefined
-      setAuthLoading(false);
-    } catch (error) {
-      error instanceof Error &&
-        console.error('useAuth.login', error.toString());
-    }
-  };
-
-  const logout = async () => {
-    try {
-      // FIXME: The logout is crashing, see oauthLogout
-      // isAuthState(authState) && await oauthLogout(authState.idToken);
-      isAuthState(authState) && (await revoke(authState.accessToken));
-    } catch (error) {
-      error instanceof Error &&
-        console.error('useAuth.logout', error.toString());
-    }
-
-    await removeAuthState();
-  };
-
+  const login = async () => await performLogin(setAuthLoading, storeAuthState);
+  const logout = async () => await performLogout(authState, removeAuthState);
   const isAuthenticated = getIsAuthenticated(authState);
 
   return {

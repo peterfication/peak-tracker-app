@@ -1,4 +1,9 @@
-import { refresh } from '../utils/oauth';
+import {
+  authorize,
+  // logout as oauthLogout,
+  refresh,
+  revoke,
+} from '../utils/oauth';
 import { AuthState, isAuthState, MaybeAuthState } from './useAuthState';
 
 /**
@@ -141,4 +146,58 @@ export const updateRefreshToken = async (
     await removeAuthState();
     setAuthLoading(false);
   }
+};
+
+/**
+ * This function is used to perform the login and store the auth state.
+ *
+ * @param setAuthLoading React useState function to set the authLoading state
+ * @param storeAuthState Function to permanently store the auth state
+ */
+export const performLogin = async (
+  setAuthLoading: (authLoading: boolean) => void,
+  storeAuthState: (authState: AuthState) => Promise<void>,
+) => {
+  try {
+    setAuthLoading(true);
+
+    const result = await authorize();
+
+    const newAuthState: AuthState = {
+      accessToken: result.accessToken,
+      idToken: result.idToken,
+      refreshToken: result.refreshToken,
+      expiresAt: result.accessTokenExpirationDate,
+      // Expire in 10 seconds for refresh testing (also change it in updateRefreshToken)
+      // expiresAt: new Date(Date.now() + 60 * 1000 + 10 * 1000).toISOString(),
+    };
+
+    await storeAuthState(newAuthState);
+
+    // We need to set authLoading to false after the auth state is stored
+    // so that we don't immediately trigger a refresh because it might be undefined
+    setAuthLoading(false);
+  } catch (error) {
+    error instanceof Error && console.error('useAuth.login', error.toString());
+  }
+};
+
+/**
+ * This function is used to perform the logout and remove the auth state.
+ *
+ * @param removeAuthState Function to remove the auth state
+ */
+export const performLogout = async (
+  authState: MaybeAuthState,
+  removeAuthState: () => Promise<void>,
+) => {
+  try {
+    // FIXME: The logout is crashing, see oauthLogout
+    // isAuthState(authState) && await oauthLogout(authState.idToken);
+    isAuthState(authState) && (await revoke(authState.accessToken));
+  } catch (error) {
+    error instanceof Error && console.error('useAuth.logout', error.toString());
+  }
+
+  await removeAuthState();
 };
