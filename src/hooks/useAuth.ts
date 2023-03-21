@@ -8,7 +8,7 @@ import {
   performLogout,
 } from '@app/hooks/useAuth.helpers';
 import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
-import { useAuthState } from '@app/hooks/useAuthState';
+import { MaybeAuthState, useAuthState } from '@app/hooks/useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is
@@ -22,6 +22,15 @@ type UseAuthReturnType = AuthContextInterface & {
    * set and stored in storage.
    */
   login: () => Promise<void>;
+
+  /**
+   * Whether the auth state is refreshing at the moment.
+   *
+   * Default is true, because we need to wait for the initial auth load
+   * in useAuth.
+   */
+  authLoading: boolean;
+  authState: MaybeAuthState;
 };
 
 /**
