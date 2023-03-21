@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { AuthContextInterface } from '@app/contexts/AuthContext';
 import {
@@ -7,7 +7,7 @@ import {
   performLogout,
 } from '@app/hooks/useAuth.helpers';
 import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
-import { useAuthState } from '@app/hooks/useAuthState';
+import { MaybeAuthState, useAuthState } from '@app/hooks/useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is
@@ -21,6 +21,15 @@ type UseAuthReturnType = AuthContextInterface & {
    * set and stored in storage.
    */
   login: () => Promise<void>;
+
+  /**
+   * Whether the auth state is refreshing at the moment.
+   *
+   * Default is true, because we need to wait for the initial auth load
+   * in useAuth.
+   */
+  authLoading: boolean;
+  authState: MaybeAuthState;
 };
 
 /**
@@ -67,14 +76,21 @@ export const useAuth = (): UseAuthReturnType => {
     [authState, authLoading, storeAuthState, removeAuthState],
   );
 
-  const login = async () => await performLogin(setAuthLoading, storeAuthState);
-  const logout = async () => await performLogout(authState, removeAuthState);
+  const login = useCallback(
+    async () => await performLogin(setAuthLoading, storeAuthState),
+    [storeAuthState],
+  );
+  const logout = useCallback(
+    async () => await performLogout(await getAuthState(), removeAuthState),
+    [getAuthState, removeAuthState],
+  );
   const isAuthenticated = getIsAuthenticated(authState);
 
   return {
     // To the outside of this hook we only want authLoading to expose a
     // boolean value, so we cast undefined to false.
     authLoading: !!authLoading,
+    authState,
     isAuthenticated,
     login,
     logout,

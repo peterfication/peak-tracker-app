@@ -6,7 +6,8 @@
       "@app/*": ["src/*"]
     },
     "strict": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": true
   },
   "typeRoots": ["./src/types"]
 }

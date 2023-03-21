@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 /**
@@ -18,14 +18,17 @@ export const useEncryptedStorage = () => {
    * @param newValue The new value to be stored.
    * @throws An error if the value couldn't be stored.
    */
-  const setItem = async (key: string, newValue: string): Promise<void> => {
-    try {
-      await EncryptedStorage.setItem(key, newValue);
-      setValue(newValue);
-    } catch (error) {
-      console.error('useEncryptedStorage.setItem', error);
-    }
-  };
+  const setItem = useCallback(
+    async (key: string, newValue: string): Promise<void> => {
+      try {
+        await EncryptedStorage.setItem(key, newValue);
+        setValue(newValue);
+      } catch (error) {
+        console.error('useEncryptedStorage.setItem', error);
+      }
+    },
+    [],
+  );
 
   /**
    * This function is used to retrieve a value from the encrypted storage.
@@ -34,7 +37,7 @@ export const useEncryptedStorage = () => {
    * @returns The value or null if it doesn't exist.
    * @throws An error if the value couldn't be retrieved.
    */
-  const getItem = async (key: string): Promise<string | null> => {
+  const getItem = useCallback(async (key: string): Promise<string | null> => {
     try {
       const storageValue = await EncryptedStorage.getItem(key);
       setValue(storageValue);
@@ -43,7 +46,7 @@ export const useEncryptedStorage = () => {
       console.error('useEncryptedStorage.getItem', error);
       return null;
     }
-  };
+  }, []);
 
   /**
    * This function is used to remove a value from the encrypted storage.
@@ -51,28 +54,28 @@ export const useEncryptedStorage = () => {
    * @param key The key to be used for removing the value.
    * @throws An error if the value couldn't be removed.
    */
-  const removeItem = async (key: string): Promise<void> => {
+  const removeItem = useCallback(async (key: string): Promise<void> => {
     try {
       await EncryptedStorage.removeItem(key);
       setValue(null);
     } catch (error) {
       console.error('useEncryptedStorage.removeItem', error);
     }
-  };
+  }, []);
 
   /**
    * This function is used to remove all values from the encrypted storage.
    *
    * @throws An error if the values couldn't be removed.
    */
-  const clear = async (): Promise<void> => {
+  const clear = useCallback(async (): Promise<void> => {
     try {
       await EncryptedStorage.clear();
       setValue(null);
     } catch (error) {
       console.error('useEncryptedStorage.clear', error);
     }
-  };
+  }, []);
 
   return { value, setItem, getItem, removeItem, clear };
 };

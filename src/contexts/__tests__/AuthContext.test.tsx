@@ -5,21 +5,19 @@ import { render, screen } from '@testing-library/react-native';
 import { AuthProvider } from '@app/contexts/AuthContext';
 import { useAuth } from '@app/hooks/useAuth';
 
+jest.mock('@app/hooks/useAuth');
 const mockedUseAuth = jest.mocked(useAuth);
 
-const setIsAuthenticated = (isAuthenticated: boolean | null) =>
-  mockedUseAuth.mockReturnValue({
-    login: jest.fn(),
-    logout: jest.fn(),
-    authLoading: false,
-    isAuthenticated,
-  });
-
-jest.mock('../../hooks/useAuth', () => ({
-  useAuth: jest.fn(),
-}));
-
 describe('AuthProvider', () => {
+  const setIsAuthenticated = (isAuthenticated: boolean | null) =>
+    mockedUseAuth.mockReturnValue({
+      login: jest.fn(),
+      logout: jest.fn(),
+      authState: undefined,
+      authLoading: false,
+      isAuthenticated,
+    });
+
   describe('when isAuthenticated is null', () => {
     beforeEach(() => {
       setIsAuthenticated(null);

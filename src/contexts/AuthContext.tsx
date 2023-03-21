@@ -10,13 +10,6 @@ export interface AuthContextInterface {
    */
   logout: () => Promise<void>;
   /**
-   * Whether the auth state is refreshing at the moment.
-   *
-   * Default is true, because we need to wait for the initial auth load
-   * in useAuth.
-   */
-  authLoading: boolean;
-  /**
    * The initial value of isAuthenticated is null to be able to handle
    * the case when the auth state is not yet set (auth state === undefined)
    * to show the user a loading screen (see LoginLoadingScreen in AuthProvider).
@@ -32,7 +25,6 @@ export interface AuthContextInterface {
  */
 export const AuthContext = createContext<AuthContextInterface>({
   logout: async () => {},
-  authLoading: true,
   isAuthenticated: false,
 });
 
@@ -48,24 +40,27 @@ export const AuthProvider: AuthProviderType = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { login, logout, authLoading, isAuthenticated } = useAuth();
+  const { login, logout, isAuthenticated } = useAuth();
 
   const authContextValue = useMemo(
     () => ({
       logout,
-      authLoading,
       isAuthenticated,
     }),
-    [logout, authLoading, isAuthenticated],
+    [isAuthenticated, logout],
   );
 
-  if (isAuthenticated === null) {
+  if (authContextValue.isAuthenticated === null) {
     return <LoginLoadingScreen />;
   }
 
   return (
     <AuthContext.Provider value={authContextValue}>
-      {isAuthenticated ? children : <LoginScreen login={login} />}
+      {authContextValue.isAuthenticated ? (
+        children
+      ) : (
+        <LoginScreen login={login} />
+      )}
     </AuthContext.Provider>
   );
 };

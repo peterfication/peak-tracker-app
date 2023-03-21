@@ -118,12 +118,14 @@ module.exports = {
     },
   ],
   ignorePatterns: [
-    'node_modules/',
+    'build/',
     'cache/',
     'coverage/',
     'dist/',
-    'build/',
     'index.js',
+    'node_modules/',
+    'src/graphql/generated.ts',
+    'src/graphql/schema.ts',
   ],
   settings: {
     // See https://github.com/facebook/react-native/issues/28549#issuecomment-657249702

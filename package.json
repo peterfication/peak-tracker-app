@@ -7,6 +7,7 @@
     "android": "echo 'Does not work with dotenv, see https://github.com/goatandsheep/react-native-dotenv/issues/393#issuecomment-1380913100'; exit; APP_ENV=development react-native run-android",
     "format": "prettier --write .",
     "format:ci": "prettier --check .",
+    "graphql:codegen": "graphql-codegen --config graphql-codegen.yml",
     "ios": "echo 'Does not work with dotenv, see https://github.com/goatandsheep/react-native-dotenv/issues/393#issuecomment-1380913100'; exit; APP_ENV=development react-native run-ios --simulator='iPhone 14'",
     "lint": "eslint .",
     "start": "APP_ENV=development react-native start",
@@ -23,6 +24,8 @@
     "storybook:watch": "sb-rn-watcher"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.10",
+    "graphql": "^16.6.0",
     "react": "18.2.0",
     "react-native": "0.71.4",
     "react-native-app-auth": "^6.4.3",
@@ -35,6 +38,11 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@graphql-codegen/cli": "^3.2.2",
+    "@graphql-codegen/introspection": "^3.0.1",
+    "@graphql-codegen/typescript": "^3.0.2",
+    "@graphql-codegen/typescript-operations": "^3.0.2",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@prettier/plugin-xml": "^2.2.0",
     "@react-native-async-storage/async-storage": "^1.17.12",
     "@react-native-community/datetimepicker": "^6.7.5",
