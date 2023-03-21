@@ -55,29 +55,47 @@ const parseAuthStateFromStorage = (
   return isAuthState(parsedAuthState) ? parsedAuthState : null;
 };
 
-/**
- * This hook is used to store, retrieve and remove the auth state from the encrypted storage.
- */
-export const useAuthState = () => {
-  const { setItem, getItem } = useEncryptedStorage();
-
-  const [authState, setAuthState] = useState<MaybeAuthState>(undefined);
-
+interface UseAuthStateReturnType {
+  authState: MaybeAuthState;
   /**
    * This function is used to store the auth state in the encrypted storage.
    *
    * @param newAuthState The new auth state to be stored.
    */
-  const storeAuthState = async (newAuthState: AuthState) => {
-    setAuthState(newAuthState);
-    await setItem('authState', JSON.stringify(newAuthState));
-  };
-
+  storeAuthState: (newAuthState: AuthState) => Promise<void>;
   /**
    * This function is used to retrieve the auth state from the encrypted storage.
    *
    * @returns The auth state or undefined if it doesn't exist.
    */
+  getAuthState: () => Promise<void>;
+  /**
+   * This method is used to get the id token from the auth state without triggering
+   * re-renders in case the ID token changes. This is needed in the ApolloProvider so
+   * that the Apollo client is not re-created every time the ID token changes.
+   *
+   * It will always return a string but this string might be empty if the auth state
+   * is not available.
+   */
+  getIdToken: () => Promise<string>;
+  /**
+   * This function is used to remove the auth state from the encrypted storage.
+   */
+  removeAuthState: () => Promise<void>;
+}
+/**
+ * This hook is used to store, retrieve and remove the auth state from the encrypted storage.
+ */
+export const useAuthState = (): UseAuthStateReturnType => {
+  const { setItem, getItem } = useEncryptedStorage();
+
+  const [authState, setAuthState] = useState<MaybeAuthState>(undefined);
+
+  const storeAuthState = async (newAuthState: AuthState) => {
+    setAuthState(newAuthState);
+    await setItem('authState', JSON.stringify(newAuthState));
+  };
+
   const getAuthState = async (): Promise<void> => {
     try {
       const authStateFromStorageString = await getItem('authState');
@@ -97,13 +115,32 @@ export const useAuthState = () => {
     }
   };
 
-  /**
-   * This function is used to remove the auth state from the encrypted storage.
-   */
+  const getIdToken = async (): Promise<string> => {
+    try {
+      const authStateFromStorageString = await getItem('authState');
+      const authStateFromStorage = parseAuthStateFromStorage(
+        authStateFromStorageString,
+      );
+
+      if (isAuthState(authStateFromStorage)) {
+        return authStateFromStorage.idToken;
+      }
+      return '';
+    } catch (error) {
+      return '';
+    }
+  };
+
   const removeAuthState = async () => {
     setAuthState(null);
     await setItem('authState', '');
   };
 
-  return { authState, storeAuthState, getAuthState, removeAuthState };
+  return {
+    authState,
+    storeAuthState,
+    getAuthState,
+    getIdToken,
+    removeAuthState,
+  };
 };

@@ -9,11 +9,11 @@ import Storybook from './.storybook/Storybook';
 
 export const App = () => {
   return (
-    <AuthProvider>
-      <ApolloProvider>
+    <ApolloProvider>
+      <AuthProvider>
         <HomeScreenWrapper />
-      </ApolloProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 };
 

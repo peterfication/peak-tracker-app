@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useApolloClient } from '@apollo/client';
 
 import { AuthContextInterface } from '@app/contexts/AuthContext';
 import {
@@ -30,6 +31,9 @@ type UseAuthReturnType = AuthContextInterface & {
 export const useAuth = (): UseAuthReturnType => {
   const { authState, getAuthState, storeAuthState, removeAuthState } =
     useAuthState();
+
+  // Needed for cache clear on logout
+  const apolloClient = useApolloClient();
 
   // Undefined means it's the first run
   const [authLoading, setAuthLoading] = useState<boolean | undefined>(
@@ -68,7 +72,7 @@ export const useAuth = (): UseAuthReturnType => {
   );
 
   const login = async () => await performLogin(setAuthLoading, storeAuthState);
-  const logout = async () => await performLogout(authState, removeAuthState);
+  const logout = async () => await performLogout(authState, removeAuthState, apolloClient);
   const isAuthenticated = getIsAuthenticated(authState);
 
   return {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   ApolloClient,
   ApolloProvider as ApolloProviderOriginal,
@@ -9,8 +9,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
-import { AuthContext } from '@app/contexts/AuthContext';
-import { isAuthState } from '@app/hooks/useAuthState';
+import { useAuthState } from '@app/hooks/useAuthState';
 
 const GRAPHQL_URL = 'https://peak-tracker.com/gql';
 
@@ -75,26 +74,16 @@ const httpLink = createHttpLink({
 export const ApolloProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const { authLoading, authState, isAuthenticated } = useContext(AuthContext);
+  const { getIdToken } = useAuthState();
 
-  // TODO: Extract from Provider to make it testable and to maybe use useMemo
-  const authLink = setContext((_, { headers }) => {
-    // TODO: prevent GraphQL calls if auth state is missing
-    const authStateMissing =
-      authLoading || !isAuthenticated || !isAuthState(authState);
-
-    if (authStateMissing) {
-      return {
-        headers: {
-          ...(isObject(headers) ? headers : {}),
-        },
-      };
-    }
-
+  // TODO: Extract from Provider to make it testable
+  const authLink = setContext(async (_, { headers }) => {
+    const idToken = await getIdToken();
+    console.log('authLink.idToken', idToken);
     return {
       headers: {
         ...(isObject(headers) ? headers : {}),
-        authorization: `Bearer ${authState.idToken}`,
+        authorization: `Bearer ${idToken}`,
       },
     };
   });

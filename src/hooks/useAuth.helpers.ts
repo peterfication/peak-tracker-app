@@ -1,3 +1,5 @@
+import { ApolloClient } from '@apollo/client';
+
 import {
   AuthState,
   isAuthState,
@@ -189,11 +191,13 @@ export const performLogin = async (
 export const performLogout = async (
   authState: MaybeAuthState,
   removeAuthState: () => Promise<void>,
+  apolloClient: ApolloClient<unknown>,
 ) => {
   try {
     // FIXME: The logout is crashing, see oauthLogout
     // isAuthState(authState) && await oauthLogout(authState.idToken);
     isAuthState(authState) && (await revoke(authState.accessToken));
+    await apolloClient.clearStore();
   } catch (error) {
     error instanceof Error && console.error('performLogout', error.toString());
   }
