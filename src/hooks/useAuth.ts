@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 
 import { AuthContextInterface } from '@app/contexts/AuthContext';
@@ -80,8 +80,15 @@ export const useAuth = (): UseAuthReturnType => {
     [authState, authLoading, storeAuthState, removeAuthState],
   );
 
-  const login = async () => await performLogin(setAuthLoading, storeAuthState);
-  const logout = async () => await performLogout(authState, removeAuthState, apolloClient);
+  const login = useCallback(
+    async () => await performLogin(setAuthLoading, storeAuthState),
+    [storeAuthState],
+  );
+  const logout = useCallback(
+    async () =>
+      await performLogout(await getAuthState(), removeAuthState, apolloClient),
+    [getAuthState, removeAuthState, apolloClient],
+  );
   const isAuthenticated = getIsAuthenticated(authState);
 
   return {
