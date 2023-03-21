@@ -11,8 +11,8 @@
     "ios": "echo 'Does not work with dotenv, see https://github.com/goatandsheep/react-native-dotenv/issues/393#issuecomment-1380913100'; exit; APP_ENV=development react-native run-ios --simulator='iPhone 14'",
     "lint": "eslint .",
     "start": "APP_ENV=development react-native start",
-    "spellcheck": "cspell **",
-    "spellcheck:list": "cspell ** --words-only --unique --no-progress",
+    "spellcheck": "cspell '**'",
+    "spellcheck:list": "cspell '**' --words-only --unique --no-progress",
     "test": "jest",
     "test:coverage": "jest --verbose --coverage",
     "test:coverage:open": "jest --verbose --coverage; open ./coverage/lcov-report/index.html",
@@ -88,5 +88,6 @@
   },
   "volta": {
     "node": "18.14.0"
-  }
+  },
+  "packageManager": "yarn@3.5.0"
 }
