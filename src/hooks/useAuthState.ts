@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useEncryptedStorage } from '@app/hooks/useEncryptedStorage';
 
@@ -68,7 +68,7 @@ interface UseAuthStateReturnType {
    *
    * @returns The auth state or undefined if it doesn't exist.
    */
-  getAuthState: () => Promise<void>;
+  getAuthState: () => Promise<AuthState | null>;
   /**
    * This method is used to get the id token from the auth state without triggering
    * re-renders in case the ID token changes. This is needed in the ApolloProvider so
@@ -91,12 +91,15 @@ export const useAuthState = (): UseAuthStateReturnType => {
 
   const [authState, setAuthState] = useState<MaybeAuthState>(undefined);
 
-  const storeAuthState = async (newAuthState: AuthState) => {
-    setAuthState(newAuthState);
-    await setItem('authState', JSON.stringify(newAuthState));
-  };
+  const storeAuthState = useCallback(
+    async (newAuthState: AuthState) => {
+      setAuthState(newAuthState);
+      await setItem('authState', JSON.stringify(newAuthState));
+    },
+    [setItem],
+  );
 
-  const getAuthState = async (): Promise<void> => {
+  const getAuthState = useCallback(async (): Promise<AuthState | null> => {
     try {
       const authStateFromStorageString = await getItem('authState');
       const authStateFromStorage = parseAuthStateFromStorage(
@@ -104,6 +107,7 @@ export const useAuthState = (): UseAuthStateReturnType => {
       );
 
       setAuthState(authStateFromStorage);
+      return authStateFromStorage;
     } catch (error) {
       error instanceof Error && console.error('getAuthState', error.toString());
 
@@ -112,8 +116,9 @@ export const useAuthState = (): UseAuthStateReturnType => {
       await setItem('authState', '');
 
       setAuthState(null);
+      return null;
     }
-  };
+  }, [getItem, setItem]);
 
   const getIdToken = async (): Promise<string> => {
     try {
@@ -131,10 +136,10 @@ export const useAuthState = (): UseAuthStateReturnType => {
     }
   };
 
-  const removeAuthState = async () => {
+  const removeAuthState = useCallback(async () => {
     setAuthState(null);
     await setItem('authState', '');
-  };
+  }, [setItem]);
 
   return {
     authState,
