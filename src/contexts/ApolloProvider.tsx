@@ -79,7 +79,6 @@ export const ApolloProvider: React.FC<React.PropsWithChildren> = ({
   // TODO: Extract from Provider to make it testable
   const authLink = setContext(async (_, { headers }) => {
     const idToken = await getIdToken();
-    console.log('authLink.idToken', idToken);
     return {
       headers: {
         ...(isObject(headers) ? headers : {}),

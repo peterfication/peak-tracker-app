@@ -46,6 +46,7 @@ describe('useAuth', () => {
       getAuthState: mockedGetAuthState,
       storeAuthState: mockedStoreAuthState,
       removeAuthState: mockedRemoveAuthState,
+      getIdToken: jest.fn(),
     });
   });
 
@@ -131,6 +132,8 @@ describe('useAuth', () => {
 
   describe('logout', () => {
     it('calls performLogout', async () => {
+      mockedGetAuthState.mockResolvedValue(mockedAuthState);
+
       const { result } = renderHook(() => useAuth());
 
       await act(async () => {
