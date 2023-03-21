@@ -40,6 +40,25 @@ const isUnauthorizedError = (error: unknown): boolean =>
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
+const httpLink = createHttpLink({
+  uri: GRAPHQL_URL,
+});
+
+const authLink = (getIdToken: () => Promise<string>) =>
+  setContext(async (_, { headers }) => {
+    const idToken = await getIdToken();
+    return {
+      headers: {
+        ...(isObject(headers) ? headers : {}),
+        authorization: `Bearer ${idToken}`,
+      },
+    };
+  });
+
+// TODO: custom fetching to add operation name to the request URL
+// https://www.apollographql.com/docs/react/networking/advanced-http-networking/#custom-fetching
+// Do this
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
@@ -64,30 +83,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-const httpLink = createHttpLink({
-  uri: GRAPHQL_URL,
-});
-
-// TODO: custom fetching to add operation name to the request URL
-// https://www.apollographql.com/docs/react/networking/advanced-http-networking/#custom-fetching
-
-export const ApolloProvider: React.FC<React.PropsWithChildren> = ({
-  children,
-}) => {
-  const { getIdToken } = useAuthState();
-
-  // TODO: Extract from Provider to make it testable
-  const authLink = setContext(async (_, { headers }) => {
-    const idToken = await getIdToken();
-    return {
-      headers: {
-        ...(isObject(headers) ? headers : {}),
-        authorization: `Bearer ${idToken}`,
-      },
-    };
-  });
-
-  const client = new ApolloClient({
+const client = (getIdToken: () => Promise<string>) =>
+  new ApolloClient({
     cache: new InMemoryCache({
       typePolicies: {
         Peak: {
@@ -95,10 +92,17 @@ export const ApolloProvider: React.FC<React.PropsWithChildren> = ({
         },
       },
     }),
-    link: from([errorLink, authLink, httpLink]),
+    link: from([errorLink, authLink(getIdToken), httpLink]),
   });
 
+export const ApolloProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const { getIdToken } = useAuthState();
+
   return (
-    <ApolloProviderOriginal client={client}>{children}</ApolloProviderOriginal>
+    <ApolloProviderOriginal client={client(getIdToken)}>
+      {children}
+    </ApolloProviderOriginal>
   );
 };
