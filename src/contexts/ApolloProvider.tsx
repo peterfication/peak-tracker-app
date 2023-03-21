@@ -2,8 +2,8 @@ import React from 'react';
 import {
   ApolloClient,
   ApolloProvider as ApolloProviderOriginal,
-  createHttpLink,
   from,
+  HttpLink,
   InMemoryCache,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
@@ -40,12 +40,32 @@ const isUnauthorizedError = (error: unknown): boolean =>
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
-const httpLink = createHttpLink({
+/**
+ * Add the operation name to the request URL for easier request inspection.
+ */
+const fetchWithOperationName = (uri: string, options: { body: string }) => {
+  const parsedBody = JSON.parse(options.body) as unknown;
+  const operationName =
+    isObject(parsedBody) && typeof parsedBody.operationName === 'string'
+      ? parsedBody.operationName
+      : '';
+
+  return fetch(`${uri}?op=${operationName}`, options);
+};
+
+/**
+ * The HTTP link is used to specify the GraphQL endpoint.
+ */
+const httpLink = new HttpLink({
   uri: GRAPHQL_URL,
+  fetch: fetchWithOperationName,
 });
 
+/**
+ * The auth link is used to add the ID token to the request headers.
+ */
 const authLink = (getIdToken: () => Promise<string>) =>
-  setContext(async (_, { headers }) => {
+  setContext(async (_, { headers } ) => {
     const idToken = await getIdToken();
     return {
       headers: {
@@ -55,10 +75,9 @@ const authLink = (getIdToken: () => Promise<string>) =>
     };
   });
 
-// TODO: custom fetching to add operation name to the request URL
-// https://www.apollographql.com/docs/react/networking/advanced-http-networking/#custom-fetching
-// Do this
-
+/**
+ * The error link is used to handle errors from the GraphQL server.
+ */
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
