@@ -13,8 +13,6 @@ import { useAuthState } from '@app/hooks/useAuthState';
 
 const GRAPHQL_URL = 'https://peak-tracker.com/gql';
 
-// TODO: Test the functions in this file
-
 /**
  * Unfortunately, the Apollo Client doesn't export the ServerError interface.
  */

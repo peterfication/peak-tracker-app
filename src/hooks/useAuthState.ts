@@ -120,7 +120,7 @@ export const useAuthState = (): UseAuthStateReturnType => {
     }
   }, [getItem, setItem]);
 
-  const getIdToken = async (): Promise<string> => {
+  const getIdToken = useCallback(async (): Promise<string> => {
     try {
       const authStateFromStorageString = await getItem('authState');
       const authStateFromStorage = parseAuthStateFromStorage(
@@ -134,7 +134,7 @@ export const useAuthState = (): UseAuthStateReturnType => {
     } catch (error) {
       return '';
     }
-  };
+  }, [getItem]);
 
   const removeAuthState = useCallback(async () => {
     setAuthState(null);
