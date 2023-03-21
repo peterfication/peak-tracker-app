@@ -20,7 +20,6 @@ module.exports = {
   coveragePathIgnorePatterns: [
     './src/utils/vendor',
     './src/graphql/generated.ts',
-    './src/contexts/ApolloProvider.tsx',
   ],
   coverageThreshold: {
     global: {

@@ -7,11 +7,13 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { onError } from '@apollo/client/link/error';
+import { ErrorLink, onError } from '@apollo/client/link/error';
 
 import { useAuthState } from '@app/hooks/useAuthState';
 
 const GRAPHQL_URL = 'https://peak-tracker.com/gql';
+
+// TODO: Test the functions in this file
 
 /**
  * Unfortunately, the Apollo Client doesn't export the ServerError interface.
@@ -24,33 +26,41 @@ interface ServerError {
  * Check whether a network error is a server error. This is needed in order to access
  * the statusCode property.
  */
-const isServerError = (error: unknown): error is ServerError =>
+export const isServerError = (error: unknown): error is ServerError =>
   typeof error === 'object' && error !== null && 'statusCode' in error;
 
 /**
  * Check for a 401 error from the backend. This happens if the auth state is not
  * valid/up to date. This actually shouldn't happen.
  */
-const isUnauthorizedError = (error: unknown): boolean =>
+export const isUnauthorizedError = (error: unknown): boolean =>
   isServerError(error) && error.statusCode === 401;
 
 /**
  * Needed for any checks from the Apollo Client.
  */
-const isObject = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null;
+export const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
 
 /**
  * Add the operation name to the request URL for easier request inspection.
  */
-const fetchWithOperationName = (uri: string, options: { body: string }) => {
-  const parsedBody = JSON.parse(options.body) as unknown;
-  const operationName =
-    isObject(parsedBody) && typeof parsedBody.operationName === 'string'
-      ? parsedBody.operationName
-      : '';
+export const fetchWithOperationName = (
+  uri: string,
+  options: { body: string },
+) => {
+  try {
+    const parsedBody = JSON.parse(options.body) as unknown;
+    const operationName =
+      isObject(parsedBody) && typeof parsedBody.operationName === 'string'
+        ? parsedBody.operationName
+        : '';
 
-  return fetch(`${uri}?op=${operationName}`, options);
+    return fetch(`${uri}?op=${operationName}`, options);
+  } catch (error) {
+    console.error(`Failed to parse body: ${options.body}`);
+    return fetch(uri, options);
+  }
 };
 
 /**
@@ -64,21 +74,21 @@ const httpLink = new HttpLink({
 /**
  * The auth link is used to add the ID token to the request headers.
  */
-const authLink = (getIdToken: () => Promise<string>) =>
-  setContext(async (_, { headers } ) => {
+export const authLink = (getIdToken: () => Promise<string>) =>
+  setContext(async (_, { headers }) => {
     const idToken = await getIdToken();
     return {
       headers: {
         ...(isObject(headers) ? headers : {}),
-        authorization: `Bearer ${idToken}`,
+        Authorization: `Bearer ${idToken}`,
       },
     };
   });
 
-/**
- * The error link is used to handle errors from the GraphQL server.
- */
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+export const errorHandler: ErrorLink.ErrorHandler = ({
+  graphQLErrors,
+  networkError,
+}) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
       const errorDetails = [
@@ -100,9 +110,14 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       console.error(errorMessage);
     }
   }
-});
+};
 
-const client = (getIdToken: () => Promise<string>) =>
+/**
+ * The error link is used to handle errors from the GraphQL server.
+ */
+export const errorLink = onError(errorHandler);
+
+export const client = (getIdToken: () => Promise<string>) =>
   new ApolloClient({
     cache: new InMemoryCache({
       typePolicies: {
