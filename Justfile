@@ -13,6 +13,10 @@ format:
 graphql-codegen:
   yarn graphql:codegen
 
+# Run the GraphQL validation (check for the usage of deprecated fields)
+graphql-validate:
+  yarn graphql:validate
+
 # Lint the JS/TS files with ESLint
 lint:
   yarn lint
