@@ -3,7 +3,7 @@ import { STORYBOOK_ENABLED } from '@env';
 
 import { ApolloProvider } from '@app/contexts/ApolloProvider';
 import { AuthProvider } from '@app/contexts/AuthContext';
-import { HomeScreenWrapper } from '@app/screens/HomeScreen';
+import { NavigationProvider } from '@app/contexts/NavigationProvider';
 
 import Storybook from './.storybook/Storybook';
 
@@ -11,7 +11,7 @@ export const App = () => {
   return (
     <AuthProvider>
       <ApolloProvider>
-        <HomeScreenWrapper />
+        <NavigationProvider />
       </ApolloProvider>
     </AuthProvider>
   );
