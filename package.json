@@ -51,7 +51,7 @@
     "@graphql-inspector/validate-command": "^3.4.7",
     "@prettier/plugin-xml": "^2.2.0",
     "@react-native-async-storage/async-storage": "^1.17.12",
-    "@react-native-community/datetimepicker": "^6.7.5",
+    "@react-native-community/datetimepicker": "^7.0.0",
     "@react-native-community/eslint-config": "^3.2.0",
     "@react-native-community/slider": "^4.4.2",
     "@storybook/addon-actions": "^6.5.14",
