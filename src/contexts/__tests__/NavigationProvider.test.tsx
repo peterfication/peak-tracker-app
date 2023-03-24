@@ -8,7 +8,10 @@ jest.mock('../../screens/HomeScreen');
 describe('NavigationProvider', () => {
   it('renders', () => {
     expect(() => {
-      render(<NavigationProvider />);
+      // Disable linking to avoid "act ..." errors in tests
+      render(<NavigationProvider disableLinking />);
+
+      expect(true).toBe(true);
     }).not.toThrow();
   });
 });

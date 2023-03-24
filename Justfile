@@ -25,6 +25,10 @@ lint:
 lint-fix:
   yarn lint --fix
 
+# Open a deep link in the iOS simulator (url should be like com.peak-tracker://...)
+open-deep-link url:
+  xcrun simctl openurl booted {{url}}
+
 # Install iOS Cocoa Pods
 pod-install:
   (cd ios && pod install)

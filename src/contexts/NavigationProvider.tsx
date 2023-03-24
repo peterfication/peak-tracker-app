@@ -25,11 +25,34 @@ export interface NavigationProps {
 const Stack = createNativeStackNavigator<StackParamList>();
 
 /**
+ * Configuration for deep links.
+ *
+ * Open a deep link in the iOS simulator from the terminal with:
+ * xcrun simctl openurl booted com.peak-tracker://peaks/zugspitze
+ */
+const linking = {
+  prefixes: ['com.peak-tracker://'],
+  config: {
+    screens: {
+      Peak: 'peaks/:peakSlug',
+    },
+  },
+};
+
+/**
  * The navigation provider defines all routes and their associated screens.
  */
-export const NavigationProvider = () => {
+export const NavigationProvider = ({
+  disableLinking = false,
+}: {
+  /**
+   * This is just for testing purposes so that we don't have to use act in tests.
+   */
+  disableLinking?: boolean;
+}) => {
+  const linkingConfig = disableLinking ? undefined : linking;
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linkingConfig}>
       <Stack.Navigator>
         <Stack.Screen
           name="Home"

@@ -44,6 +44,7 @@ msys
 nsurl
 okhttp
 ondevice
+openurl
 peaktracker
 posix
 preact
@@ -53,6 +54,7 @@ recrawl
 redbox
 sbmodern
 setlocal
+simctl
 squareup
 subview
 subviews
@@ -63,4 +65,6 @@ typecheck
 typeof
 xcconfig
 xcodeproj
+xcrun
 xctest
+zugspitze
