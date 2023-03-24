@@ -58,6 +58,7 @@
       <string>com.peak-tracker</string>
       <key>CFBundleURLSchemes</key>
       <array>
+        <string>com.peak-tracker</string>
         <string>com.peak-tracker.auth</string>
       </array>
     </dict>

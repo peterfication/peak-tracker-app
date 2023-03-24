@@ -39,7 +39,7 @@ export const HomeScreen = ({
 
   console.log({ data, loading, error });
 
-  const tempPeakSlug = 'zugspitze'; // cspell:disable-line
+  const tempPeakSlug = 'zugspitze';
 
   return (
     <View flex paddingH-25 paddingT-120>
