@@ -3,6 +3,7 @@ const path = require('path');
 const transformIgnorePatternsPackages = [
   '(jest-)?@?react-native',
   '@react-native(-community)?',
+  '@react-navigation',
   'react-native-ui-lib',
   // The following packages are needed for the Storybook import to
   // work when testing App.tsx

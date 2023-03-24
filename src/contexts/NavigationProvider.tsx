@@ -13,6 +13,10 @@ export type StackParamList = {
   Peak: { peakSlug?: string };
 };
 
+/**
+ * We define the navigation props here globally, so that screens only need to
+ * import this interface and not the types needed to construct it.
+ */
 export interface NavigationProps {
   Home: NativeStackScreenProps<StackParamList, 'Home'>;
   Peak: NativeStackScreenProps<StackParamList, 'Peak'>;
@@ -20,6 +24,9 @@ export interface NavigationProps {
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
+/**
+ * The navigation provider defines all routes and their associated screens.
+ */
 export const NavigationProvider = () => {
   return (
     <NavigationContainer>

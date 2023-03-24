@@ -1,12 +1,17 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
+import { NavigationProps } from '@app/contexts/NavigationProvider';
 import { HomeScreen } from '@app/screens/HomeScreen';
 
 jest.mock('../../hooks/useAuth');
 
 describe('HomeScreen', () => {
   const mockedLogout = jest.fn();
+
+  const mockedNavigation = {
+    navigate: jest.fn(),
+  } as unknown as NavigationProps['Home']['navigation'];
 
   const useGetPeaksQueryResult = {
     data: undefined,
@@ -21,7 +26,8 @@ describe('HomeScreen', () => {
   it('should render the HomeScreen component', () => {
     render(
       <HomeScreen
-        logout={jest.fn()}
+        logout={mockedLogout}
+        navigation={mockedNavigation}
         useGetPeaksQueryResult={useGetPeaksQueryResult}
       />,
     );
@@ -34,6 +40,7 @@ describe('HomeScreen', () => {
     render(
       <HomeScreen
         logout={mockedLogout}
+        navigation={mockedNavigation}
         useGetPeaksQueryResult={useGetPeaksQueryResult}
       />,
     );

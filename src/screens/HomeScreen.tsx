@@ -10,12 +10,14 @@ import {
 } from '@app/graphql/generated';
 
 export const HomeScreenWrapper = () => {
+  const navigation = useNavigation<NavigationProps['Home']['navigation']>();
   const { logout } = useContext(AuthContext);
   const useGetPeaksQueryResult = useGetPeaksQuery();
 
   return (
     <HomeScreen
       logout={logout}
+      navigation={navigation}
       useGetPeaksQueryResult={useGetPeaksQueryResult}
     />
   );
@@ -23,15 +25,16 @@ export const HomeScreenWrapper = () => {
 
 export const HomeScreen = ({
   logout,
+  navigation,
   useGetPeaksQueryResult,
 }: {
   logout: () => Promise<void>;
+  navigation: NavigationProps['Home']['navigation'];
   useGetPeaksQueryResult: Pick<
     GetPeaksQueryHookResult,
     'data' | 'loading' | 'error'
   >;
 }) => {
-  const navigation = useNavigation<NavigationProps['Home']['navigation']>();
   const { data, loading, error } = useGetPeaksQueryResult;
 
   console.log({ data, loading, error });
