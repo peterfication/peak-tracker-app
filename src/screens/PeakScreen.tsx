@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Text, View } from 'react-native-ui-lib';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { NavigationProps } from '../../App';
+import { NavigationProps } from '@app/contexts/NavigationProvider';
 
 export const PeakScreenWrapper = () => {
   return <PeakScreen />;

@@ -3,12 +3,11 @@ import { Button, Text, View } from 'react-native-ui-lib';
 import { useNavigation } from '@react-navigation/native';
 
 import { AuthContext } from '@app/contexts/AuthContext';
+import { NavigationProps } from '@app/contexts/NavigationProvider';
 import {
   GetPeaksQueryHookResult,
   useGetPeaksQuery,
 } from '@app/graphql/generated';
-
-import { NavigationProps } from '../../App';
 
 export const HomeScreenWrapper = () => {
   const { logout } = useContext(AuthContext);
