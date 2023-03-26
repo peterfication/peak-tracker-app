@@ -53,14 +53,16 @@ export const shouldRefresh = (
   authState: MaybeAuthState,
   authLoading: boolean | undefined,
 ): boolean => {
-  // If the auth state is not present yet, we don't want to trigger a refresh
-  if (!isAuthState(authState)) {
-    return false;
-  }
-
-  // If the auth state is present, but the refresh token is null, we don't
-  // want to trigger a refresh.
-  if (authState.refreshToken === null) {
+  if (
+    // If the auth state is not present yet, we don't want to trigger a refresh
+    !isAuthState(authState) ||
+    // If the auth state is present, but the refresh token is null, we don't
+    // want to trigger a refresh.
+    authState.refreshToken === null ||
+    // If the auth state is present, but the authLoading is true, we don't
+    // want to trigger another refresh.
+    authLoading
+  ) {
     return false;
   }
 
@@ -68,12 +70,6 @@ export const shouldRefresh = (
   // want to trigger a refresh just to be sure
   if (authLoading === undefined) {
     return true;
-  }
-
-  // If the auth state is present, but the authLoading is true, we don't
-  // want to trigger another refresh.
-  if (authLoading) {
-    return false;
   }
 
   // If the auth state is expired, we want to refresh it.
