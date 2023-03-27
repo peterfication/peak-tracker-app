@@ -16,9 +16,13 @@ type AuthConfiguration = Parameters<typeof RNAuthorize>[0];
 /**
  * The common config for both the production and localhost config.
  */
-const configBase: Pick<AuthConfiguration, 'redirectUrl' | 'scopes'> = {
+const configBase: Pick<
+  AuthConfiguration,
+  'redirectUrl' | 'scopes' | 'iosPrefersEphemeralSession'
+> = {
   redirectUrl: 'com.peak-tracker.auth://callback/',
   scopes: ['openid'],
+  iosPrefersEphemeralSession: true,
 };
 
 /**

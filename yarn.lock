@@ -5676,7 +5676,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-native: 0.71.4
-    react-native-app-auth: ^6.4.3
+    react-native-app-auth: ^v7.0.0-rc2
     react-native-dotenv: ^3.4.8
     react-native-encrypted-storage: ^4.0.3
     react-native-gesture-handler: ^2.9.0
@@ -14960,15 +14960,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-app-auth@npm:^6.4.3":
-  version: 6.4.3
-  resolution: "react-native-app-auth@npm:6.4.3"
+"react-native-app-auth@npm:^v7.0.0-rc2":
+  version: 7.0.0-rc2
+  resolution: "react-native-app-auth@npm:7.0.0-rc2"
   dependencies:
     invariant: 2.2.4
     react-native-base64: 0.0.2
   peerDependencies:
     react-native: ">=0.63.0"
-  checksum: 5edf1e3b390d4feafa7d1f7c2488564c130ef9625283e83e803d896832494da121e032d61b2be062ed1be8bb0506e7176c8b3fdd30c0dd3152aa6ae1b97e3a32
+  checksum: 0d821a308e7da59ac508039a362538a301f56a8b3f0cdab389aa28677e99d195b044e7d2078c51663e5e9dd59277c183d194048e40a2fced99eb660594a68030
   languageName: node
   linkType: hard
 
