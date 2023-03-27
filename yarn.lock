@@ -4664,9 +4664,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react-native@npm:6.5.0-rc.0":
-  version: 6.5.0-rc.0
-  resolution: "@storybook/react-native@npm:6.5.0-rc.0"
+"@storybook/react-native@npm:6.5.0-rc.11":
+  version: 6.5.0-rc.11
+  resolution: "@storybook/react-native@npm:6.5.0-rc.11"
   dependencies:
     "@emotion/core": ^10.0.20
     "@emotion/native": ^10.0.14
@@ -4681,8 +4681,10 @@ __metadata:
     "@storybook/preview-web": ^6.5.14
     chokidar: ^3.5.1
     commander: ^8.2.0
+    deepmerge: ^4.3.0
     emotion-theming: ^10.0.19
     glob: ^7.1.7
+    jotai: ^2.0.2
     prettier: ^2.4.1
     react-native-swipe-gestures: ^1.0.5
     util: ^0.12.4
@@ -4694,7 +4696,7 @@ __metadata:
   bin:
     sb-rn-get-stories: bin/get-stories.js
     sb-rn-watcher: bin/watcher.js
-  checksum: b2340ea431c4e393b978c107b70902564616506826ac52322ec0d5f32b1ee3575461650988e1755c6bd48c509c8a1892ae21a800e45dcac3cb6e5181904666ac
+  checksum: ddb1239f9055be636645274a72530a2383db68c79d5c64bbb1694cd92c8c97e1fb34b1cb191b60e84cd2fe8a60320d49edb20dbc2c2f5fe26296e60b0a5e5ec6
   languageName: node
   linkType: hard
 
@@ -5647,7 +5649,7 @@ __metadata:
     "@storybook/addon-controls": ^6.5.14
     "@storybook/addon-ondevice-actions": 6.5.0-rc.0
     "@storybook/addon-ondevice-controls": 6.5.0-rc.0
-    "@storybook/react-native": 6.5.0-rc.0
+    "@storybook/react-native": 6.5.0-rc.11
     "@testing-library/react-hooks": ^8.0.1
     "@testing-library/react-native": ^12.0.0
     "@tsconfig/react-native": ^2.0.2
@@ -8265,6 +8267,13 @@ __metadata:
   version: 4.3.0
   resolution: "deepmerge@npm:4.3.0"
   checksum: c7980eb5c5be040b371f1df0d566473875cfabed9f672ccc177b81ba8eee5686ce2478de2f1d0076391621cbe729e5eacda397179a59ef0f68901849647db126
+  languageName: node
+  linkType: hard
+
+"deepmerge@npm:^4.3.0":
+  version: 4.3.1
+  resolution: "deepmerge@npm:4.3.1"
+  checksum: 2024c6a980a1b7128084170c4cf56b0fd58a63f2da1660dcfe977415f27b17dbe5888668b59d0b063753f3220719d5e400b7f113609489c90160bb9a5518d052
   languageName: node
   linkType: hard
 
@@ -12174,6 +12183,18 @@ __metadata:
   version: 4.13.1
   resolution: "jose@npm:4.13.1"
   checksum: 89be959573beee69bd443493887d78799fd42340b45afa2c6681beda30314bcdfa5575f6977203c199e4c3e0ec2fc18d3c94745e7f0d59db51dedfae0efee63d
+  languageName: node
+  linkType: hard
+
+"jotai@npm:^2.0.2":
+  version: 2.0.3
+  resolution: "jotai@npm:2.0.3"
+  peerDependencies:
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    react:
+      optional: true
+  checksum: 3ad1d6a9b7e40a8dd8cdc423441164c25852a328c98806ed0e2a283a4e07af661f4a88b50528367aeae582932171bc8979e45cbc9023af30b9f4a348faeed567
   languageName: node
   linkType: hard
 
