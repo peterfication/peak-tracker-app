@@ -31,7 +31,7 @@
     "graphql": "^16.6.0",
     "react": "18.2.0",
     "react-native": "0.71.4",
-    "react-native-app-auth": "^6.4.3",
+    "react-native-app-auth": "^v7.0.0-rc2",
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-reanimated": "^3.0.2",

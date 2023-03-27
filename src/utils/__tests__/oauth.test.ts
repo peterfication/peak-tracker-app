@@ -20,6 +20,7 @@ describe('authorize', () => {
       expect(RNAuthorize).toHaveBeenCalledWith({
         redirectUrl: 'com.peak-tracker.auth://callback/',
         scopes: ['openid'],
+        iosPrefersEphemeralSession: true,
         issuer: 'http://localhost:3000',
         clientId: 'local-abc-123-app',
       });
@@ -35,6 +36,7 @@ describe('refresh', () => {
         {
           redirectUrl: 'com.peak-tracker.auth://callback/',
           scopes: ['openid'],
+          iosPrefersEphemeralSession: true,
           issuer: 'http://localhost:3000',
           clientId: 'local-abc-123-app',
         },
@@ -54,6 +56,7 @@ describe('logout', () => {
         {
           redirectUrl: 'com.peak-tracker.auth://callback/',
           scopes: ['openid'],
+          iosPrefersEphemeralSession: true,
           issuer: 'http://localhost:3000',
           clientId: 'local-abc-123-app',
         },
@@ -74,6 +77,7 @@ describe('revoke', () => {
         {
           redirectUrl: 'com.peak-tracker.auth://callback/',
           scopes: ['openid'],
+          iosPrefersEphemeralSession: true,
           issuer: 'http://localhost:3000',
           clientId: 'local-abc-123-app',
         },
