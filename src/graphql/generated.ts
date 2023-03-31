@@ -144,19 +144,25 @@ export type GetPeaksQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetPeaksQuery = { __typename?: 'RootQueryType', peaks?: { __typename?: 'PeakConnection', edges?: Array<{ __typename?: 'PeakEdge', node?: { __typename?: 'Peak', id: string, name: string } | null } | null> | null } | null };
 
+export type PeakListPeakFragment = { __typename?: 'Peak', id: string, name: string };
 
+export const PeakListPeakFragmentDoc = gql`
+    fragment PeakListPeak on Peak {
+  id
+  name
+}
+    `;
 export const GetPeaksDocument = gql`
     query GetPeaks {
   peaks {
     edges {
       node {
-        id
-        name
+        ...PeakListPeak
       }
     }
   }
 }
-    `;
+    ${PeakListPeakFragmentDoc}`;
 
 /**
  * __useGetPeaksQuery__
