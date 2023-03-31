@@ -18,15 +18,15 @@ export enum AuthLoadingState {
    * On startup, the auth state is unknown, hence we don't know yet if we need to
    * refresh it.
    */
-  Init = 'init',
+  Init = 'INIT',
   /**
    * An auth state refresh is in progress.
    */
-  Loading = 'loading',
+  Loading = 'LOADING',
   /**
    * No auth state refresh is in progress.
    */
-  NotLoading = 'notLoading',
+  NotLoading = 'NOT_LOADING',
 }
 
 /**
