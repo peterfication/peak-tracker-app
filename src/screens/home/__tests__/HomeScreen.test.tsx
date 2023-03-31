@@ -1,9 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import { HomeScreen } from '@app/screens/HomeScreen';
-
-jest.mock('../../hooks/useAuth');
+import { HomeScreen } from '@app/screens';
 
 describe('HomeScreen', () => {
   afterEach(() => {

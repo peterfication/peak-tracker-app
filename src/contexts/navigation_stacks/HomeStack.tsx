@@ -2,7 +2,7 @@ import React from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { HomeScreenWrapper } from '@app/screens/HomeScreen';
+import { HomeScreenWrapper } from '@app/screens';
 
 // This can't be an interface because it's used as a generic.
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

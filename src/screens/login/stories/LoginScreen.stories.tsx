@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory } from '@storybook/react-native';
 import { Alert } from 'react-native';
 
-import { LoginScreen } from '@app/screens/LoginScreen';
+import { LoginScreen } from '@app/screens';
 
 const LoginScreenMeta = {
   title: 'Login Screen',

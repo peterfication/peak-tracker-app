@@ -47,8 +47,8 @@ try {
 
 const getStories = () => {
   return {
-    './src/screens/stories/LoginLoadingScreen.stories.tsx': require('../src/screens/stories/LoginLoadingScreen.stories.tsx'),
-    './src/screens/stories/LoginScreen.stories.tsx': require('../src/screens/stories/LoginScreen.stories.tsx'),
+    './src/screens/login/stories/LoginLoadingScreen.stories.tsx': require('../src/screens/login/stories/LoginLoadingScreen.stories.tsx'),
+    './src/screens/login/stories/LoginScreen.stories.tsx': require('../src/screens/login/stories/LoginScreen.stories.tsx'),
   };
 };
 

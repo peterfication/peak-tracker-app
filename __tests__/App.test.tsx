@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 
 import { App } from '../App';
 
-jest.mock('../src/hooks/useAuth', () => ({
+jest.mock('@app/hooks/useAuth', () => ({
   useAuth: () => ({
     login: jest.fn(),
     logout: jest.fn(),

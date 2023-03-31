@@ -1,4 +1,4 @@
-import { LoginLoadingScreen } from '@app/screens/LoginScreen';
+import { LoginLoadingScreen } from '@app/screens';
 
 const LoginLoadingScreenMeta = {
   title: 'Login Loading Screen',

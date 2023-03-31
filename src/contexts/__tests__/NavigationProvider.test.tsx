@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 
 import { NavigationProvider } from '@app/contexts/NavigationProvider';
 
-jest.mock('../../screens/HomeScreen');
+jest.mock('@app/screens/home/HomeScreen');
 
 describe('NavigationProvider', () => {
   it('renders', () => {

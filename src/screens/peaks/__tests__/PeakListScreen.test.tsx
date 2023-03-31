@@ -3,9 +3,7 @@ import { ApolloError } from '@apollo/client';
 import { render, screen } from '@testing-library/react-native';
 
 import { PeaksNavigationProps } from '@app/contexts/NavigationProvider';
-import { PeakListScreen } from '@app/screens/PeakListScreen';
-
-jest.mock('../../hooks/useAuth');
+import { PeakListScreen } from '@app/screens';
 
 describe('PeakListScreen', () => {
   const mockedNavigation = {
