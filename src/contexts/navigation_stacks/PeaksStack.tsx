@@ -2,8 +2,7 @@ import React from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { PeakListScreenWrapper } from '@app/screens/PeakListScreen';
-import { PeakScreenWrapper } from '@app/screens/PeakScreen';
+import { PeakScreenWrapper, PeakListScreenWrapper } from '@app/screens';
 
 // This can't be an interface because it's used as a generic.
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

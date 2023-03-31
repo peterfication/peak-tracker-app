@@ -3,7 +3,7 @@ import { ApolloLink, execute, gql } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { render } from '@testing-library/react-native';
 
-import { AuthStateMode, useAuthState } from '@app/hooks/useAuthState';
+import { AuthStateMode, useAuthState } from '@app/hooks';
 
 import {
   ApolloProvider,

@@ -1,5 +1,5 @@
-import { AuthLoadingState } from '@app/hooks/useAuth';
 import {
+  AuthLoadingState,
   getIsAuthenticated,
   isExpired,
   performLogin,
@@ -7,11 +7,12 @@ import {
   shouldRefresh,
   shouldRefreshComplex,
   updateRefreshToken,
-} from '@app/hooks/useAuth.helpers';
-import { AuthState, AuthStateMode } from '@app/hooks/useAuthState';
+  AuthState,
+  AuthStateMode,
+} from '@app/hooks';
 import { authorize, refresh, revoke } from '@app/utils/oauth';
 
-jest.mock('../../utils/oauth');
+jest.mock('@app/utils/oauth');
 const mockedAuthorize = jest.mocked(authorize);
 const mockedRefresh = jest.mocked(refresh);
 const mockedRevoke = jest.mocked(revoke);

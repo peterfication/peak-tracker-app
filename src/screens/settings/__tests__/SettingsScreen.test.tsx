@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { SettingsScreen } from '@app/screens/SettingsScreen';
+import { SettingsScreen } from '@app/screens';
 
-jest.mock('../../hooks/useAuth');
+jest.mock('@app/hooks/useAuth');
 
 describe('SettingsScreen', () => {
   const mockedLogout = jest.fn();

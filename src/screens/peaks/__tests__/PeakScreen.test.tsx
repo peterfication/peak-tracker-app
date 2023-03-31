@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import { PeaksNavigationProps } from '@app/contexts/NavigationProvider';
-import { PeakScreen } from '@app/screens/PeakScreen';
+import { PeaksNavigationProps } from '@app/contexts';
+import { PeakScreen } from '@app/screens';
 
 describe('PeakScreen', () => {
   const mockedRoute = {

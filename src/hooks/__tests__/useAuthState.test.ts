@@ -4,10 +4,10 @@ import {
   AuthState,
   AuthStateMode,
   useAuthState,
-} from '@app/hooks/useAuthState';
-import { useEncryptedStorage } from '@app/hooks/useEncryptedStorage';
+  useEncryptedStorage,
+} from '@app/hooks';
 
-jest.mock('../useEncryptedStorage');
+jest.mock('@app/hooks/useEncryptedStorage');
 const mockedUseEncryptedStorage = jest.mocked(useEncryptedStorage);
 
 describe('useAuthState', () => {

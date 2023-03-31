@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-import { useEncryptedStorage } from '@app/hooks/useEncryptedStorage';
+import { useEncryptedStorage } from '@app/hooks';
 
 jest.mock('react-native-encrypted-storage');
 const mockedSetItem = jest.mocked(EncryptedStorage.setItem);

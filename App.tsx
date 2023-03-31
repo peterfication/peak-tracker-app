@@ -1,9 +1,11 @@
 import React from 'react';
 import { STORYBOOK_ENABLED } from '@env';
 
-import { ApolloProvider } from '@app/contexts/ApolloProvider';
-import { AuthProvider } from '@app/contexts/AuthContext';
-import { NavigationProvider } from '@app/contexts/NavigationProvider';
+import {
+  ApolloProvider,
+  AuthProvider,
+  NavigationProvider,
+} from '@app/contexts';
 
 import Storybook from './.storybook/Storybook';
 

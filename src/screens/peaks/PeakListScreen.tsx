@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'react-native-ui-lib';
 
-import { PeaksNavigationProps } from '@app/contexts/NavigationProvider';
+import { PeaksNavigationProps } from '@app/contexts';
 import {
   GetPeaksQueryHookResult,
   useGetPeaksQuery,
