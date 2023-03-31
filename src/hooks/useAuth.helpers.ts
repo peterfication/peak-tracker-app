@@ -1,6 +1,7 @@
 import { AuthLoadingState } from '@app/hooks/useAuth';
 import {
   AuthState,
+  AuthStateMode,
   isAuthState,
   MaybeAuthState,
 } from '@app/hooks/useAuthState';
@@ -14,20 +15,18 @@ import {
 /**
  * This function is used to determine if the user is authenticated.
  *
- * It returns null if the auth state is not present yet. This is useful
- * to prevent the app from rendering the LoginScreen shortly before the
+ * It returns AuthStateMode.Loading if the auth state is not present yet. This is useful
+ * to prevent the app from rendering the LoginScreen shortly before the possibly
  * authenticated auth state is retrieved.
  */
 export const getIsAuthenticated = (
   authState: MaybeAuthState,
-): boolean | null => {
-  // Undefined means that the auth state is not present yet.
-  if (authState === undefined) {
-    return null;
+): boolean | AuthStateMode.Loading => {
+  if (authState === AuthStateMode.Loading) {
+    return AuthStateMode.Loading;
   }
 
-  // Null means that the user is not authenticated.
-  return authState !== null;
+  return authState !== AuthStateMode.NotAuthenticated;
 };
 
 /**
