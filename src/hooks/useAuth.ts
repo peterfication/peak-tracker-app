@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { AuthContextInterface } from '@app/contexts/AuthContext';
+import { AuthContextInterface } from '@app/contexts';
 import {
   getIsAuthenticated,
   performLogin,
   performLogout,
-} from '@app/hooks/useAuth.helpers';
-import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
-import { MaybeAuthState, useAuthState } from '@app/hooks/useAuthState';
+  effectUpdateRefreshToken,
+  MaybeAuthState,
+  useAuthState,
+} from '@app/hooks';
 
 /**
  *

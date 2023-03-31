@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import { NavigationProvider } from '@app/contexts/NavigationProvider';
+import { NavigationProvider } from '@app/contexts';
 
 jest.mock('@app/screens/home/HomeScreen');
 

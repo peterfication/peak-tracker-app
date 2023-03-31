@@ -1,14 +1,15 @@
 import React from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { useAuth } from '@app/hooks/useAuth';
 import {
+  useAuth,
   getIsAuthenticated,
   performLogin,
   performLogout,
-} from '@app/hooks/useAuth.helpers';
-import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
-import { AuthState, useAuthState } from '@app/hooks/useAuthState';
+  effectUpdateRefreshToken,
+  AuthState,
+  useAuthState,
+} from '@app/hooks';
 
 jest.mock('@app/hooks/useAuthState');
 const mockedUseAuthState = jest.mocked(useAuthState);

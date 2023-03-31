@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, Text, View } from 'react-native-ui-lib';
 
-import { AuthContext } from '@app/contexts/AuthContext';
+import { AuthContext } from '@app/contexts';
 
 export const SettingsScreenWrapper = () => {
   const { logout } = useContext(AuthContext);

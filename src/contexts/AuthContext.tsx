@@ -1,7 +1,6 @@
 import React, { createContext, useMemo } from 'react';
 
-import { useAuth } from '@app/hooks/useAuth';
-import { AuthStateMode } from '@app/hooks/useAuthState';
+import { useAuth, AuthStateMode } from '@app/hooks';
 import { LoginLoadingScreen, LoginScreen } from '@app/screens';
 
 export interface AuthContextInterface {

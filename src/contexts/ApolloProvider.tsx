@@ -9,7 +9,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { ErrorLink, onError } from '@apollo/client/link/error';
 
-import { useAuthState } from '@app/hooks/useAuthState';
+import { useAuthState } from '@app/hooks';
 
 const GRAPHQL_URL = 'https://peak-tracker.com/gql';
 

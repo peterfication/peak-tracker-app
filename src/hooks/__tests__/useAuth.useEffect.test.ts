@@ -1,7 +1,10 @@
-import { AuthLoadingState } from '@app/hooks/useAuth';
-import { shouldRefresh, updateRefreshToken } from '@app/hooks/useAuth.helpers';
-import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
-import { AuthState } from '@app/hooks/useAuthState';
+import {
+  AuthLoadingState,
+  shouldRefresh,
+  updateRefreshToken,
+  effectUpdateRefreshToken,
+  AuthState,
+} from '@app/hooks';
 
 jest.mock('@app/hooks/useAuth.helpers');
 const mockedShouldRefresh = jest.mocked(shouldRefresh);
