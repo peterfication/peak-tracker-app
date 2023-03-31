@@ -14,13 +14,22 @@ export interface AuthState {
   refreshToken: string | null;
   expiresAt: string;
 }
+
+export enum AuthStateMode {
+  /**
+   * This mode means that on startup, the auth state is not loaded yet.
+   */
+  Loading = 'loading',
+  /**
+   * This mode means that no auth state is available and the user is not authenticated.
+   */
+  NotAuthenticated = 'notAuthenticated',
+}
+
 /**
- * This state is used to store the auth state in memory.
- *
- * Undefined means the initial state when nothing is loaded yet.
- * Null means no auth state is available and the user is not authenticated.
+ * This state represents the state of the auth information.
  */
-export type MaybeAuthState = AuthState | null | undefined;
+export type MaybeAuthState = AuthState | AuthStateMode;
 
 /**
  * Type guard to check if the auth state is an AuthState.
@@ -42,17 +51,19 @@ export const isAuthState = (authState: unknown): authState is AuthState =>
  */
 const parseAuthStateFromStorage = (
   authStateFromStorageString: string | null,
-): AuthState | null => {
+): AuthState | AuthStateMode.NotAuthenticated => {
   if (
     authStateFromStorageString === null ||
     authStateFromStorageString === ''
   ) {
-    return null;
+    return AuthStateMode.NotAuthenticated;
   }
 
   const parsedAuthState = JSON.parse(authStateFromStorageString) as unknown;
 
-  return isAuthState(parsedAuthState) ? parsedAuthState : null;
+  return isAuthState(parsedAuthState)
+    ? parsedAuthState
+    : AuthStateMode.NotAuthenticated;
 };
 
 interface UseAuthStateReturnType {
@@ -68,7 +79,7 @@ interface UseAuthStateReturnType {
    *
    * @returns The auth state or undefined if it doesn't exist.
    */
-  getAuthState: () => Promise<AuthState | null>;
+  getAuthState: () => Promise<AuthState | AuthStateMode.NotAuthenticated>;
   /**
    * This method is used to get the id token from the auth state without triggering
    * re-renders in case the ID token changes. This is needed in the ApolloProvider so
@@ -89,7 +100,9 @@ interface UseAuthStateReturnType {
 export const useAuthState = (): UseAuthStateReturnType => {
   const { setItem, getItem } = useEncryptedStorage();
 
-  const [authState, setAuthState] = useState<MaybeAuthState>(undefined);
+  const [authState, setAuthState] = useState<MaybeAuthState>(
+    AuthStateMode.Loading,
+  );
 
   const storeAuthState = useCallback(
     async (newAuthState: AuthState) => {
@@ -99,7 +112,9 @@ export const useAuthState = (): UseAuthStateReturnType => {
     [setItem],
   );
 
-  const getAuthState = useCallback(async (): Promise<AuthState | null> => {
+  const getAuthState = useCallback(async (): Promise<
+    AuthState | AuthStateMode.NotAuthenticated
+  > => {
     try {
       const authStateFromStorageString = await getItem('authState');
       const authStateFromStorage = parseAuthStateFromStorage(
@@ -115,8 +130,8 @@ export const useAuthState = (): UseAuthStateReturnType => {
       // we remove it from the encrypted storage.
       await setItem('authState', '');
 
-      setAuthState(null);
-      return null;
+      setAuthState(AuthStateMode.NotAuthenticated);
+      return AuthStateMode.NotAuthenticated;
     }
   }, [getItem, setItem]);
 
@@ -137,7 +152,7 @@ export const useAuthState = (): UseAuthStateReturnType => {
   }, [getItem]);
 
   const removeAuthState = useCallback(async () => {
-    setAuthState(null);
+    setAuthState(AuthStateMode.NotAuthenticated);
     await setItem('authState', '');
   }, [setItem]);
 

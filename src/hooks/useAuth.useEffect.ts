@@ -12,7 +12,7 @@ const REFRESH_CHECK_INTERVAL = 2 * 1000; // eslint-disable-line no-magic-numbers
  * for the auth state.
  */
 export const effectUpdateRefreshToken = (
-  authState: MaybeAuthState | null,
+  authState: MaybeAuthState,
   authLoading: AuthLoadingState,
   setAuthLoading: (authLoading: AuthLoadingState) => void,
   storeAuthState: (authState: AuthState) => Promise<void>,

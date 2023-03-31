@@ -8,7 +8,7 @@ import {
   shouldRefreshComplex,
   updateRefreshToken,
 } from '@app/hooks/useAuth.helpers';
-import { AuthState } from '@app/hooks/useAuthState';
+import { AuthState, AuthStateMode } from '@app/hooks/useAuthState';
 import { authorize, refresh, revoke } from '@app/utils/oauth';
 
 jest.mock('../../utils/oauth');
@@ -18,11 +18,13 @@ const mockedRevoke = jest.mocked(revoke);
 
 describe('getIsAuthenticated', () => {
   it('should return null for an undefined authState', () => {
-    expect(getIsAuthenticated(undefined)).toBeNull();
+    expect(getIsAuthenticated(AuthStateMode.Loading)).toBe(
+      AuthStateMode.Loading,
+    );
   });
 
   it('should return false for null authState', () => {
-    expect(getIsAuthenticated(null)).toBe(false);
+    expect(getIsAuthenticated(AuthStateMode.NotAuthenticated)).toBe(false);
   });
 
   it('should return true for authState with a defined accessToken', () => {
@@ -59,13 +61,16 @@ describe('shouldRefresh', () => {
     expiresAt: new Date(Date.now() + 60 * 1000).toISOString(),
   };
 
-  it('should return false if authState is undefined', () => {
-    const result = shouldRefresh(undefined, AuthLoadingState.Init);
+  it('should return false if authState is loading', () => {
+    const result = shouldRefresh(AuthStateMode.Loading, AuthLoadingState.Init);
     expect(result).toBe(false);
   });
 
-  it('should return false if authState is null', () => {
-    const result = shouldRefresh(null, AuthLoadingState.Init);
+  it('should return false if authState is not authenticated', () => {
+    const result = shouldRefresh(
+      AuthStateMode.NotAuthenticated,
+      AuthLoadingState.Init,
+    );
     expect(result).toBe(false);
   });
 
@@ -117,13 +122,19 @@ describe('shouldRefreshComplex', () => {
     expiresAt: new Date(Date.now() + 60 * 1000).toISOString(),
   };
 
-  it('should return false if authState is undefined', () => {
-    const result = shouldRefreshComplex(undefined, AuthLoadingState.Init);
+  it('should return false if authState is loading', () => {
+    const result = shouldRefreshComplex(
+      AuthStateMode.Loading,
+      AuthLoadingState.Init,
+    );
     expect(result).toBe(false);
   });
 
-  it('should return false if authState is null', () => {
-    const result = shouldRefreshComplex(null, AuthLoadingState.Init);
+  it('should return false if authState is not authenticated', () => {
+    const result = shouldRefreshComplex(
+      AuthStateMode.NotAuthenticated,
+      AuthLoadingState.Init,
+    );
     expect(result).toBe(false);
   });
 
@@ -181,7 +192,7 @@ describe('updateRefreshToken', () => {
 
   it('should remove auth state if authState is not valid', async () => {
     await updateRefreshToken(
-      null,
+      AuthStateMode.NotAuthenticated,
       setAuthLoading,
       storeAuthState,
       removeAuthState,

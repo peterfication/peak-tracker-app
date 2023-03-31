@@ -3,7 +3,7 @@ import { ApolloLink, execute, gql } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { render } from '@testing-library/react-native';
 
-import { useAuthState } from '@app/hooks/useAuthState';
+import { AuthStateMode, useAuthState } from '@app/hooks/useAuthState';
 
 import {
   ApolloProvider,
@@ -26,7 +26,7 @@ describe('ApolloProvider', () => {
   beforeEach(() => {
     mockedUseAuthState.mockReturnValue({
       getIdToken: mockGetIdToken,
-      authState: null,
+      authState: AuthStateMode.Loading,
       storeAuthState: jest.fn(),
       getAuthState: jest.fn(),
       removeAuthState: jest.fn(),

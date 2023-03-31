@@ -4,23 +4,26 @@ import { View } from 'react-native-ui-lib';
 
 import { AuthProvider } from '@app/contexts/AuthContext';
 import { AuthLoadingState, useAuth } from '@app/hooks/useAuth';
+import { AuthStateMode } from '@app/hooks/useAuthState';
 
 jest.mock('@app/hooks/useAuth');
 const mockedUseAuth = jest.mocked(useAuth);
 
 describe('AuthProvider', () => {
-  const setIsAuthenticated = (isAuthenticated: boolean | null) =>
+  const setIsAuthenticated = (
+    isAuthenticated: boolean | AuthStateMode.Loading,
+  ) =>
     mockedUseAuth.mockReturnValue({
       login: jest.fn(),
       logout: jest.fn(),
-      authState: undefined,
+      authState: AuthStateMode.Loading,
       authLoading: AuthLoadingState.NotLoading,
       isAuthenticated,
     });
 
-  describe('when isAuthenticated is null', () => {
+  describe('when isAuthenticated is AuthStateMode.Loading', () => {
     beforeEach(() => {
-      setIsAuthenticated(null);
+      setIsAuthenticated(AuthStateMode.Loading);
     });
 
     it('renders the LoginLoadingScreen if', () => {

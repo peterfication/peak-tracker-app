@@ -1,6 +1,10 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { AuthState, useAuthState } from '@app/hooks/useAuthState';
+import {
+  AuthState,
+  AuthStateMode,
+  useAuthState,
+} from '@app/hooks/useAuthState';
 import { useEncryptedStorage } from '@app/hooks/useEncryptedStorage';
 
 jest.mock('../useEncryptedStorage');
@@ -70,7 +74,7 @@ describe('useAuthState', () => {
       });
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
-      expect(result.current.authState).toBeNull();
+      expect(result.current.authState).toBe(AuthStateMode.NotAuthenticated);
     });
 
     it('should return null if auth state does not exist', async () => {
@@ -83,7 +87,7 @@ describe('useAuthState', () => {
       });
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
-      expect(result.current.authState).toBeNull();
+      expect(result.current.authState).toBe(AuthStateMode.NotAuthenticated);
     });
 
     it('should handle an empty string in storage', async () => {
@@ -96,7 +100,7 @@ describe('useAuthState', () => {
       });
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
-      expect(result.current.authState).toBeNull();
+      expect(result.current.authState).toBe(AuthStateMode.NotAuthenticated);
     });
 
     it('should handle bad data in the storage', async () => {
@@ -113,7 +117,7 @@ describe('useAuthState', () => {
       });
 
       expect(mockedGetItem).toHaveBeenCalledWith('authState');
-      expect(result.current.authState).toBeNull();
+      expect(result.current.authState).toBe(AuthStateMode.NotAuthenticated);
       expect(mockedSetItem).toHaveBeenCalledWith('authState', '');
 
       expect(consoleErrorMock).toHaveBeenCalledWith(
@@ -132,7 +136,7 @@ describe('useAuthState', () => {
         await result.current.removeAuthState();
       });
       expect(mockedSetItem).toHaveBeenCalledWith('authState', '');
-      expect(result.current.authState).toBeNull();
+      expect(result.current.authState).toBe(AuthStateMode.NotAuthenticated);
     });
   });
 });

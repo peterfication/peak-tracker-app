@@ -1,6 +1,7 @@
 import React, { createContext, useMemo } from 'react';
 
 import { useAuth } from '@app/hooks/useAuth';
+import { AuthStateMode } from '@app/hooks/useAuthState';
 import { LoginLoadingScreen, LoginScreen } from '@app/screens/LoginScreen';
 
 export interface AuthContextInterface {
@@ -14,7 +15,7 @@ export interface AuthContextInterface {
    * the case when the auth state is not yet set (auth state === undefined)
    * to show the user a loading screen (see LoginLoadingScreen in AuthProvider).
    */
-  isAuthenticated: boolean | null;
+  isAuthenticated: boolean | AuthStateMode.Loading;
 }
 
 /**
@@ -50,7 +51,7 @@ export const AuthProvider: AuthProviderType = ({
     [isAuthenticated, logout],
   );
 
-  if (authContextValue.isAuthenticated === null) {
+  if (authContextValue.isAuthenticated === AuthStateMode.Loading) {
     return <LoginLoadingScreen />;
   }
 
