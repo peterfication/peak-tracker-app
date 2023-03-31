@@ -8,54 +8,59 @@ module.exports = {
     'plugin:promise/recommended',
     'plugin:react/recommended',
     'plugin:testing-library/react',
-    'plugin:import/recommended',
     'plugin:jsx-a11y/recommended',
     '@react-native-community',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    // Needs to be last
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   plugins: [
     '@typescript-eslint',
-    'import',
     'jsx-a11y',
     'promise',
-    'simple-import-sort',
     'testing-library',
     'unused-imports',
+    'import',
   ],
   rules: {
-    'prettier/prettier': 0,
     '@typescript-eslint/no-empty-function': 0,
-    'import/no-unresolved': 0,
 
-    // Configure simple-import-sort
-    'simple-import-sort/exports': 'error',
-    'simple-import-sort/imports': [
+    'import/no-unresolved': ['error', { ignore: ['^@env'] }],
+    'import/order': [
       'error',
       {
-        // From https://github.com/lydell/eslint-plugin-simple-import-sort/blob/main/examples/.eslintrc.js
-        groups: [
-          // Node.js builtins. You could also generate this regex if you use a `.js` config.
-          // For example: `^(${require("module").builtinModules.join("|")})(/|$)`
-          // Note that if you use the `node:` prefix for Node.js builtins,
-          // you can avoid this complexity: You can simply use "^node:".
-          [
-            '^(assert|buffer|child_process|cluster|console|constants|crypto|dgram|dns|domain|events|fs|http|https|module|net|os|path|punycode|querystring|readline|repl|stream|string_decoder|sys|timers|tls|tty|url|util|vm|zlib|freelist|v8|process|async_hooks|http2|perf_hooks)(/.*|$)',
-          ],
-          // Packages. `react` related packages come first.
-          ['^react', '^@?\\w'],
-          // Internal packages.
-          ['^(@app)(/.*|$)'],
-          // Side effect imports.
-          ['^\\u0000'],
-          // Parent imports. Put `..` last.
-          ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-          // Other relative imports. Put same-folder imports and `.` last.
-          ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-          // Style imports.
-          ['^.+\\.s?css$'],
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: '@app/**/*',
+            group: 'internal',
+          },
         ],
+        pathGroupsExcludedImportTypes: ['type'],
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          ['sibling', 'parent'],
+          'index',
+          'unknown',
+        ],
+        'newlines-between': 'always',
+        distinctGroup: false,
+        alphabetize: {
+          /* sort in ascending order. Options: ["ignore", "asc", "desc"] */
+          order: 'asc',
+          /* ignore case. Options: [true, false] */
+          caseInsensitive: true,
+        },
       },
     ],
 
@@ -128,7 +133,10 @@ module.exports = {
     'src/graphql/schema.ts',
   ],
   settings: {
-    // See https://github.com/facebook/react-native/issues/28549#issuecomment-657249702
-    'import/ignore': ['node_modules/react-native/index\\.js$'],
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.json',
+      },
+    },
   },
 };
