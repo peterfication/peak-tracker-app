@@ -1,3 +1,4 @@
+import { AuthLoadingState } from '@app/hooks/useAuth';
 import { shouldRefresh, updateRefreshToken } from '@app/hooks/useAuth.helpers';
 import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
 import { AuthState } from '@app/hooks/useAuthState';
@@ -30,7 +31,7 @@ describe('effectUpdateRefreshToken', () => {
     it('should not call updateRefreshToken', () => {
       const clear = effectUpdateRefreshToken(
         mockedAuthState,
-        undefined,
+        AuthLoadingState.Init,
         mockedSetAuthLoading,
         mockedStoreAuthState,
         mockedRemoveAuthState,
@@ -50,7 +51,7 @@ describe('effectUpdateRefreshToken', () => {
       mockedUpdateRefreshToken.mockResolvedValueOnce();
       const clear = effectUpdateRefreshToken(
         mockedAuthState,
-        undefined,
+        AuthLoadingState.Init,
         mockedSetAuthLoading,
         mockedStoreAuthState,
         mockedRemoveAuthState,
@@ -78,7 +79,7 @@ describe('effectUpdateRefreshToken', () => {
 
         const clear = effectUpdateRefreshToken(
           mockedAuthState,
-          undefined,
+          AuthLoadingState.Init,
           mockedSetAuthLoading,
           mockedStoreAuthState,
           mockedRemoveAuthState,
@@ -102,7 +103,7 @@ describe('effectUpdateRefreshToken', () => {
 
       const clear = effectUpdateRefreshToken(
         mockedAuthState,
-        undefined,
+        AuthLoadingState.Init,
         mockedSetAuthLoading,
         mockedStoreAuthState,
         mockedRemoveAuthState,
@@ -119,7 +120,7 @@ describe('effectUpdateRefreshToken', () => {
 
       const clear = effectUpdateRefreshToken(
         mockedAuthState,
-        undefined,
+        AuthLoadingState.Init,
         mockedSetAuthLoading,
         mockedStoreAuthState,
         mockedRemoveAuthState,
@@ -145,7 +146,7 @@ describe('effectUpdateRefreshToken', () => {
           mockedUpdateRefreshToken.mockResolvedValueOnce();
           const clear = effectUpdateRefreshToken(
             mockedAuthState,
-            undefined,
+            AuthLoadingState.Init,
             mockedSetAuthLoading,
             mockedStoreAuthState,
             mockedRemoveAuthState,
@@ -167,7 +168,7 @@ describe('effectUpdateRefreshToken', () => {
         it('should call updateRefreshToken', () => {
           const clear = effectUpdateRefreshToken(
             mockedAuthState,
-            undefined,
+            AuthLoadingState.Init,
             mockedSetAuthLoading,
             mockedStoreAuthState,
             mockedRemoveAuthState,

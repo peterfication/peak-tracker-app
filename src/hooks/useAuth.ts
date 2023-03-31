@@ -10,6 +10,26 @@ import { effectUpdateRefreshToken } from '@app/hooks/useAuth.useEffect';
 import { MaybeAuthState, useAuthState } from '@app/hooks/useAuthState';
 
 /**
+ *
+ * Whether the auth state is refreshing at the moment.
+ */
+export enum AuthLoadingState {
+  /**
+   * On startup, the auth state is unknown, hence we don't know yet if we need to
+   * refresh it.
+   */
+  Init,
+  /**
+   * An auth state refresh is in progress.
+   */
+  Loading,
+  /**
+   * No auth state refresh is in progress.
+   */
+  NotLoading,
+}
+
+/**
  * The login function is not part of the AuthContextInterface because it is
  * only needed in the login screen and there it can be passed as a prop in
  * the AuthProvider.
@@ -25,10 +45,10 @@ type UseAuthReturnType = AuthContextInterface & {
   /**
    * Whether the auth state is refreshing at the moment.
    *
-   * Default is true, because we need to wait for the initial auth load
+   * Default is AuthLoadingState.Init, because we need to wait for the initial auth load
    * in useAuth.
    */
-  authLoading: boolean;
+  authLoading: AuthLoadingState;
   authState: MaybeAuthState;
 };
 
@@ -41,8 +61,8 @@ export const useAuth = (): UseAuthReturnType => {
     useAuthState();
 
   // Undefined means it's the first run
-  const [authLoading, setAuthLoading] = useState<boolean | undefined>(
-    undefined,
+  const [authLoading, setAuthLoading] = useState<AuthLoadingState>(
+    AuthLoadingState.Init,
   );
 
   // This effect is used to set the initial auth state from storage.
@@ -87,9 +107,7 @@ export const useAuth = (): UseAuthReturnType => {
   const isAuthenticated = getIsAuthenticated(authState);
 
   return {
-    // To the outside of this hook we only want authLoading to expose a
-    // boolean value, so we cast undefined to false.
-    authLoading: !!authLoading,
+    authLoading,
     authState,
     isAuthenticated,
     login,

@@ -1,3 +1,4 @@
+import { AuthLoadingState } from '@app/hooks/useAuth';
 import {
   getIsAuthenticated,
   isExpired,
@@ -59,12 +60,12 @@ describe('shouldRefresh', () => {
   };
 
   it('should return false if authState is undefined', () => {
-    const result = shouldRefresh(undefined, undefined);
+    const result = shouldRefresh(undefined, AuthLoadingState.Init);
     expect(result).toBe(false);
   });
 
   it('should return false if authState is null', () => {
-    const result = shouldRefresh(null, undefined);
+    const result = shouldRefresh(null, AuthLoadingState.Init);
     expect(result).toBe(false);
   });
 
@@ -73,17 +74,20 @@ describe('shouldRefresh', () => {
       ...authState,
       refreshToken: null,
     };
-    const result = shouldRefresh(authStateWithNullRefreshToken, undefined);
+    const result = shouldRefresh(
+      authStateWithNullRefreshToken,
+      AuthLoadingState.Init,
+    );
     expect(result).toBe(false);
   });
 
-  it('should return false if authLoading is true', () => {
-    const result = shouldRefresh(authState, true);
+  it('should return false if authLoading is loading', () => {
+    const result = shouldRefresh(authState, AuthLoadingState.Loading);
     expect(result).toBe(false);
   });
 
-  it('should return true if authLoading is undefined', () => {
-    const result = shouldRefresh(authState, undefined);
+  it('should return true if authLoading is init', () => {
+    const result = shouldRefresh(authState, AuthLoadingState.Init);
     expect(result).toBe(true);
   });
 
@@ -92,12 +96,15 @@ describe('shouldRefresh', () => {
       ...authState,
       expiresAt: new Date().toISOString(),
     };
-    const result = shouldRefresh(authStateWithExpiredToken, false);
+    const result = shouldRefresh(
+      authStateWithExpiredToken,
+      AuthLoadingState.NotLoading,
+    );
     expect(result).toBe(true);
   });
 
   it('should return false if authState is not expired', () => {
-    const result = shouldRefresh(authState, false);
+    const result = shouldRefresh(authState, AuthLoadingState.NotLoading);
     expect(result).toBe(true);
   });
 });
@@ -111,12 +118,12 @@ describe('shouldRefreshComplex', () => {
   };
 
   it('should return false if authState is undefined', () => {
-    const result = shouldRefreshComplex(undefined, undefined);
+    const result = shouldRefreshComplex(undefined, AuthLoadingState.Init);
     expect(result).toBe(false);
   });
 
   it('should return false if authState is null', () => {
-    const result = shouldRefreshComplex(null, undefined);
+    const result = shouldRefreshComplex(null, AuthLoadingState.Init);
     expect(result).toBe(false);
   });
 
@@ -127,18 +134,18 @@ describe('shouldRefreshComplex', () => {
     };
     const result = shouldRefreshComplex(
       authStateWithNullRefreshToken,
-      undefined,
+      AuthLoadingState.Init,
     );
     expect(result).toBe(false);
   });
 
-  it('should return false if authLoading is true', () => {
-    const result = shouldRefreshComplex(authState, true);
+  it('should return false if authLoading is loading', () => {
+    const result = shouldRefreshComplex(authState, AuthLoadingState.Loading);
     expect(result).toBe(false);
   });
 
-  it('should return true if authLoading is undefined', () => {
-    const result = shouldRefreshComplex(authState, undefined);
+  it('should return true if authLoading is init', () => {
+    const result = shouldRefreshComplex(authState, AuthLoadingState.Init);
     expect(result).toBe(true);
   });
 
@@ -147,12 +154,15 @@ describe('shouldRefreshComplex', () => {
       ...authState,
       expiresAt: new Date().toISOString(),
     };
-    const result = shouldRefreshComplex(authStateWithExpiredToken, false);
+    const result = shouldRefreshComplex(
+      authStateWithExpiredToken,
+      AuthLoadingState.NotLoading,
+    );
     expect(result).toBe(true);
   });
 
   it('should return false if authState is not expired', () => {
-    const result = shouldRefreshComplex(authState, false);
+    const result = shouldRefreshComplex(authState, AuthLoadingState.NotLoading);
     expect(result).toBe(true);
   });
 });
@@ -177,9 +187,9 @@ describe('updateRefreshToken', () => {
       removeAuthState,
     );
 
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.Loading);
     expect(removeAuthState).toHaveBeenCalled();
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.NotLoading);
   });
 
   it('should remove auth state if refresh token is null', async () => {
@@ -192,9 +202,9 @@ describe('updateRefreshToken', () => {
       removeAuthState,
     );
 
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.Loading);
     expect(removeAuthState).toHaveBeenCalled();
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.NotLoading);
   });
 
   it('should update the auth state if refresh token is valid', async () => {
@@ -213,7 +223,7 @@ describe('updateRefreshToken', () => {
       removeAuthState,
     );
 
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.Loading);
     expect(mockedRefresh).toHaveBeenCalledWith(authState.refreshToken);
     expect(storeAuthState).toHaveBeenCalledWith({
       accessToken: 'new_access_token',
@@ -221,7 +231,7 @@ describe('updateRefreshToken', () => {
       refreshToken: 'new_refresh_token',
       expiresAt: '2020-01-01T00:00:00.000Z',
     });
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.NotLoading);
   });
 
   it('should remove auth state if refresh token refresh fails', async () => {
@@ -239,10 +249,10 @@ describe('updateRefreshToken', () => {
       removeAuthState,
     );
 
-    expect(setAuthLoading).toHaveBeenCalledWith(true);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.Loading);
     expect(mockedRefresh).toHaveBeenCalledWith(validAuthState.refreshToken);
     expect(removeAuthState).toHaveBeenCalled();
-    expect(setAuthLoading).toHaveBeenCalledWith(false);
+    expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.NotLoading);
 
     expect(consoleErrorMock).toHaveBeenCalledWith(
       'updateRefreshToken.storeAuthState',
@@ -272,7 +282,7 @@ describe('performLogin', () => {
     it('should store the auth state if login is successful', async () => {
       await performLogin(setAuthLoading, storeAuthState);
 
-      expect(setAuthLoading).toHaveBeenCalledWith(true);
+      expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.Loading);
       expect(mockedAuthorize).toHaveBeenCalled();
       expect(storeAuthState).toHaveBeenCalledWith({
         accessToken: 'new_access_token',
@@ -280,7 +290,7 @@ describe('performLogin', () => {
         refreshToken: 'new_refresh_token',
         expiresAt: '2020-01-01T00:00:00.000Z',
       });
-      expect(setAuthLoading).toHaveBeenCalledWith(false);
+      expect(setAuthLoading).toHaveBeenCalledWith(AuthLoadingState.NotLoading);
     });
   });
 

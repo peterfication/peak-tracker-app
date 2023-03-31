@@ -1,3 +1,4 @@
+import { AuthLoadingState } from '@app/hooks/useAuth';
 import { shouldRefresh, updateRefreshToken } from '@app/hooks/useAuth.helpers';
 import { AuthState, MaybeAuthState } from '@app/hooks/useAuthState';
 
@@ -12,8 +13,8 @@ const REFRESH_CHECK_INTERVAL = 2 * 1000; // eslint-disable-line no-magic-numbers
  */
 export const effectUpdateRefreshToken = (
   authState: MaybeAuthState | null,
-  authLoading: boolean | undefined,
-  setAuthLoading: (authLoading: boolean) => void,
+  authLoading: AuthLoadingState,
+  setAuthLoading: (authLoading: AuthLoadingState) => void,
   storeAuthState: (authState: AuthState) => Promise<void>,
   removeAuthState: () => Promise<void>,
 ) => {
