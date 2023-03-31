@@ -27,12 +27,14 @@ interface ServerError {
 export const isServerError = (error: unknown): error is ServerError =>
   typeof error === 'object' && error !== null && 'statusCode' in error;
 
+const STATUS_CODE_UNAUTHORIZED = 401;
+
 /**
  * Check for a 401 error from the backend. This happens if the auth state is not
  * valid/up to date. This actually shouldn't happen.
  */
 export const isUnauthorizedError = (error: unknown): boolean =>
-  isServerError(error) && error.statusCode === 401;
+  isServerError(error) && error.statusCode === STATUS_CODE_UNAUTHORIZED;
 
 /**
  * Needed for any checks from the Apollo Client.

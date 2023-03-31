@@ -30,13 +30,20 @@ export const getIsAuthenticated = (
 };
 
 /**
+ * The margin in milliseconds that is used to determine if the auth state
+ * is expired, so that we refresh early enough.
+ */
+const EXPIRATION_MARGIN = 60 * 1000; // eslint-disable-line no-magic-numbers
+
+/**
  * Takes an expiration date and returns true if the date
  * minus 60 seconds is in the past.
  */
 export const isExpired = (expiresAt: string): boolean => {
-  // We subtract 60 seconds from the expiresAt date to have a buffer
+  // We subtract the EXPIRATION_MARGIN from the expiresAt date to have a buffer
+  // so that we refresh early enough.
   const adjustedExpiresAtDate = new Date(
-    new Date(expiresAt).getTime() - 60 * 1000,
+    new Date(expiresAt).getTime() - EXPIRATION_MARGIN,
   );
 
   const now = new Date();

@@ -28,6 +28,7 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-empty-function': 0,
+    'no-magic-numbers': 'error',
 
     'import/no-unresolved': ['error', { ignore: ['^@env'] }],
     'import/order': [
@@ -103,6 +104,7 @@ module.exports = {
         // For awaiting Promises in tests to work
         // `await new Promise(process.nextTick);`
         '@typescript-eslint/unbound-method': 0,
+        'no-magic-numbers': 0,
       },
     },
     // Ignore some rules for stories files
@@ -112,6 +114,7 @@ module.exports = {
         // Because of "ComponentStory not found in '@storybook/react-native'"
         'import/named': 0,
         'react-native/no-inline-styles': 0,
+        'no-magic-numbers': 0,
       },
     },
     // Ignore some rules for JS files

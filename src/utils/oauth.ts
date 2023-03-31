@@ -11,7 +11,7 @@ import {
  *
  * `AuthConfiguration not found in 'react-native-app-auth'`
  */
-type AuthConfiguration = Parameters<typeof RNAuthorize>[0];
+type AuthConfiguration = Parameters<typeof RNAuthorize>[0]; // eslint-disable-line no-magic-numbers
 
 /**
  * The common config for both the production and localhost config.

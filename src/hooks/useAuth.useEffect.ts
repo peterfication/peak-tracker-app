@@ -2,6 +2,11 @@ import { shouldRefresh, updateRefreshToken } from '@app/hooks/useAuth.helpers';
 import { AuthState, MaybeAuthState } from '@app/hooks/useAuthState';
 
 /**
+ * Check whether the auth state should be refreshed every 2 seconds.
+ */
+const REFRESH_CHECK_INTERVAL = 2 * 1000; // eslint-disable-line no-magic-numbers
+
+/**
  * This function is the effect in useAuth that sets up the refresh functionality
  * for the auth state.
  */
@@ -35,7 +40,7 @@ export const effectUpdateRefreshToken = (
 
   const refreshInterval = setInterval(() => {
     updateRefreshTokenWrapper();
-  }, 2000);
+  }, REFRESH_CHECK_INTERVAL);
 
   // The setInterval needs to be cleared when the component unmounts
   // otherwise it will keep running in the background and new setIntervals
