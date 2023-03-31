@@ -18,15 +18,15 @@ export enum AuthLoadingState {
    * On startup, the auth state is unknown, hence we don't know yet if we need to
    * refresh it.
    */
-  Init,
+  Init = 'init',
   /**
    * An auth state refresh is in progress.
    */
-  Loading,
+  Loading = 'loading',
   /**
    * No auth state refresh is in progress.
    */
-  NotLoading,
+  NotLoading = 'notLoading',
 }
 
 /**
@@ -60,7 +60,6 @@ export const useAuth = (): UseAuthReturnType => {
   const { authState, getAuthState, storeAuthState, removeAuthState } =
     useAuthState();
 
-  // Undefined means it's the first run
   const [authLoading, setAuthLoading] = useState<AuthLoadingState>(
     AuthLoadingState.Init,
   );
