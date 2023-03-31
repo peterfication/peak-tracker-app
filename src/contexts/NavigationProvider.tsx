@@ -1,28 +1,24 @@
 import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { HomeScreenWrapper } from '@app/screens/HomeScreen';
-import { PeakScreenWrapper } from '@app/screens/PeakScreen';
+import {
+  HomeStackScreen,
+  PeaksStackScreen,
+  SettingsStackScreen,
+  HomeNavigationProps,
+  PeaksNavigationProps,
+  SettingsNavigationProps,
+  homeLinking,
+} from './navigation_stacks';
 
-// This can't be an interface because it's used as a generic.
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type StackParamList = {
-  Home: undefined;
-  Peak: { peakSlug?: string };
+export type {
+  HomeNavigationProps,
+  PeaksNavigationProps,
+  SettingsNavigationProps,
 };
 
-/**
- * We define the navigation props here globally, so that screens only need to
- * import this interface and not the types needed to construct it.
- */
-export interface NavigationProps {
-  Home: NativeStackScreenProps<StackParamList, 'Home'>;
-  Peak: NativeStackScreenProps<StackParamList, 'Peak'>;
-}
-
-const Stack = createNativeStackNavigator<StackParamList>();
+const Tab = createBottomTabNavigator();
 
 /**
  * Configuration for deep links.
@@ -34,7 +30,7 @@ const linking = {
   prefixes: ['com.peak-tracker://'],
   config: {
     screens: {
-      Peak: 'peaks/:peakSlug',
+      ...homeLinking,
     },
   },
 };
@@ -53,14 +49,23 @@ export const NavigationProvider = ({
   const linkingConfig = disableLinking ? undefined : linking;
   return (
     <NavigationContainer linking={linkingConfig}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreenWrapper}
-          options={{ title: 'Peak Tracker Dashboard' }}
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen
+          name="TabHome"
+          component={HomeStackScreen}
+          options={{ title: 'Home' }}
         />
-        <Stack.Screen name="Peak" component={PeakScreenWrapper} />
-      </Stack.Navigator>
+        <Tab.Screen
+          name="TabPeaks"
+          component={PeaksStackScreen}
+          options={{ title: 'Peaks' }}
+        />
+        <Tab.Screen
+          name="TabSettings"
+          component={SettingsStackScreen}
+          options={{ title: 'Settings' }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
