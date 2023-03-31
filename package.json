@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
+    "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "graphql": "^16.6.0",

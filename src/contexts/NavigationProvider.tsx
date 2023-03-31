@@ -1,16 +1,23 @@
 import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HomeScreenWrapper } from '@app/screens/HomeScreen';
+import { PeakListScreenWrapper } from '@app/screens/PeakListScreen';
 import { PeakScreenWrapper } from '@app/screens/PeakScreen';
+import { SettingsScreenWrapper } from '@app/screens/SettingsScreen';
 
 // This can't be an interface because it's used as a generic.
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type StackParamList = {
   Home: undefined;
+
   Peak: { peakSlug?: string };
+  PeakList: undefined;
+
+  Settings: undefined;
 };
 
 /**
@@ -20,9 +27,44 @@ export type StackParamList = {
 export interface NavigationProps {
   Home: NativeStackScreenProps<StackParamList, 'Home'>;
   Peak: NativeStackScreenProps<StackParamList, 'Peak'>;
+  Settings: NativeStackScreenProps<StackParamList, 'Settings'>;
+  PeakList: NativeStackScreenProps<StackParamList, 'PeakList'>;
 }
 
-const Stack = createNativeStackNavigator<StackParamList>();
+const HomeStack = createNativeStackNavigator<StackParamList>();
+
+const HomeStackScreen = () => (
+  <HomeStack.Navigator>
+    <HomeStack.Screen
+      name="Home"
+      component={HomeScreenWrapper}
+      options={{ title: 'Peak Tracker' }}
+    />
+  </HomeStack.Navigator>
+);
+
+const PeaksStack = createNativeStackNavigator<StackParamList>();
+
+const PeaksStackScreen = () => (
+  <PeaksStack.Navigator>
+    <PeaksStack.Screen name="PeakList" component={PeakListScreenWrapper} />
+    <PeaksStack.Screen name="Peak" component={PeakScreenWrapper} />
+  </PeaksStack.Navigator>
+);
+
+const SettingsStack = createNativeStackNavigator<StackParamList>();
+
+const SettingsStackScreen = () => (
+  <SettingsStack.Navigator>
+    <SettingsStack.Screen
+      name="Settings"
+      component={SettingsScreenWrapper}
+      options={{ title: 'Peak Tracker' }}
+    />
+  </SettingsStack.Navigator>
+);
+
+const Tab = createBottomTabNavigator();
 
 /**
  * Configuration for deep links.
@@ -53,14 +95,23 @@ export const NavigationProvider = ({
   const linkingConfig = disableLinking ? undefined : linking;
   return (
     <NavigationContainer linking={linkingConfig}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreenWrapper}
-          options={{ title: 'Peak Tracker Dashboard' }}
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen
+          name="TabHome"
+          component={HomeStackScreen}
+          options={{ title: 'Home' }}
         />
-        <Stack.Screen name="Peak" component={PeakScreenWrapper} />
-      </Stack.Navigator>
+        <Tab.Screen
+          name="TabPeaks"
+          component={PeaksStackScreen}
+          options={{ title: 'Peaks' }}
+        />
+        <Tab.Screen
+          name="TabSettings"
+          component={SettingsStackScreen}
+          options={{ title: 'Settings' }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
