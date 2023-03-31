@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native-ui-lib';
 import { render, screen } from '@testing-library/react-native';
+import { View } from 'react-native-ui-lib';
 
 import { AuthProvider } from '@app/contexts/AuthContext';
 import { useAuth } from '@app/hooks/useAuth';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { ComponentStory } from '@storybook/react-native';
+import { Alert } from 'react-native';
 
 import { LoginScreen } from '@app/screens/LoginScreen';
 

@@ -1,17 +1,17 @@
+import { OAUTH_CLIENT_ID, OAUTH_USE_LOCALHOST } from '@env';
 import {
   authorize as RNAuthorize,
   logout as RNLogout,
   refresh as RNRefresh,
   revoke as RNRevoke,
 } from 'react-native-app-auth';
-import { OAUTH_CLIENT_ID, OAUTH_USE_LOCALHOST } from '@env';
 
 /**
  * It can't be imported from react-native-app-auth because it's not exported.
  *
  * `AuthConfiguration not found in 'react-native-app-auth'`
  */
-type AuthConfiguration = Parameters<typeof RNAuthorize>[0];
+type AuthConfiguration = Parameters<typeof RNAuthorize>[0]; // eslint-disable-line no-magic-numbers
 
 /**
  * The common config for both the production and localhost config.
