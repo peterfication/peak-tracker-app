@@ -19,11 +19,11 @@ export enum AuthStateMode {
   /**
    * This mode means that on startup, the auth state is not loaded yet.
    */
-  Loading = 'loading',
+  Loading = 'LOADING',
   /**
    * This mode means that no auth state is available and the user is not authenticated.
    */
-  NotAuthenticated = 'notAuthenticated',
+  NotAuthenticated = 'NOT_AUTHENTICATED',
 }
 
 /**
