@@ -8,6 +8,8 @@ import {
   useGetPeaksQuery,
 } from '@app/graphql/generated';
 
+import { Peak, peaksFromQuery } from './PeakListScreen.utils';
+
 export const PeakListScreenWrapper = () => {
   const navigation =
     useNavigation<PeaksNavigationProps['PeakList']['navigation']>();
@@ -21,31 +23,6 @@ export const PeakListScreenWrapper = () => {
     />
   );
 };
-
-/**
- * Extracted Peak type from the GraphQL query.
- */
-type Peak = NonNullable<
-  NonNullable<
-    NonNullable<
-      NonNullable<
-        NonNullable<Pick<GetPeaksQueryHookResult, 'data'>['data']>['peaks']
-      >['edges']
-    >[number]
-  >['node']
->;
-
-/**
- * Check whether a peak from the query data is a peak.
- */
-const isPeakListPeak = (peak: unknown): peak is Peak =>
-  peak !== null && typeof peak === 'object' && 'name' in peak;
-
-/**
- * Extract the peaks from the query data and properly type them.
- */
-const peaksFromQuery = (data: GetPeaksQueryHookResult['data']): Peak[] =>
-  (data?.peaks?.edges?.map(edge => edge?.node) ?? []).filter(isPeakListPeak);
 
 const PeakButton = ({
   peak,
@@ -87,6 +64,7 @@ export const PeakListScreen = ({
       </Text>
 
       {loading && <Text testID="peak-list-loading">Loading...</Text>}
+
       {error && (
         <Text testID="peak-list-error">
           Error: {error.networkError?.message}
