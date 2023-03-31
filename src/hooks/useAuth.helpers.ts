@@ -1,3 +1,4 @@
+import { AuthLoadingState } from '@app/hooks/useAuth';
 import {
   AuthState,
   isAuthState,
@@ -58,7 +59,7 @@ export const isExpired = (expiresAt: string): boolean => {
  */
 export const shouldRefresh = (
   authState: MaybeAuthState,
-  authLoading: boolean | undefined,
+  authLoading: AuthLoadingState,
 ): boolean => {
   if (
     // If the auth state is not present yet, we don't want to trigger a refresh
@@ -66,16 +67,16 @@ export const shouldRefresh = (
     // If the auth state is present, but the refresh token is null, we don't
     // want to trigger a refresh.
     authState.refreshToken === null ||
-    // If the auth state is present, but the authLoading is true, we don't
+    // If the auth state is present, but auth is already loading, we don't
     // want to trigger another refresh.
-    authLoading
+    authLoading === AuthLoadingState.Loading
   ) {
     return false;
   }
 
   // If the auth state is present, but the authLoading is undefined, we
   // want to trigger a refresh just to be sure
-  if (authLoading === undefined) {
+  if (authLoading === AuthLoadingState.Init) {
     return true;
   }
 
@@ -89,7 +90,7 @@ export const shouldRefresh = (
  */
 export const shouldRefreshComplex = (
   authState: MaybeAuthState,
-  authLoading: boolean | undefined,
+  authLoading: AuthLoadingState,
 ): boolean =>
   !(
     // If the auth state is not present yet, we don't want to trigger a refresh
@@ -98,14 +99,14 @@ export const shouldRefreshComplex = (
       // If the auth state is present, but the refresh token is null, we don't
       // want to trigger a refresh.
       authState.refreshToken === null ||
-      // If the auth state is present, but the authLoading is true, we don't
+      // If the auth state is present, but auth is already loading, we don't
       // want to trigger another refresh.
-      authLoading
+      authLoading === AuthLoadingState.Loading
     )
   ) &&
   // If the auth state is present, but the authLoading is undefined, we
   // want to trigger a refresh just to be sure
-  (authLoading === undefined ||
+  (authLoading === AuthLoadingState.Init ||
     // If the auth state is expired, we want to refresh it.
     isExpired(authState.expiresAt));
 
@@ -131,24 +132,24 @@ const authStateFromResult = (
  */
 export const updateRefreshToken = async (
   authState: MaybeAuthState,
-  setAuthLoading: (authLoading: boolean) => void,
+  setAuthLoading: (authLoading: AuthLoadingState) => void,
   storeAuthState: (authState: AuthState) => Promise<void>,
   removeAuthState: () => Promise<void>,
 ) => {
-  setAuthLoading(true);
+  setAuthLoading(AuthLoadingState.Loading);
 
   // This should not happen because shouldRefresh should return false
   // in that case
   if (!isAuthState(authState) || authState.refreshToken === null) {
     await removeAuthState();
-    setAuthLoading(false);
+    setAuthLoading(AuthLoadingState.NotLoading);
     return;
   }
 
   try {
     const result = await refresh(authState.refreshToken);
     await storeAuthState(authStateFromResult(result));
-    setAuthLoading(false);
+    setAuthLoading(AuthLoadingState.NotLoading);
   } catch (error) {
     error instanceof Error &&
       console.error('updateRefreshToken.storeAuthState', error.toString());
@@ -156,7 +157,7 @@ export const updateRefreshToken = async (
     // If an error happened, we remove the auth state so that the user can
     // login again.
     await removeAuthState();
-    setAuthLoading(false);
+    setAuthLoading(AuthLoadingState.NotLoading);
   }
 };
 
@@ -167,18 +168,18 @@ export const updateRefreshToken = async (
  * @param storeAuthState Function to permanently store the auth state
  */
 export const performLogin = async (
-  setAuthLoading: (authLoading: boolean) => void,
+  setAuthLoading: (authLoading: AuthLoadingState) => void,
   storeAuthState: (authState: AuthState) => Promise<void>,
 ) => {
   try {
-    setAuthLoading(true);
+    setAuthLoading(AuthLoadingState.Loading);
 
     const result = await authorize();
     await storeAuthState(authStateFromResult(result));
 
     // We need to set authLoading to false after the auth state is stored
     // so that we don't immediately trigger a refresh because it might be undefined
-    setAuthLoading(false);
+    setAuthLoading(AuthLoadingState.NotLoading);
   } catch (error) {
     error instanceof Error && console.error('performLogin', error.toString());
   }

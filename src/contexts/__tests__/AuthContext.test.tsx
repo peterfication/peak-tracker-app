@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react-native';
 import { View } from 'react-native-ui-lib';
 
 import { AuthProvider } from '@app/contexts/AuthContext';
-import { useAuth } from '@app/hooks/useAuth';
+import { AuthLoadingState, useAuth } from '@app/hooks/useAuth';
 
 jest.mock('@app/hooks/useAuth');
 const mockedUseAuth = jest.mocked(useAuth);
@@ -14,7 +14,7 @@ describe('AuthProvider', () => {
       login: jest.fn(),
       logout: jest.fn(),
       authState: undefined,
-      authLoading: false,
+      authLoading: AuthLoadingState.NotLoading,
       isAuthenticated,
     });
 
