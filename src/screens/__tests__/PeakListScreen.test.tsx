@@ -2,7 +2,7 @@ import React from 'react';
 import { ApolloError } from '@apollo/client';
 import { render, screen } from '@testing-library/react-native';
 
-import { NavigationProps } from '@app/contexts/NavigationProvider';
+import { PeaksNavigationProps } from '@app/contexts/NavigationProvider';
 import { PeakListScreen } from '@app/screens/PeakListScreen';
 
 jest.mock('../../hooks/useAuth');
@@ -10,7 +10,7 @@ jest.mock('../../hooks/useAuth');
 describe('PeakListScreen', () => {
   const mockedNavigation = {
     navigate: jest.fn(),
-  } as unknown as NavigationProps['PeakList']['navigation'];
+  } as unknown as PeaksNavigationProps['PeakList']['navigation'];
 
   afterEach(() => {
     jest.clearAllMocks();

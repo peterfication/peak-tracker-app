@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import { NavigationProps } from '@app/contexts/NavigationProvider';
+import { PeaksNavigationProps } from '@app/contexts/NavigationProvider';
 import { PeakScreen } from '@app/screens/PeakScreen';
 
 describe('PeakScreen', () => {
@@ -9,7 +9,7 @@ describe('PeakScreen', () => {
     params: {
       peakSlug: 'test-peak',
     },
-  } as unknown as NavigationProps['Peak']['route'];
+  } as unknown as PeaksNavigationProps['Peak']['route'];
 
   it('should render the PeakScreen component', () => {
     expect(() => {
