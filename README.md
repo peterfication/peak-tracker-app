@@ -1,5 +1,17 @@
 # Peak Tracker App
 
+<p>
+  <a href="https://github.com/peterfication/peak-tracker-app/actions?query=branch%3Amain+">
+    <img alt="CI" src="https://github.com/peterfication/peak-tracker-app/actions/workflows/ci.yml/badge.svg" \>
+  </a>
+  <a href="https://codecov.io/gh/peterfication/peak-tracker-app">
+    <img alt="CodeCov" src="https://codecov.io/gh/peterfication/peak-tracker-app/branch/main/graph/badge.svg?token=V5HKH4C2BA" \>
+  </a>
+  <a href="https://sonarcloud.io/summary/new_code?id=peterfication_peak-tracker-app">
+    <img alt="Maintainability Rating" src="https://sonarcloud.io/api/project_badges/measure?project=peterfication_peak-tracker-app&metric=sqale_rating" \>
+  </a>
+</p>
+
 This is the Peak Tracker mobile App that is running with the [Peak Tracker Backend](https://github.com/peterfication/peak_tracker_backend) and the [Peak Tracker Identity Provider](https://github.com/peterfication/peak-tracker-auth/)
 
 It's built with [React Native](https://reactnative.dev/).
