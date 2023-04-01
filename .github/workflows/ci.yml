@@ -141,6 +141,8 @@ jobs:
   test:
     needs: [yarn-cache]
     runs-on: ubuntu-latest
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -156,3 +158,5 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - run: yarn test:coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
