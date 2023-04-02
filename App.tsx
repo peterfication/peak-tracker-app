@@ -5,7 +5,7 @@ import {
   ApolloProvider,
   AuthProvider,
   NavigationProvider,
-} from '@app/contexts';
+} from '@app/providers';
 
 import Storybook from './.storybook/Storybook';
 

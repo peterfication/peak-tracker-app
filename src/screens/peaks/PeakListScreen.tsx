@@ -2,13 +2,13 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'react-native-ui-lib';
 
-import type { PeaksNavigationProps } from '@app/contexts';
 import {
   getPeaksExtractPeaksFromData,
   GetPeaksPeakFragment,
   GetPeaksQueryHookResult,
   useGetPeaksQuery,
 } from '@app/graphql/queries';
+import type { PeaksNavigationProps } from '@app/providers';
 
 export const PeakListScreenWrapper = () => {
   const navigation =

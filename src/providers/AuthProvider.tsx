@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 
+import { AuthContext } from '@app/contexts';
 import { useAuth, AuthStateMode } from '@app/hooks';
 import { LoginLoadingScreen, LoginScreen } from '@app/screens';
-
-import { AuthContext } from './AuthContext';
 
 export type AuthProviderType = React.FC<{ children: React.ReactNode }>;
 
