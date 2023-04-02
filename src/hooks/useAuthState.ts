@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { useEncryptedStorage } from '../hooks/useEncryptedStorage';
+import { useEncryptedStorage } from './useEncryptedStorage';
 
 /**
  * @see MaybeAuthState
