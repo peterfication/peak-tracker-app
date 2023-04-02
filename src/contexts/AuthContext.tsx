@@ -1,7 +1,11 @@
 import React, { createContext, useMemo } from 'react';
 
 import { useAuth, AuthStateMode } from '@app/hooks';
-import { LoginLoadingScreen, LoginScreen } from '@app/screens';
+import {
+  LoginLoadingScreen,
+  LoginScreen,
+  // Import directly from the file to avoid a circular dependency
+} from '@app/screens/login/LoginScreen';
 
 export interface AuthContextInterface {
   /**

@@ -1,34 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { AuthContextInterface } from '@app/contexts';
+import type { AuthContextInterface } from '@app/contexts';
+
 import {
   getIsAuthenticated,
   performLogin,
   performLogout,
-  effectUpdateRefreshToken,
-  MaybeAuthState,
-  useAuthState,
-} from '@app/hooks';
-
-/**
- *
- * Whether the auth state is refreshing at the moment.
- */
-export enum AuthLoadingState {
-  /**
-   * On startup, the auth state is unknown, hence we don't know yet if we need to
-   * refresh it.
-   */
-  Init = 'INIT',
-  /**
-   * An auth state refresh is in progress.
-   */
-  Loading = 'LOADING',
-  /**
-   * No auth state refresh is in progress.
-   */
-  NotLoading = 'NOT_LOADING',
-}
+  AuthLoadingState,
+} from './useAuth.helpers';
+import { effectUpdateRefreshToken } from './useAuth.useEffect';
+import { MaybeAuthState, useAuthState } from './useAuthState';
 
 /**
  * The login function is not part of the AuthContextInterface because it is

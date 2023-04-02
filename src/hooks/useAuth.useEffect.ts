@@ -1,10 +1,9 @@
 import {
-  AuthLoadingState,
   shouldRefresh,
   updateRefreshToken,
-  AuthState,
-  MaybeAuthState,
-} from '@app/hooks';
+  AuthLoadingState,
+} from './useAuth.helpers';
+import { AuthState, MaybeAuthState } from './useAuthState';
 
 /**
  * Check whether the auth state should be refreshed every 2 seconds.

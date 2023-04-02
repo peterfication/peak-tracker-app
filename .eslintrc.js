@@ -29,6 +29,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-empty-function': 0,
     'no-magic-numbers': 'error',
+    'import/no-cycle': 'error',
 
     'import/no-unresolved': ['error', { ignore: ['^@env'] }],
     'import/order': [
