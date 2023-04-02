@@ -4,11 +4,11 @@ import { Button, Text, View } from 'react-native-ui-lib';
 
 import { PeaksNavigationProps } from '@app/contexts';
 import {
-  GetPeaksPeakFragment,
   getPeaksExtractPeaksFromData,
+  GetPeaksPeakFragment,
   GetPeaksQueryHookResult,
   useGetPeaksQuery,
-} from '@app/graphql';
+} from '@app/graphql/queries';
 
 export const PeakListScreenWrapper = () => {
   const navigation =

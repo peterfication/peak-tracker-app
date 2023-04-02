@@ -1,6 +1,7 @@
-import { GetPeaksQueryHookResult } from '@app/graphql/generated';
-
-import { getPeaksExtractPeaksFromData } from '../getPeaks';
+import {
+  getPeaksExtractPeaksFromData,
+  GetPeaksQueryHookResult,
+} from '../getPeaks';
 
 describe('peaksFromQuery', () => {
   it('should return an empty array when data is undefined', () => {
@@ -45,9 +46,9 @@ describe('peaksFromQuery', () => {
     };
     const result = getPeaksExtractPeaksFromData(data);
     expect(result).toEqual([
-      { id: '1', name: 'Peak 1' },
-      { id: '2', name: 'Peak 2' },
-      { id: '3', name: 'Peak 3' },
+      { id: '1', name: 'Peak 1', slug: 'peak-1' },
+      { id: '2', name: 'Peak 2', slug: 'peak-2' },
+      { id: '3', name: 'Peak 3', slug: 'peak-3' },
     ]);
   });
 });

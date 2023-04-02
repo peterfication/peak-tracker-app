@@ -2,7 +2,7 @@ import {
   useGetPeaksQuery,
   GetPeaksQueryHookResult,
   GetPeaksPeakFragment,
-} from '@app/graphql/generated';
+} from '../generated';
 
 export { useGetPeaksQuery };
 export type { GetPeaksQueryHookResult, GetPeaksPeakFragment };

@@ -18,6 +18,7 @@
     "storybook:start": "APP_ENV=storybook react-native start",
     "storybook:watch": "sb-rn-watcher",
     "test": "jest",
+    "test:clear": "jest --clearCache",
     "test:coverage": "jest --verbose --coverage",
     "test:coverage:open": "jest --verbose --coverage; open ./coverage/lcov-report/index.html",
     "test:watch": "jest --watch",
