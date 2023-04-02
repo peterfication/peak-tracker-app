@@ -1,8 +1,5 @@
-import {
-  shouldRefresh,
-  updateRefreshToken,
-  AuthLoadingState,
-} from './useAuth.helpers';
+import { shouldRefresh, updateRefreshToken } from './useAuth.helpers';
+import { AuthLoadingState } from './useAuth.types';
 import { AuthState, MaybeAuthState } from './useAuthState';
 
 /**

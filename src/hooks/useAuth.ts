@@ -1,38 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import type { AuthContextInterface } from '@app/contexts';
-
 import {
   getIsAuthenticated,
   performLogin,
   performLogout,
-  AuthLoadingState,
 } from './useAuth.helpers';
+import { UseAuthReturnType, AuthLoadingState } from './useAuth.types';
 import { effectUpdateRefreshToken } from './useAuth.useEffect';
-import { MaybeAuthState, useAuthState } from './useAuthState';
-
-/**
- * The login function is not part of the AuthContextInterface because it is
- * only needed in the login screen and there it can be passed as a prop in
- * the AuthProvider.
- */
-type UseAuthReturnType = AuthContextInterface & {
-  /**
-   * This function is used to login the user in the app
-   * via the OAuth flow. After the user has logged in, the auth state is
-   * set and stored in storage.
-   */
-  login: () => Promise<void>;
-
-  /**
-   * Whether the auth state is refreshing at the moment.
-   *
-   * Default is AuthLoadingState.Init, because we need to wait for the initial auth load
-   * in useAuth.
-   */
-  authLoading: AuthLoadingState;
-  authState: MaybeAuthState;
-};
+import { useAuthState } from './useAuthState';
 
 /**
  * This hook is used to login and logout and interacting with the

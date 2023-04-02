@@ -5,32 +5,13 @@ import {
   revoke,
 } from '@app/utils';
 
+import { AuthLoadingState } from './useAuth.types';
 import {
   AuthState,
   AuthStateMode,
   isAuthState,
   MaybeAuthState,
 } from './useAuthState';
-
-/**
- *
- * Whether the auth state is refreshing at the moment.
- */
-export enum AuthLoadingState {
-  /**
-   * On startup, the auth state is unknown, hence we don't know yet if we need to
-   * refresh it.
-   */
-  Init = 'INIT',
-  /**
-   * An auth state refresh is in progress.
-   */
-  Loading = 'LOADING',
-  /**
-   * No auth state refresh is in progress.
-   */
-  NotLoading = 'NOT_LOADING',
-}
 
 /**
  * This function is used to determine if the user is authenticated.
