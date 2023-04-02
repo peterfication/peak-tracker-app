@@ -2,7 +2,7 @@ import React from 'react';
 import { ApolloError } from '@apollo/client';
 import { render, screen } from '@testing-library/react-native';
 
-import { PeaksNavigationProps } from '@app/contexts';
+import { PeaksNavigationProps } from '@app/providers';
 import { PeakListScreen } from '@app/screens';
 
 describe('PeakListScreen', () => {
@@ -67,6 +67,7 @@ describe('PeakListScreen', () => {
               node: {
                 id: '1',
                 name: 'Peak 1',
+                slug: 'peak-1',
               },
             },
           ],

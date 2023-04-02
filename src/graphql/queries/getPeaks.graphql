@@ -2,13 +2,14 @@ query GetPeaks {
   peaks {
     edges {
       node {
-        ...PeakListPeak
+        ...GetPeaksPeak
       }
     }
   }
 }
 
-fragment PeakListPeak on Peak {
+fragment GetPeaksPeak on Peak {
   id
   name
+  slug
 }

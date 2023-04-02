@@ -2,13 +2,13 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'react-native-ui-lib';
 
-import { PeaksNavigationProps } from '@app/contexts';
 import {
+  getPeaksExtractPeaksFromData,
+  GetPeaksPeakFragment,
   GetPeaksQueryHookResult,
   useGetPeaksQuery,
-} from '@app/graphql/generated';
-
-import { Peak, peaksFromQuery } from './PeakListScreen.utils';
+} from '@app/graphql/queries';
+import type { PeaksNavigationProps } from '@app/providers';
 
 export const PeakListScreenWrapper = () => {
   const navigation =
@@ -28,7 +28,7 @@ const PeakButton = ({
   peak,
   navigation,
 }: {
-  peak: Peak;
+  peak: GetPeaksPeakFragment;
   navigation: PeaksNavigationProps['PeakList']['navigation'];
 }) => {
   return (
@@ -39,7 +39,7 @@ const PeakButton = ({
       text70
       white
       background-orange30
-      onPress={() => navigation.navigate('Peak', { peakSlug: peak.name })}
+      onPress={() => navigation.navigate('Peak', { peakSlug: peak.slug })}
     />
   );
 };
@@ -55,7 +55,7 @@ export const PeakListScreen = ({
   >;
 }) => {
   const { data, loading, error } = useGetPeaksQueryResult;
-  const peaks = peaksFromQuery(data);
+  const peaks = getPeaksExtractPeaksFromData(data);
 
   return (
     <View flex paddingH-25 paddingT-120>

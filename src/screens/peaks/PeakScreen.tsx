@@ -2,7 +2,7 @@ import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from 'react-native-ui-lib';
 
-import { PeaksNavigationProps } from '@app/contexts';
+import type { PeaksNavigationProps } from '@app/providers';
 
 export const PeakScreenWrapper = () => {
   const route = useRoute<PeaksNavigationProps['Peak']['route']>();

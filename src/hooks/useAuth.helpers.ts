@@ -1,16 +1,17 @@
 import {
-  AuthLoadingState,
-  AuthState,
-  AuthStateMode,
-  isAuthState,
-  MaybeAuthState,
-} from '@app/hooks';
-import {
   authorize,
   // logout as oauthLogout,
   refresh,
   revoke,
 } from '@app/utils';
+
+import { AuthLoadingState } from './useAuth.types';
+import {
+  AuthState,
+  AuthStateMode,
+  isAuthState,
+  MaybeAuthState,
+} from './useAuthState';
 
 /**
  * This function is used to determine if the user is authenticated.

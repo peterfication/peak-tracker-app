@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import { NavigationProvider } from '@app/contexts';
+import { NavigationProvider } from '@app/providers';
 
 describe('NavigationProvider', () => {
   it('renders', () => {
