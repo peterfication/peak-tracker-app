@@ -142,14 +142,15 @@ export enum SortOrder {
 export type GetPeaksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPeaksQuery = { __typename?: 'RootQueryType', peaks?: { __typename?: 'PeakConnection', edges?: Array<{ __typename?: 'PeakEdge', node?: { __typename?: 'Peak', id: string, name: string } | null } | null> | null } | null };
+export type GetPeaksQuery = { __typename?: 'RootQueryType', peaks?: { __typename?: 'PeakConnection', edges?: Array<{ __typename?: 'PeakEdge', node?: { __typename?: 'Peak', id: string, name: string, slug: string } | null } | null> | null } | null };
 
-export type PeakListPeakFragment = { __typename?: 'Peak', id: string, name: string };
+export type GetPeaksPeakFragment = { __typename?: 'Peak', id: string, name: string, slug: string };
 
-export const PeakListPeakFragmentDoc = gql`
-    fragment PeakListPeak on Peak {
+export const GetPeaksPeakFragmentDoc = gql`
+    fragment GetPeaksPeak on Peak {
   id
   name
+  slug
 }
     `;
 export const GetPeaksDocument = gql`
@@ -157,12 +158,12 @@ export const GetPeaksDocument = gql`
   peaks {
     edges {
       node {
-        ...PeakListPeak
+        ...GetPeaksPeak
       }
     }
   }
 }
-    ${PeakListPeakFragmentDoc}`;
+    ${GetPeaksPeakFragmentDoc}`;
 
 /**
  * __useGetPeaksQuery__

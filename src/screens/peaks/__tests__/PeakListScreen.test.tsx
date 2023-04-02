@@ -67,6 +67,7 @@ describe('PeakListScreen', () => {
               node: {
                 id: '1',
                 name: 'Peak 1',
+                slug: 'peak-1',
               },
             },
           ],
