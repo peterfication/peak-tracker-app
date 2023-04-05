@@ -3880,14 +3880,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-async-storage/async-storage@npm:^1.17.12":
-  version: 1.17.12
-  resolution: "@react-native-async-storage/async-storage@npm:1.17.12"
+"@react-native-async-storage/async-storage@npm:^1.18.1":
+  version: 1.18.1
+  resolution: "@react-native-async-storage/async-storage@npm:1.18.1"
   dependencies:
     merge-options: ^3.0.4
   peerDependencies:
-    react-native: ^0.0.0-0 || 0.60 - 0.71 || 1000.0.0
-  checksum: 8be850aa8f7e6b0cd4051d8bf9d6a65316ec47e45d83872b4413162757afaa7074ef4b391b76d3df784872d0beabb956da1aafa65b1cd923b67bf6c8dcf5fc9c
+    react-native: ^0.0.0-0 || 0.60 - 0.72 || 1000.0.0
+  checksum: 58c8497fafdd4d112c4a70b0976783abdc6fa487f0cffca196901efd146fc838dee0cf498fdc4ef67a4634ba4ca97d60fec5a24720aea1d46f1999b0ba8b249b
   languageName: node
   linkType: hard
 
@@ -5670,7 +5670,7 @@ __metadata:
     "@graphql-inspector/cli": ^3.4.9
     "@graphql-inspector/validate-command": ^3.4.7
     "@prettier/plugin-xml": ^2.2.0
-    "@react-native-async-storage/async-storage": ^1.17.12
+    "@react-native-async-storage/async-storage": ^1.18.1
     "@react-native-community/datetimepicker": ^7.0.0
     "@react-native-community/eslint-config": ^3.2.0
     "@react-native-community/slider": ^4.4.2
