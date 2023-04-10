@@ -41,11 +41,13 @@ metacharacter
 metaspace
 millis
 msys
+multicriteria
 nsurl
 okhttp
 ondevice
 openurl
 peaktracker
+peterfication
 posix
 preact
 proguard
