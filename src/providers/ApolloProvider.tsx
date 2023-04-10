@@ -11,6 +11,7 @@ import { ErrorLink, onError } from '@apollo/client/link/error';
 
 import { useAuthState } from '@app/hooks';
 
+// FIXME: test
 const GRAPHQL_URL = 'https://peak-tracker.com/gql';
 
 /**
