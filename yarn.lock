@@ -5767,7 +5767,7 @@ __metadata:
     eslint-plugin-unused-imports: ^2.0.0
     graphql: ^16.6.0
     jest: ^29.2.1
-    metro-react-native-babel-preset: 0.76.0
+    metro-react-native-babel-preset: 0.76.2
     prettier: ^2.8.7
     react: 18.2.0
     react-dom: 18.2.0
@@ -13217,9 +13217,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"metro-react-native-babel-preset@npm:0.76.0":
-  version: 0.76.0
-  resolution: "metro-react-native-babel-preset@npm:0.76.0"
+"metro-react-native-babel-preset@npm:0.76.2":
+  version: 0.76.2
+  resolution: "metro-react-native-babel-preset@npm:0.76.2"
   dependencies:
     "@babel/core": ^7.20.0
     "@babel/plugin-proposal-async-generator-functions": ^7.0.0
@@ -13262,7 +13262,7 @@ __metadata:
     react-refresh: ^0.4.0
   peerDependencies:
     "@babel/core": "*"
-  checksum: 19c9c362b6a03c78c47f6baafc913cda7da11f9f0208f4f31dd56a9c5da14e19488edd60383dd9e4379b29e0054b105cde1f28b767d6a3a0ee5b6a3a678a05d1
+  checksum: cd939b216a11206426587f24cc2d9a2dc8d1ea7072ccb84a2caddcaa1aa82f6325e2a32e75244a008592810e13d7da56639406e7dbe025cdba7b6aac8595c62f
   languageName: node
   linkType: hard
 
