@@ -4746,9 +4746,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react-native@npm:6.5.0-rc.11":
-  version: 6.5.0-rc.11
-  resolution: "@storybook/react-native@npm:6.5.0-rc.11"
+"@storybook/react-native@npm:6.5.3":
+  version: 6.5.3
+  resolution: "@storybook/react-native@npm:6.5.3"
   dependencies:
     "@emotion/core": ^10.0.20
     "@emotion/native": ^10.0.14
@@ -4778,7 +4778,7 @@ __metadata:
   bin:
     sb-rn-get-stories: bin/get-stories.js
     sb-rn-watcher: bin/watcher.js
-  checksum: ddb1239f9055be636645274a72530a2383db68c79d5c64bbb1694cd92c8c97e1fb34b1cb191b60e84cd2fe8a60320d49edb20dbc2c2f5fe26296e60b0a5e5ec6
+  checksum: 34d1f8d699ffcaca55e6c050c00d8ac426dff8881cb2f04f93e7aef464e2a200991ce35f8e6295da6a2ff5c2e557ae8f692a3c0e5371c70f9c1fbb3e8ca2c074
   languageName: node
   linkType: hard
 
@@ -5794,7 +5794,7 @@ __metadata:
     "@storybook/addon-controls": ^6.5.14
     "@storybook/addon-ondevice-actions": 6.5.0-rc.0
     "@storybook/addon-ondevice-controls": 6.5.0-rc.0
-    "@storybook/react-native": 6.5.0-rc.11
+    "@storybook/react-native": 6.5.3
     "@testing-library/react-hooks": ^8.0.1
     "@testing-library/react-native": ^12.0.1
     "@tsconfig/react-native": ^2.0.2
