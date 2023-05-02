@@ -36,9 +36,22 @@ export type PageInfo = {
 
 export type Peak = Node & {
   __typename?: 'Peak';
+  elevation: Scalars['Int'];
   id: Scalars['ID'];
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
   name: Scalars['String'];
+  osmId: Scalars['Int'];
+  scaleCount: Scalars['Int'];
+  scaledByUser?: Maybe<Scalars['Boolean']>;
   slug: Scalars['String'];
+  wikidataId?: Maybe<Scalars['String']>;
+  wikipedia?: Maybe<Scalars['String']>;
+};
+
+
+export type PeakScaledByUserArgs = {
+  userId: Scalars['ID'];
 };
 
 /** :peak connection */
@@ -61,6 +74,17 @@ export type PeakEdge = {
   node?: Maybe<Peak>;
 };
 
+export type PeakFilterElevation = {
+  eq?: InputMaybe<Scalars['Int']>;
+  greaterThan?: InputMaybe<Scalars['Int']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['Int']>;
+  lessThanOrEqual?: InputMaybe<Scalars['Int']>;
+  notEq?: InputMaybe<Scalars['Int']>;
+};
+
 export type PeakFilterId = {
   eq?: InputMaybe<Scalars['ID']>;
   greaterThan?: InputMaybe<Scalars['ID']>;
@@ -74,10 +98,40 @@ export type PeakFilterId = {
 
 export type PeakFilterInput = {
   and?: InputMaybe<Array<PeakFilterInput>>;
+  elevation?: InputMaybe<PeakFilterElevation>;
   id?: InputMaybe<PeakFilterId>;
+  latitude?: InputMaybe<PeakFilterLatitude>;
+  longitude?: InputMaybe<PeakFilterLongitude>;
   name?: InputMaybe<PeakFilterName>;
   or?: InputMaybe<Array<PeakFilterInput>>;
+  osmId?: InputMaybe<PeakFilterOsmId>;
+  scaleCount?: InputMaybe<PeakFilterScaleCount>;
+  scaledByUser?: InputMaybe<PeakFilterScaledByUser>;
   slug?: InputMaybe<PeakFilterSlug>;
+  wikidataId?: InputMaybe<PeakFilterWikidataId>;
+  wikipedia?: InputMaybe<PeakFilterWikipedia>;
+};
+
+export type PeakFilterLatitude = {
+  eq?: InputMaybe<Scalars['Float']>;
+  greaterThan?: InputMaybe<Scalars['Float']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['Float']>;
+  lessThanOrEqual?: InputMaybe<Scalars['Float']>;
+  notEq?: InputMaybe<Scalars['Float']>;
+};
+
+export type PeakFilterLongitude = {
+  eq?: InputMaybe<Scalars['Float']>;
+  greaterThan?: InputMaybe<Scalars['Float']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['Float']>;
+  lessThanOrEqual?: InputMaybe<Scalars['Float']>;
+  notEq?: InputMaybe<Scalars['Float']>;
 };
 
 export type PeakFilterName = {
@@ -91,6 +145,40 @@ export type PeakFilterName = {
   notEq?: InputMaybe<Scalars['String']>;
 };
 
+export type PeakFilterOsmId = {
+  eq?: InputMaybe<Scalars['Int']>;
+  greaterThan?: InputMaybe<Scalars['Int']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['Int']>;
+  lessThanOrEqual?: InputMaybe<Scalars['Int']>;
+  notEq?: InputMaybe<Scalars['Int']>;
+};
+
+export type PeakFilterScaleCount = {
+  eq?: InputMaybe<Scalars['Int']>;
+  greaterThan?: InputMaybe<Scalars['Int']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['Int']>;
+  lessThanOrEqual?: InputMaybe<Scalars['Int']>;
+  notEq?: InputMaybe<Scalars['Int']>;
+};
+
+export type PeakFilterScaledByUser = {
+  eq?: InputMaybe<Scalars['Boolean']>;
+  greaterThan?: InputMaybe<Scalars['Boolean']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<Scalars['Boolean']>>;
+  input?: InputMaybe<PeakScaledByUserFieldInput>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['Boolean']>;
+  lessThanOrEqual?: InputMaybe<Scalars['Boolean']>;
+  notEq?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type PeakFilterSlug = {
   eq?: InputMaybe<Scalars['String']>;
   greaterThan?: InputMaybe<Scalars['String']>;
@@ -102,15 +190,50 @@ export type PeakFilterSlug = {
   notEq?: InputMaybe<Scalars['String']>;
 };
 
+export type PeakFilterWikidataId = {
+  eq?: InputMaybe<Scalars['String']>;
+  greaterThan?: InputMaybe<Scalars['String']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['String']>;
+  lessThanOrEqual?: InputMaybe<Scalars['String']>;
+  notEq?: InputMaybe<Scalars['String']>;
+};
+
+export type PeakFilterWikipedia = {
+  eq?: InputMaybe<Scalars['String']>;
+  greaterThan?: InputMaybe<Scalars['String']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  isNil?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['String']>;
+  lessThanOrEqual?: InputMaybe<Scalars['String']>;
+  notEq?: InputMaybe<Scalars['String']>;
+};
+
+export type PeakScaledByUserFieldInput = {
+  userId: Scalars['ID'];
+};
+
 export enum PeakSortField {
+  Elevation = 'ELEVATION',
   Id = 'ID',
+  Latitude = 'LATITUDE',
+  Longitude = 'LONGITUDE',
   Name = 'NAME',
-  Slug = 'SLUG'
+  OsmId = 'OSM_ID',
+  ScaledByUser = 'SCALED_BY_USER',
+  ScaleCount = 'SCALE_COUNT',
+  Slug = 'SLUG',
+  WikidataId = 'WIKIDATA_ID',
+  Wikipedia = 'WIKIPEDIA'
 }
 
 export type PeakSortInput = {
   field: PeakSortField;
   order?: InputMaybe<SortOrder>;
+  scaledByUserInput?: InputMaybe<PeakScaledByUserFieldInput>;
 };
 
 export type RootQueryType = {
