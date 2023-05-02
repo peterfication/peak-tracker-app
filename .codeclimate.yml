@@ -1,0 +1,21 @@
+version: '2'
+
+checks:
+  similar-code:
+    enabled: false
+  identical-code:
+    enabled: false
+
+plugins:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        typescript:
+          count_threshold: 3
+        javascript:
+          count_threshold: 3
+
+exclude_patterns:
+  - '**/__tests__/**/*'
+  - 'src/graphql/generated.ts'
