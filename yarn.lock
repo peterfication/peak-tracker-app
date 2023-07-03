@@ -4416,9 +4416,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-ondevice-controls@npm:6.5.0-rc.0":
-  version: 6.5.0-rc.0
-  resolution: "@storybook/addon-ondevice-controls@npm:6.5.0-rc.0"
+"@storybook/addon-ondevice-controls@npm:6.5.4":
+  version: 6.5.4
+  resolution: "@storybook/addon-ondevice-controls@npm:6.5.4"
   dependencies:
     "@emotion/native": ^10.0.14
     "@storybook/addons": ^6.5.14
@@ -4436,7 +4436,7 @@ __metadata:
     "@storybook/addon-controls": ^6.5.14
     react: "*"
     react-native: "*"
-  checksum: c87ea8d0c6054a2f10834cb7a843344d4cf577c4f445b1d8c9f92b48639a76090d999932202ee70562cf69425ffa224f6cf9e6e9b8f3faa1e83b48b0fa29a2dc
+  checksum: 4aaa1adeeb5297a8578888aedb44df3ee701d05af677b1e84a10ea45b034ab3b151fb067c5212df0924456eca0fa5dfb9c2a3ca9d97351a83c8279a256ec20f4
   languageName: node
   linkType: hard
 
@@ -5793,7 +5793,7 @@ __metadata:
     "@storybook/addon-actions": ^6.5.14
     "@storybook/addon-controls": ^6.5.14
     "@storybook/addon-ondevice-actions": 6.5.0-rc.0
-    "@storybook/addon-ondevice-controls": 6.5.0-rc.0
+    "@storybook/addon-ondevice-controls": 6.5.4
     "@storybook/react-native": 6.5.0-rc.11
     "@testing-library/react-hooks": ^8.0.1
     "@testing-library/react-native": ^12.0.1
