@@ -238,6 +238,7 @@ export type PeakSortInput = {
 
 export type RootQueryType = {
   __typename?: 'RootQueryType';
+  currentUser?: Maybe<User>;
   peak?: Maybe<Peak>;
   peaks?: Maybe<PeakConnection>;
 };
@@ -254,6 +255,7 @@ export type RootQueryTypePeaksArgs = {
   filter?: InputMaybe<PeakFilterInput>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  scaledByActor?: InputMaybe<Scalars['Boolean']>;
   sort?: InputMaybe<Array<InputMaybe<PeakSortInput>>>;
 };
 
@@ -261,6 +263,12 @@ export enum SortOrder {
   Asc = 'ASC',
   Desc = 'DESC'
 }
+
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String'];
+  id: Scalars['ID'];
+};
 
 export type GetPeaksQueryVariables = Exact<{ [key: string]: never; }>;
 
