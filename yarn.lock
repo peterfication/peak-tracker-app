@@ -4416,14 +4416,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-ondevice-controls@npm:6.5.0-rc.0":
-  version: 6.5.0-rc.0
-  resolution: "@storybook/addon-ondevice-controls@npm:6.5.0-rc.0"
+"@storybook/addon-ondevice-controls@npm:6.5.6":
+  version: 6.5.6
+  resolution: "@storybook/addon-ondevice-controls@npm:6.5.6"
   dependencies:
-    "@emotion/native": ^10.0.14
     "@storybook/addons": ^6.5.14
     "@storybook/client-logger": ^6.5.14
     "@storybook/core-events": ^6.5.14
+    "@storybook/react-native-theming": ^6.5.6
     core-js: ^3.0.1
     deep-equal: ^1.0.1
     prop-types: ^15.7.2
@@ -4436,7 +4436,7 @@ __metadata:
     "@storybook/addon-controls": ^6.5.14
     react: "*"
     react-native: "*"
-  checksum: c87ea8d0c6054a2f10834cb7a843344d4cf577c4f445b1d8c9f92b48639a76090d999932202ee70562cf69425ffa224f6cf9e6e9b8f3faa1e83b48b0fa29a2dc
+  checksum: 981924910063fb5de08fea1a45065673436e1c2cef8002319c57afe13936049db6dcf968a8836ef9540de5025e707a91247f005ae2cf396a7c085056d68373a1
   languageName: node
   linkType: hard
 
@@ -4743,6 +4743,16 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 6161c96e9ee459ef93c3d972374ce339ae57d0c5fa25730007484e4824f79a34814110431db97031107558e5ce41259710f8a54564e8975db0215b78c5572a1b
+  languageName: node
+  linkType: hard
+
+"@storybook/react-native-theming@npm:^6.5.6":
+  version: 6.5.6
+  resolution: "@storybook/react-native-theming@npm:6.5.6"
+  peerDependencies:
+    react: "*"
+    react-native: ">=0.57.0"
+  checksum: 52b7b82b5bf49dfa4cafd6bd06736b8f0e852c8b83d9c82f84bcd8f3ddd12fafec608b1bfe7b6458cbb70ecb4f6dcd5f0b3d4d986a68a00613120d07a305b23b
   languageName: node
   linkType: hard
 
@@ -5793,7 +5803,7 @@ __metadata:
     "@storybook/addon-actions": ^6.5.14
     "@storybook/addon-controls": ^6.5.14
     "@storybook/addon-ondevice-actions": 6.5.0-rc.0
-    "@storybook/addon-ondevice-controls": 6.5.0-rc.0
+    "@storybook/addon-ondevice-controls": 6.5.6
     "@storybook/react-native": 6.5.0-rc.11
     "@testing-library/react-hooks": ^8.0.1
     "@testing-library/react-native": ^12.0.1
