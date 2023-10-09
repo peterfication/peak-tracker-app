@@ -261,7 +261,11 @@ export type RootQueryTypePeaksArgs = {
 
 export enum SortOrder {
   Asc = 'ASC',
-  Desc = 'DESC'
+  AscNullsFirst = 'ASC_NULLS_FIRST',
+  AscNullsLast = 'ASC_NULLS_LAST',
+  Desc = 'DESC',
+  DescNullsFirst = 'DESC_NULLS_FIRST',
+  DescNullsLast = 'DESC_NULLS_LAST'
 }
 
 export type User = {
