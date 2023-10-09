@@ -9,7 +9,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:testing-library/react',
     'plugin:jsx-a11y/recommended',
-    '@react-native-community',
+    '@react-native',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',

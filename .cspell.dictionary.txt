@@ -26,6 +26,7 @@ errorlevel
 esac
 exopackage
 genrule
+glog
 gradlew
 hermesc
 ifdef
@@ -54,8 +55,10 @@ proguard
 readarray
 recrawl
 redbox
+rncore
 sbmodern
 setlocal
+shellcheck
 simctl
 squareup
 subview
