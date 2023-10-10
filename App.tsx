@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { DevSettings } from 'react-native';
 
 import {
   ApolloProvider,
@@ -16,11 +17,7 @@ export const App = () => {
   useEffect(
     () => {
       if (__DEV__) {
-        // Add item to DevMenu (Cmd+D) to toggle between the app and Storybook.
-        // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-unsafe-assignment
-        const DevMenu = require('react-native-dev-menu');
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-        DevMenu.addItem('Toggle Storybook', toggleStorybook);
+        DevSettings.addMenuItem('Toggle Storybook', toggleStorybook);
       }
     },
     // We only want to run this hook once.
