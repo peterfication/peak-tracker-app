@@ -7192,7 +7192,7 @@ __metadata:
     react-native-reanimated: ^3.5.4
     react-native-safe-area-context: ^4.7.2
     react-native-screens: ^3.25.0
-    react-native-ui-lib: ^7.2.4
+    react-native-ui-lib: ^7.8.0
     react-test-renderer: 18.2.0
     typescript: 5.0
   languageName: unknown
@@ -17298,18 +17298,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-text-size@npm:4.0.0-rc.1":
-  version: 4.0.0-rc.1
-  resolution: "react-native-text-size@npm:4.0.0-rc.1"
-  peerDependencies:
-    react-native: ">=0.59.0"
-  checksum: 539163a1848748547a03e4cfac2f116c37d9ef0a158f1286ba2b9e1df88d619c0f1d87902246365542384b95803293f8410530e8544751d945bf57a14aba8f0b
-  languageName: node
-  linkType: hard
-
-"react-native-ui-lib@npm:^7.2.4":
-  version: 7.2.4
-  resolution: "react-native-ui-lib@npm:7.2.4"
+"react-native-ui-lib@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "react-native-ui-lib@npm:7.8.0"
   dependencies:
     babel-plugin-transform-inline-environment-variables: ^0.0.2
     color: ^3.1.0
@@ -17322,16 +17313,16 @@ __metadata:
     prop-types: ^15.5.10
     react-freeze: ^1.0.0
     react-native-redash: ^12.0.3
-    react-native-text-size: 4.0.0-rc.1
     semver: ^5.5.0
     tinycolor2: ^1.4.2
     url-parse: ^1.2.0
+    wix-react-native-text-size: ~1.0.0
   peerDependencies:
     react: ">=17.0.1"
     react-native: ">=0.64.1"
     react-native-gesture-handler: ">=2.5.0"
     react-native-reanimated: ">=2.0.0"
-  checksum: 204ed93f0a05b2eec8276a545f016d1485e57178bfa48d57d34af75fac1f9c35356dbb84aaaebf80a6ec6be526386d3a477c969929dfdc0a329c0e46b042a7f5
+  checksum: 7cc67ded9c50ef608e6786fb08b590d2de3d698c88531758b6546273e1932a953caf5a32e0e5296fb51c911f86101f630afab2aeb2b59427ecaffc63adb09895
   languageName: node
   linkType: hard
 
@@ -20337,6 +20328,15 @@ __metadata:
   dependencies:
     string-width: ^1.0.2 || 2 || 3 || 4
   checksum: d5fc37cd561f9daee3c80e03b92ed3e84d80dde3365a8767263d03dacfc8fa06b065ffe1df00d8c2a09f731482fcacae745abfbb478d4af36d0a891fad4834d3
+  languageName: node
+  linkType: hard
+
+"wix-react-native-text-size@npm:~1.0.0":
+  version: 1.0.8
+  resolution: "wix-react-native-text-size@npm:1.0.8"
+  peerDependencies:
+    react-native: ">=0.59.0"
+  checksum: 4195d4cd4c51219cf7355c8792c3f84c05b1c848a017913c2c2b9a7f06e9b405f0edc8460a9f98ee7dd2923bb0bb5f1315da0ccdb899854f598f113cb2c670b1
   languageName: node
   linkType: hard
 

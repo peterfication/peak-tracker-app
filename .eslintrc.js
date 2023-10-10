@@ -94,6 +94,12 @@ module.exports = {
       ],
       rules: {
         '@typescript-eslint/no-unnecessary-condition': 'error',
+
+        // See https://stackoverflow.com/questions/72149756/async-function-passed-as-prop-into-react-component-causing-typescript-eslint-no/73944767#73944767
+        '@typescript-eslint/no-misused-promises': [
+          'error',
+          { checksVoidReturn: { attributes: false } },
+        ],
       },
     },
 
