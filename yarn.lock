@@ -5431,12 +5431,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/datetimepicker@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "@react-native-community/datetimepicker@npm:7.0.1"
+"@react-native-community/datetimepicker@npm:^7.6.0":
+  version: 7.6.0
+  resolution: "@react-native-community/datetimepicker@npm:7.6.0"
   dependencies:
     invariant: ^2.2.4
-  checksum: 108724a239d086e165ab17fd39fac43a8daf91a852ea9fd40d5bf9a2dd984ad8a473079e6228bc7f9fed0d6cf5610b2f4438142765e228f25aef37f9c6c4f85f
+  checksum: 029b37eba026137f49cfcc257025f78fecdd2aa621df326acf1763087cc586db18b311feb0e54f2524927a9b91210af411c1c50912bee795776f0f62e80ed47e
   languageName: node
   linkType: hard
 
@@ -7146,7 +7146,7 @@ __metadata:
     "@graphql-inspector/validate-command": ^3.4.7
     "@prettier/plugin-xml": ^2.2.0
     "@react-native-async-storage/async-storage": ^1.19.3
-    "@react-native-community/datetimepicker": ^7.0.1
+    "@react-native-community/datetimepicker": ^7.6.0
     "@react-native-community/eslint-config": ^3.2.0
     "@react-native-community/slider": ^4.4.2
     "@react-navigation/bottom-tabs": ^6.5.7
