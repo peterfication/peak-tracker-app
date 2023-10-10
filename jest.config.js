@@ -13,6 +13,7 @@ const transformIgnorePatternsPackages = [
   'react-native-modal-datetime-picker',
   'react-native-app-auth',
   'react-native-base64',
+  'react-native-reanimated',
 ].join('|');
 
 module.exports = {
@@ -32,6 +33,7 @@ module.exports = {
   },
   collectCoverageFrom: ['src/**/{!(*.stories),}.(ts|tsx)'],
   setupFiles: ['./node_modules/react-native-gesture-handler/jestSetup.js'],
+  setupFilesAfterEnv: ['./jest.setup.js'],
   transformIgnorePatterns: [
     `node_modules/(?!(${transformIgnorePatternsPackages})/)`,
   ],
