@@ -24,16 +24,6 @@
 #endif
 }
 
-/// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
-///
-/// @see: https://reactjs.org/blog/2022/03/29/react-v18.html
-/// @note: This requires to be rendering on Fabric (i.e. on the New Architecture).
-/// @return: `true` if the `concurrentRoot` feature is enabled. Otherwise, it returns `false`.
-- (BOOL)concurrentRootEnabled
-{
-  return true;
-}
-
 // This is stated as needed for react-native-app-auth in their README but it seems to work without it.
 // - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *) options {
 //  if ([self.authorizationFlowManagerDelegate resumeExternalUserAgentFlowWithURL:url]) {

@@ -19,10 +19,11 @@ export const App = () => {
   );
 };
 
-const defaultExport = STORYBOOK_ENABLED === 'true' ? Storybook : App;
+let AppEntryPoint = App;
 
 if (STORYBOOK_ENABLED === 'true') {
   console.log('Running Storybook ...');
+  AppEntryPoint = Storybook;
 }
 
-export default defaultExport;
+export default AppEntryPoint;
