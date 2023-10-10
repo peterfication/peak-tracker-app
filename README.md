@@ -25,4 +25,4 @@ Commands are defined in the [`Justfile`](Justfile) and can be listed with [`just
 
 ## Storybook
 
-Storybook can be toggled via the [DevMenu](https://github.com/zoontek/react-native-dev-menu) (CMD+D).
+Storybook can be toggled via the ReactNative developer menu (open them by shaking the device e.g. with CMD+CTRL+Z).
