@@ -47,10 +47,6 @@ start:
   # See https://github.com/goatandsheep/react-native-dotenv/issues/393#issuecomment-1380913100
   yarn start
 
-# Run storybook app
-storybook:
-  yarn storybook:start
-
 # Run this command when new *.stories.tsx files have been created
 storybook-generate:
   yarn storybook:generate
