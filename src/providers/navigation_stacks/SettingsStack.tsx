@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SettingsScreenWrapper } from '@app/screens';
 
 // This can't be an interface because it's used as a generic.
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+
 type SettingsStackParamList = {
   Settings: undefined;
 };
