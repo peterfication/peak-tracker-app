@@ -7186,7 +7186,7 @@ __metadata:
     react-dom: 18.2.0
     react-native: 0.71.13
     react-native-app-auth: ^7.1.0
-    react-native-dotenv: ^3.4.8
+    react-native-dotenv: ^3.4.9
     react-native-encrypted-storage: ^4.0.3
     react-native-gesture-handler: ^2.13.1
     react-native-reanimated: ^3.5.4
@@ -10213,10 +10213,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.0, dotenv@npm:^16.0.3":
+"dotenv@npm:^16.0.0":
   version: 16.0.3
   resolution: "dotenv@npm:16.0.3"
   checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
   languageName: node
   linkType: hard
 
@@ -17165,14 +17172,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-dotenv@npm:^3.4.8":
-  version: 3.4.8
-  resolution: "react-native-dotenv@npm:3.4.8"
+"react-native-dotenv@npm:^3.4.9":
+  version: 3.4.9
+  resolution: "react-native-dotenv@npm:3.4.9"
   dependencies:
-    dotenv: ^16.0.3
+    dotenv: ^16.3.1
   peerDependencies:
     "@babel/runtime": ^7.20.6
-  checksum: 8443cec44862d3e110f236b1120d8a1f829cb4545a85c8462e6c01935aa216f50b05eb659661db29939d4d293ce7de6212bf877963e3b37f6c900629f6546d67
+  checksum: 9727c6a08e1b3e53b31d620ac1e9daedd899b61c0fd5413fb4593a209c0bf73e245506fc02bdb0d3caa4abf4f4145fa8499afff8e48e22bcf317cd90dbe18b87
   languageName: node
   linkType: hard
 
