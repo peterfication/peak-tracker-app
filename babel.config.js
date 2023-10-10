@@ -13,11 +13,7 @@ module.exports = {
       'module:react-native-dotenv',
       {
         // verbose: true,
-        allowlist: [
-          'OAUTH_CLIENT_ID',
-          'OAUTH_USE_LOCALHOST',
-          'STORYBOOK_ENABLED',
-        ],
+        allowlist: ['OAUTH_CLIENT_ID', 'OAUTH_USE_LOCALHOST'],
       },
     ],
     'react-native-reanimated/plugin',

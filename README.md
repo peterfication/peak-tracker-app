@@ -22,3 +22,7 @@ It's built with [React Native](https://reactnative.dev/).
 ## Useful commands
 
 Commands are defined in the [`Justfile`](Justfile) and can be listed with [`just`](https://github.com/casey/just).
+
+## Storybook
+
+Storybook can be toggled via the [DevMenu](https://github.com/zoontek/react-native-dev-menu) (CMD+D).
