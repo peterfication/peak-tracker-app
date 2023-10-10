@@ -3,8 +3,8 @@ import { render } from '@testing-library/react-native';
 
 import { App } from '../App';
 
-jest.mock('react-native-dev-menu', () => ({
-  addItem: jest.fn(() => Promise.resolve()),
+jest.mock('react-native/Libraries/Utilities/DevSettings', () => ({
+  addMenuItem: jest.fn(),
 }));
 
 jest.mock('@app/hooks/useAuth', () => ({
