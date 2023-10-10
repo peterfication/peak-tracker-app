@@ -1,5 +1,5 @@
 import React from 'react';
-// import { STORYBOOK_ENABLED } from '@env';
+import { STORYBOOK_ENABLED } from '@env';
 
 import {
   ApolloProvider,
@@ -7,7 +7,7 @@ import {
   NavigationProvider,
 } from '@app/providers';
 
-// import Storybook from './.storybook/Storybook';
+import Storybook from './.storybook/Storybook';
 
 export const App = () => {
   return (
@@ -19,11 +19,10 @@ export const App = () => {
   );
 };
 
-// const defaultExport = STORYBOOK_ENABLED === 'true' ? Storybook : App;
+const defaultExport = STORYBOOK_ENABLED === 'true' ? Storybook : App;
 
-// if (STORYBOOK_ENABLED === 'true') {
-//   console.log('Running Storybook ...');
-// }
+if (STORYBOOK_ENABLED === 'true') {
+  console.log('Running Storybook ...');
+}
 
-// export default defaultExport;
-export default App;
+export default defaultExport;

@@ -22,3 +22,15 @@ It's built with [React Native](https://reactnative.dev/).
 ## Useful commands
 
 Commands are defined in the [`Justfile`](Justfile) and can be listed with [`just`](https://github.com/casey/just).
+
+## Issues
+
+### Switch between the app and Storybook
+
+The Metro cache will mess things up, so if you switch between those two, you need to reset the metro cache:
+
+```bash
+yarn storybook:start --reset-cache
+# OR
+yarn start --reset-cache
+```
