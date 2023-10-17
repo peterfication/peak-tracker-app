@@ -2,6 +2,11 @@
 default:
   just --list
 
+# Run iOS and Android builds
+build:
+  yarn build:android
+  yarn build:ios
+
 # Run all checks from CI
 ci: spellcheck format lint typecheck test-coverage
 
