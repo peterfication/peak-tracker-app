@@ -49,8 +49,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.22.20",
-    "@babel/runtime": "^7.23.1",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/runtime": "^7.23.2",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/introspection": "^4.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
