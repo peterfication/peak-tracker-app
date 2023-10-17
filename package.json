@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "android": "echo 'Does not work with dotenv, see https://github.com/goatandsheep/react-native-dotenv/issues/393#issuecomment-1380913100'; exit; APP_ENV=development react-native run-android",
+    "build:android": "mkdir -p android/build && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/build/index.android.bundle --assets-dest android/build",
+    "build:ios": "mkdir -p ios/build && react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/build/index.ios.bundle --assets-dest ios/build",
     "format": "prettier --write .",
     "format:ci": "prettier --check .",
     "graphql:codegen": "graphql-codegen --config graphql-codegen.yml",
