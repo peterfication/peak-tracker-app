@@ -216,7 +216,12 @@ describe('authLink', () => {
     mockGetIdToken.mockResolvedValueOnce(mockIdToken);
 
     const lastLink = new ApolloLink(operation => {
-      const headers = operation.getContext().headers as Record<string, string>;
+      /* eslint-disable dot-notation */
+      const headers = operation.getContext()['headers'] as Record<
+        string,
+        string
+      >;
+      /* eslint-enable dot-notation */
       expect(headers).toEqual({ Authorization: expectedAuthorizationHeader });
 
       return null;
@@ -239,7 +244,12 @@ describe('authLink', () => {
     }));
 
     const lastLink = new ApolloLink(operation => {
-      const headers = operation.getContext().headers as Record<string, string>;
+      /* eslint-disable dot-notation */
+      const headers = operation.getContext()['headers'] as Record<
+        string,
+        string
+      >;
+      /* eslint-enable dot-notation */
       expect(headers).toEqual({
         'x-custom': 'mocked header',
         Authorization: expectedAuthorizationHeader,

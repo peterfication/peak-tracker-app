@@ -10,15 +10,15 @@ describe('peaksFromQuery', () => {
     expect(result).toEqual([]);
   });
 
-  it('should return an empty array when peaks is undefined', () => {
-    const data: GetPeaksQueryHookResult['data'] = { peaks: undefined };
+  it('should return an empty array when peaks is null', () => {
+    const data: GetPeaksQueryHookResult['data'] = { peaks: null };
     const result = getPeaksExtractPeaksFromData(data);
     expect(result).toEqual([]);
   });
 
-  it('should return an empty array when edges is undefined', () => {
+  it('should return an empty array when edges is null', () => {
     const data: GetPeaksQueryHookResult['data'] = {
-      peaks: { edges: undefined },
+      peaks: { edges: null },
     };
     const result = getPeaksExtractPeaksFromData(data);
     expect(result).toEqual([]);
@@ -27,7 +27,7 @@ describe('peaksFromQuery', () => {
   it('should return an empty array when all nodes are null or invalid', () => {
     const data: GetPeaksQueryHookResult['data'] = {
       peaks: {
-        edges: [{ node: null }, { node: undefined }, null],
+        edges: [{ node: null }, null],
       },
     };
     const result = getPeaksExtractPeaksFromData(data);

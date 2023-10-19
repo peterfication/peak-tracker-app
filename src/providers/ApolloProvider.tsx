@@ -52,8 +52,8 @@ export const fetchWithOperationName = (
   try {
     const parsedBody = JSON.parse(options.body) as unknown;
     const operationName =
-      isObject(parsedBody) && typeof parsedBody.operationName === 'string'
-        ? parsedBody.operationName
+      isObject(parsedBody) && typeof parsedBody['operationName'] === 'string' // eslint-disable-line dot-notation
+        ? parsedBody['operationName'] // eslint-disable-line dot-notation
         : '';
 
     return fetch(`${uri}?op=${operationName}`, options);
