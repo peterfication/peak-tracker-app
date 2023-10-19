@@ -2,6 +2,7 @@ import React from 'react';
 import { ApolloError } from '@apollo/client';
 import { render, screen } from '@testing-library/react-native';
 
+import { GetPeaksQueryHookResult } from '@app/graphql/queries';
 import { PeaksNavigationProps } from '@app/providers';
 import { PeakListScreen } from '@app/screens';
 
@@ -15,10 +16,13 @@ describe('PeakListScreen', () => {
   });
 
   describe('when the useGetPeaksQueryResult is loading', () => {
-    const useGetPeaksQueryResult = {
+    const useGetPeaksQueryResult: Pick<
+      GetPeaksQueryHookResult,
+      'data' | 'loading' | 'error'
+    > = {
       data: undefined,
       loading: true,
-      error: undefined,
+      error: new ApolloError({}),
     };
 
     it('should render the loading', () => {
@@ -59,7 +63,10 @@ describe('PeakListScreen', () => {
   });
 
   describe('when the useGetPeaksQueryResult returns returns data', () => {
-    const useGetPeaksQueryResult = {
+    const useGetPeaksQueryResult: Pick<
+      GetPeaksQueryHookResult,
+      'data' | 'loading' | 'error'
+    > = {
       data: {
         peaks: {
           edges: [
@@ -74,7 +81,7 @@ describe('PeakListScreen', () => {
         },
       },
       loading: false,
-      error: undefined,
+      error: new ApolloError({}),
     };
 
     it('should list the peaks', () => {

@@ -50,7 +50,7 @@ const configLocalhost = (): AuthConfiguration => ({
  */
 const config = (): AuthConfiguration => {
   OAUTH_USE_LOCALHOST === 'true' &&
-    process.env.NODE_ENV !== 'test' &&
+    process.env['NODE_ENV'] !== 'test' && // eslint-disable-line dot-notation
     /* istanbul ignore next */
     console.log('Using localhost as OAuth issuer.');
 
