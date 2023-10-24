@@ -1,3 +1,4 @@
+# eslint-disable-next-line @graphql-eslint/naming-convention
 query GetPeaks {
   peaks {
     edges {
