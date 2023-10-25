@@ -39,6 +39,7 @@ export type PageInfo = {
 export type Peak = Node & {
   __typename?: 'Peak';
   elevation: Scalars['Int']['output'];
+  googlePlacesId?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   latitude: Scalars['Float']['output'];
   longitude: Scalars['Float']['output'];
@@ -87,6 +88,17 @@ export type PeakFilterElevation = {
   notEq?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type PeakFilterGooglePlacesId = {
+  eq?: InputMaybe<Scalars['String']['input']>;
+  greaterThan?: InputMaybe<Scalars['String']['input']>;
+  greaterThanOrEqual?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  isNil?: InputMaybe<Scalars['Boolean']['input']>;
+  lessThan?: InputMaybe<Scalars['String']['input']>;
+  lessThanOrEqual?: InputMaybe<Scalars['String']['input']>;
+  notEq?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type PeakFilterId = {
   eq?: InputMaybe<Scalars['ID']['input']>;
   greaterThan?: InputMaybe<Scalars['ID']['input']>;
@@ -101,6 +113,7 @@ export type PeakFilterId = {
 export type PeakFilterInput = {
   and?: InputMaybe<Array<PeakFilterInput>>;
   elevation?: InputMaybe<PeakFilterElevation>;
+  googlePlacesId?: InputMaybe<PeakFilterGooglePlacesId>;
   id?: InputMaybe<PeakFilterId>;
   latitude?: InputMaybe<PeakFilterLatitude>;
   longitude?: InputMaybe<PeakFilterLongitude>;
@@ -220,6 +233,7 @@ export type PeakScaledByUserFieldInput = {
 
 export enum PeakSortField {
   Elevation = 'ELEVATION',
+  GooglePlacesId = 'GOOGLE_PLACES_ID',
   Id = 'ID',
   Latitude = 'LATITUDE',
   Longitude = 'LONGITUDE',
