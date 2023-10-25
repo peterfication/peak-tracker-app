@@ -42,7 +42,7 @@ describe('ApolloProvider', () => {
 });
 
 const MockQuery = gql`
-  query {
+  query Peaks {
     peaks {
       edges {
         node {

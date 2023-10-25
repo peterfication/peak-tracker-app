@@ -103,6 +103,21 @@ module.exports = {
       },
     },
 
+    // Configure GraphQL ESLint
+    // See https://the-guild.dev/graphql/eslint/docs/getting-started
+    {
+      files: ['*.ts', '*.tsx'],
+      plugins: ['@graphql-eslint'],
+      processor: '@graphql-eslint/graphql',
+    },
+    {
+      files: ['*.graphql'],
+      extends: 'plugin:@graphql-eslint/operations-recommended',
+      rules: {
+        'spaced-comment': 0,
+      },
+    },
+
     // Ignore some rules for test files
     {
       files: ['**/__tests__/**/*.ts?(x)'],
