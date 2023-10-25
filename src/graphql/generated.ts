@@ -118,6 +118,7 @@ export type PeakFilterInput = {
   latitude?: InputMaybe<PeakFilterLatitude>;
   longitude?: InputMaybe<PeakFilterLongitude>;
   name?: InputMaybe<PeakFilterName>;
+  not?: InputMaybe<Array<PeakFilterInput>>;
   or?: InputMaybe<Array<PeakFilterInput>>;
   osmId?: InputMaybe<PeakFilterOsmId>;
   scaleCount?: InputMaybe<PeakFilterScaleCount>;
