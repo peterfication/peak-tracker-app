@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "format:ci": "prettier --check .",
     "graphql:codegen": "graphql-codegen --config graphql-codegen.yml",
-    "graphql:validate": "graphql-inspector validate 'src/graphql/**/*.graphql' 'src/graphql/schema.json' --deprecated",
+    "graphql:validate": "graphql-inspector validate 'src/**/*.graphql' 'src/graphql/schema.json' --deprecated",
     "ios": "echo 'Does not work with dotenv, see https://github.com/goatandsheep/react-native-dotenv/issues/393#issuecomment-1380913100'; exit; APP_ENV=development react-native run-ios --simulator='iPhone 14'",
     "lint": "eslint .",
     "spellcheck": "cspell '**'",
