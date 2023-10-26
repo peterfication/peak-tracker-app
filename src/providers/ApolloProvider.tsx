@@ -121,6 +121,12 @@ export const client = (getIdToken: () => Promise<string>) =>
   new ApolloClient({
     cache: new InMemoryCache({
       typePolicies: {
+        // If the root query is called different than `Query`, we have to define it for
+        // the InMemoryCache.
+        // See https://github.com/apollographql/apollo-client/issues/7470
+        RootQueryType: {
+          queryType: true,
+        },
         Peak: {
           merge: true,
         },

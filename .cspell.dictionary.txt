@@ -41,6 +41,7 @@ lldb
 metacharacter
 metaspace
 millis
+minifiable
 msys
 multicriteria
 nsurl

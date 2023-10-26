@@ -155,6 +155,7 @@ module.exports = {
     'index.js',
     'node_modules/',
     'src/graphql/generated.ts',
+    'src/graphql/generated/*.ts',
     'src/graphql/schema.ts',
   ],
   settings: {

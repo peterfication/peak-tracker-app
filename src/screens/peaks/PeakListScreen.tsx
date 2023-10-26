@@ -1,34 +1,31 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'react-native-ui-lib';
 
-import {
-  getPeaksExtractPeaksFromData,
-  GetPeaksPeakFragment,
-  GetPeaksQueryHookResult,
-  useGetPeaksQuery,
-} from '@app/graphql/queries';
 import type { PeaksNavigationProps } from '@app/providers';
+
+import {
+  extractNodes,
+  PeakListPeakFragment,
+  PeakListDocument,
+  PeakListQueryResult,
+} from './PeakListScreen.graphql';
 
 export const PeakListScreenWrapper = () => {
   const navigation =
     useNavigation<PeaksNavigationProps['PeakList']['navigation']>();
 
-  const useGetPeaksQueryResult = useGetPeaksQuery();
+  const queryResult = useQuery(PeakListDocument);
 
-  return (
-    <PeakListScreen
-      navigation={navigation}
-      useGetPeaksQueryResult={useGetPeaksQueryResult}
-    />
-  );
+  return <PeakListScreen navigation={navigation} queryResult={queryResult} />;
 };
 
 const PeakButton = ({
   peak,
   navigation,
 }: {
-  peak: GetPeaksPeakFragment;
+  peak: PeakListPeakFragment;
   navigation: PeaksNavigationProps['PeakList']['navigation'];
 }) => {
   return (
@@ -46,16 +43,13 @@ const PeakButton = ({
 
 export const PeakListScreen = ({
   navigation,
-  useGetPeaksQueryResult,
+  queryResult,
 }: {
   navigation: PeaksNavigationProps['PeakList']['navigation'];
-  useGetPeaksQueryResult: Pick<
-    GetPeaksQueryHookResult,
-    'data' | 'loading' | 'error'
-  >;
+  queryResult: PeakListQueryResult;
 }) => {
-  const { data, loading, error } = useGetPeaksQueryResult;
-  const peaks = getPeaksExtractPeaksFromData(data);
+  const { loading, error } = queryResult;
+  const nodes = extractNodes(queryResult);
 
   return (
     <View flex paddingH-25 paddingT-120>
@@ -71,7 +65,7 @@ export const PeakListScreen = ({
         </Text>
       )}
 
-      {peaks.map(peak => (
+      {nodes.map(peak => (
         <PeakButton key={peak.id} peak={peak} navigation={navigation} />
       ))}
     </View>

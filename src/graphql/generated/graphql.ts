@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+/* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -7,7 +7,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -291,55 +290,21 @@ export type User = {
   id: Scalars['ID']['output'];
 };
 
-export type GetPeaksQueryVariables = Exact<{ [key: string]: never; }>;
+export type PeakListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPeaksQuery = { __typename?: 'RootQueryType', peaks?: { __typename?: 'PeakConnection', edges?: Array<{ __typename?: 'PeakEdge', node?: { __typename?: 'Peak', id: string, name: string, slug: string } | null } | null> | null } | null };
+export type PeakListQuery = (
+  { __typename?: 'RootQueryType' }
+  & { ' $fragmentRefs'?: { 'PeakListPeaksFragment': PeakListPeaksFragment } }
+);
 
-export type GetPeaksPeakFragment = { __typename?: 'Peak', id: string, name: string, slug: string };
+export type PeakListPeaksFragment = { __typename?: 'RootQueryType', peaks?: { __typename?: 'PeakConnection', edges?: Array<{ __typename?: 'PeakEdge', node?: (
+        { __typename?: 'Peak' }
+        & { ' $fragmentRefs'?: { 'PeakListPeakFragment': PeakListPeakFragment } }
+      ) | null } | null> | null } | null } & { ' $fragmentName'?: 'PeakListPeaksFragment' };
 
-export const GetPeaksPeakFragmentDoc = gql`
-    fragment GetPeaksPeak on Peak {
-  id
-  name
-  slug
-}
-    `;
-export const GetPeaksDocument = gql`
-    query GetPeaks {
-  peaks {
-    edges {
-      node {
-        ...GetPeaksPeak
-      }
-    }
-  }
-}
-    ${GetPeaksPeakFragmentDoc}`;
+export type PeakListPeakFragment = { __typename?: 'Peak', id: string, name: string, slug: string } & { ' $fragmentName'?: 'PeakListPeakFragment' };
 
-/**
- * __useGetPeaksQuery__
- *
- * To run a query within a React component, call `useGetPeaksQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPeaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPeaksQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetPeaksQuery(baseOptions?: Apollo.QueryHookOptions<GetPeaksQuery, GetPeaksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPeaksQuery, GetPeaksQueryVariables>(GetPeaksDocument, options);
-      }
-export function useGetPeaksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPeaksQuery, GetPeaksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPeaksQuery, GetPeaksQueryVariables>(GetPeaksDocument, options);
-        }
-export type GetPeaksQueryHookResult = ReturnType<typeof useGetPeaksQuery>;
-export type GetPeaksLazyQueryHookResult = ReturnType<typeof useGetPeaksLazyQuery>;
-export type GetPeaksQueryResult = Apollo.QueryResult<GetPeaksQuery, GetPeaksQueryVariables>;
+export const PeakListPeakFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PeakListPeak"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Peak"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]} as unknown as DocumentNode<PeakListPeakFragment, unknown>;
+export const PeakListPeaksFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PeakListPeaks"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RootQueryType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"peaks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PeakListPeak"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PeakListPeak"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Peak"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]} as unknown as DocumentNode<PeakListPeaksFragment, unknown>;
+export const PeakListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PeakList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PeakListPeaks"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PeakListPeak"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Peak"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PeakListPeaks"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RootQueryType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"peaks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PeakListPeak"}}]}}]}}]}}]}}]} as unknown as DocumentNode<PeakListQuery, PeakListQueryVariables>;

@@ -3,6 +3,7 @@ cache
 coverage
 ios/Pods
 src/graphql/generated.ts
+src/graphql/generated/
 src/graphql/schema.json
 vendor
 **/*.mm
