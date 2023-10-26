@@ -1,0 +1,19 @@
+query PeakList {
+  ...PeakListPeaks
+}
+
+fragment PeakListPeaks on RootQueryType {
+  peaks {
+    edges {
+      node {
+        ...PeakListPeak
+      }
+    }
+  }
+}
+
+fragment PeakListPeak on Peak {
+  id
+  name
+  slug
+}

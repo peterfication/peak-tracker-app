@@ -2,9 +2,12 @@ import React from 'react';
 import { ApolloError } from '@apollo/client';
 import { render, screen } from '@testing-library/react-native';
 
-import { GetPeaksQueryHookResult } from '@app/graphql/queries';
 import { PeaksNavigationProps } from '@app/providers';
 import { PeakListScreen } from '@app/screens';
+
+import { useQueryResult } from '../PeakListScreen.graphql';
+
+type PeakListQueryResult = ReturnType<typeof useQueryResult>;
 
 describe('PeakListScreen', () => {
   const mockedNavigation = {
@@ -15,21 +18,18 @@ describe('PeakListScreen', () => {
     jest.clearAllMocks();
   });
 
-  describe('when the useGetPeaksQueryResult is loading', () => {
-    const useGetPeaksQueryResult: Pick<
-      GetPeaksQueryHookResult,
-      'data' | 'loading' | 'error'
-    > = {
+  describe('when the queryResult is loading', () => {
+    const queryResult: PeakListQueryResult = {
       data: undefined,
       loading: true,
       error: new ApolloError({}),
-    };
+    } as unknown as PeakListQueryResult;
 
     it('should render the loading', () => {
       render(
         <PeakListScreen
           navigation={mockedNavigation}
-          useGetPeaksQueryResult={useGetPeaksQueryResult}
+          queryResult={queryResult}
         />,
       );
 
@@ -38,22 +38,22 @@ describe('PeakListScreen', () => {
     });
   });
 
-  describe('when the useGetPeaksQueryResult returns an error', () => {
+  describe('when the queryResult returns an error', () => {
     const MOCK_ERROR = new ApolloError({
       networkError: new Error('Network error'),
     });
 
-    const useGetPeaksQueryResult = {
+    const queryResult: PeakListQueryResult = {
       data: undefined,
       loading: false,
       error: MOCK_ERROR,
-    };
+    } as unknown as PeakListQueryResult;
 
     it('should render the error', () => {
       render(
         <PeakListScreen
           navigation={mockedNavigation}
-          useGetPeaksQueryResult={useGetPeaksQueryResult}
+          queryResult={queryResult}
         />,
       );
 
@@ -62,11 +62,8 @@ describe('PeakListScreen', () => {
     });
   });
 
-  describe('when the useGetPeaksQueryResult returns returns data', () => {
-    const useGetPeaksQueryResult: Pick<
-      GetPeaksQueryHookResult,
-      'data' | 'loading' | 'error'
-    > = {
+  describe('when the useGetPeaksQueryResult returns data', () => {
+    const queryResult: PeakListQueryResult = {
       data: {
         peaks: {
           edges: [
@@ -82,13 +79,13 @@ describe('PeakListScreen', () => {
       },
       loading: false,
       error: new ApolloError({}),
-    };
+    } as unknown as PeakListQueryResult;
 
     it('should list the peaks', () => {
       render(
         <PeakListScreen
           navigation={mockedNavigation}
-          useGetPeaksQueryResult={useGetPeaksQueryResult}
+          queryResult={queryResult}
         />,
       );
       const peak1 = screen.getByTestId('peak-list-peak-1');

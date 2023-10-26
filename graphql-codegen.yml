@@ -1,16 +1,16 @@
 schema: https://peak-tracker.com/gql
-documents: src/graphql/queries/*.graphql
+documents: src/**/*.graphql
 extensions:
   codegen:
     generates:
       ./src/graphql/schema.json:
         plugins:
           - introspection
-      ./src/graphql/generated.ts:
+      ./src/graphql/generated/:
+        preset: client
+        presetConfig:
+          fragmentMasking:
+            unmaskFunctionName: getFragmentData
         config:
           scalars:
             Date: string
-        plugins:
-          - typescript
-          - typescript-operations
-          - typescript-react-apollo
