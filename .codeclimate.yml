@@ -19,3 +19,4 @@ plugins:
 exclude_patterns:
   - '**/__tests__/**/*'
   - 'src/graphql/generated.ts'
+  - 'src/graphql/generated/**/*.ts'
