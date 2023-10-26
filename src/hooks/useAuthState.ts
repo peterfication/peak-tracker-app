@@ -34,6 +34,7 @@ export type MaybeAuthState = AuthState | AuthStateMode;
 /**
  * Type guard to check if the auth state is an AuthState.
  */
+// eslint-disable-next-line complexity
 export const isAuthState = (authState: unknown): authState is AuthState =>
   typeof authState === 'object' &&
   authState !== null &&

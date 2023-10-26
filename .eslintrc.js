@@ -1,3 +1,4 @@
+const MAX_COMPLEXITY = 5;
 const MAX_LINES_PER_FUNCTION = 25;
 
 module.exports = {
@@ -32,6 +33,8 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 0,
     'no-magic-numbers': 'error',
     'import/no-cycle': 'error',
+
+    complexity: ['error', MAX_COMPLEXITY],
 
     'import/no-unresolved': ['error', { ignore: ['^@env'] }],
     'import/order': [
