@@ -1,22 +1,20 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'react-native-ui-lib';
 
 import type { PeaksNavigationProps } from '@app/providers';
 
 import {
+  useQueryResult,
   extractNodes,
   PeakListPeakFragment,
-  PeakListDocument,
-  PeakListQueryResult,
 } from './PeakListScreen.graphql';
 
 export const PeakListScreenWrapper = () => {
   const navigation =
     useNavigation<PeaksNavigationProps['PeakList']['navigation']>();
 
-  const queryResult = useQuery(PeakListDocument);
+  const queryResult = useQueryResult();
 
   return <PeakListScreen navigation={navigation} queryResult={queryResult} />;
 };
@@ -46,7 +44,7 @@ export const PeakListScreen = ({
   queryResult,
 }: {
   navigation: PeaksNavigationProps['PeakList']['navigation'];
-  queryResult: PeakListQueryResult;
+  queryResult: ReturnType<typeof useQueryResult>;
 }) => {
   const { loading, error } = queryResult;
   const nodes = extractNodes(queryResult);

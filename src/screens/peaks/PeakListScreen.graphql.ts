@@ -1,3 +1,5 @@
+import { useQuery } from '@apollo/client';
+
 import { getFragmentData } from '@app/graphql/generated';
 import {
   PeakListPeakFragmentDoc,
@@ -6,13 +8,9 @@ import {
   PeakListPeakFragment,
   PeakListDocument,
 } from '@app/graphql/generated/graphql';
-import { SimpleQueryResult } from '@app/graphql/utils';
 import { notEmpty } from '@app/utils';
 
-export type PeakListQueryResult = Pick<
-  SimpleQueryResult<PeakListQuery>,
-  'data' | 'loading' | 'error'
->;
+export const useQueryResult = () => useQuery(PeakListDocument);
 
 /**
  * Extract the nodes from the peak connection so we have a nice array
@@ -20,7 +18,9 @@ export type PeakListQueryResult = Pick<
  *
  * TODO: Create a generic function for this.
  */
-export const extractNodes = (queryResult: PeakListQueryResult) => {
+export const extractNodes = (
+  queryResult: ReturnType<typeof useQueryResult>,
+) => {
   const { data } = queryResult;
 
   return (getFragmentData(PeakListPeaksFragmentDoc, data)?.peaks?.edges || [])
@@ -28,5 +28,4 @@ export const extractNodes = (queryResult: PeakListQueryResult) => {
     .filter(notEmpty);
 };
 
-export { PeakListDocument };
 export type { PeakListPeakFragment, PeakListQuery };

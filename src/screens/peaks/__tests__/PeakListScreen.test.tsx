@@ -5,7 +5,9 @@ import { render, screen } from '@testing-library/react-native';
 import { PeaksNavigationProps } from '@app/providers';
 import { PeakListScreen } from '@app/screens';
 
-import { PeakListQueryResult } from '../PeakListScreen.graphql';
+import { useQueryResult } from '../PeakListScreen.graphql';
+
+type PeakListQueryResult = ReturnType<typeof useQueryResult>;
 
 describe('PeakListScreen', () => {
   const mockedNavigation = {
@@ -21,7 +23,7 @@ describe('PeakListScreen', () => {
       data: undefined,
       loading: true,
       error: new ApolloError({}),
-    };
+    } as unknown as PeakListQueryResult;
 
     it('should render the loading', () => {
       render(
@@ -45,7 +47,7 @@ describe('PeakListScreen', () => {
       data: undefined,
       loading: false,
       error: MOCK_ERROR,
-    };
+    } as unknown as PeakListQueryResult;
 
     it('should render the error', () => {
       render(
