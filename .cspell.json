@@ -9,9 +9,11 @@
     }
   ],
   "ignorePaths": [
+    "android/build/**/*",
     "cache",
     "coverage",
     "ios/Pods",
+    "ios/build/**/*",
     "node_modules",
     "vendor",
     "yarn.lock",
