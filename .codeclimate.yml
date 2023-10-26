@@ -5,6 +5,10 @@ checks:
     enabled: false
   identical-code:
     enabled: false
+  # There is an eslint rule for that which allows for finer control, e.g.
+  # Ignoring this rule for hooks because they can get long pretty easily.
+  method-lines:
+    enabled: false
 
 plugins:
   duplication:

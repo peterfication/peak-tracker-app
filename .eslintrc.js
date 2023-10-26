@@ -1,3 +1,5 @@
+const MAX_LINES_PER_FUNCTION = 25;
+
 module.exports = {
   root: true,
   extends: [
@@ -81,6 +83,22 @@ module.exports = {
     ],
   },
   overrides: [
+    // Configure function length
+    // - Ignore test files
+    // - Ignore hooks, as they can get quite long easily
+    {
+      files: ['*.ts'],
+      rules: {
+        'max-lines-per-function': ['error', MAX_LINES_PER_FUNCTION],
+      },
+    },
+    {
+      files: ['**/__tests__/**/*.ts', '**/hooks/**/*.ts'],
+      rules: {
+        'max-lines-per-function': 0,
+      },
+    },
+
     // Needed to make plugin:@typescript-eslint/recommended-requiring-type-checking work
     // See https://stackoverflow.com/questions/58510287/parseroptions-project-has-been-set-for-typescript-eslint-parser
     {
