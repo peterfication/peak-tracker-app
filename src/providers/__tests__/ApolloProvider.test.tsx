@@ -1,7 +1,8 @@
 import React from 'react';
 import { ApolloLink, execute, gql } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { render } from '@testing-library/react-native';
+import { render, screen } from '@testing-library/react-native';
+import { Text } from 'react-native-ui-lib';
 
 import { AuthStateMode, useAuthState } from '@app/hooks';
 
@@ -16,6 +17,16 @@ import {
   isServerError,
   isUnauthorizedError,
 } from '../ApolloProvider';
+
+jest.mock(
+  '@apollo/client',
+  () =>
+    ({
+      ...jest.requireActual('@apollo/client'),
+      // Mock the ApolloClient constructor because it leads to open handles in Jest.
+      ApolloClient: jest.fn(),
+    }) as unknown,
+);
 
 jest.mock('@app/hooks/useAuthState');
 const mockedUseAuthState = jest.mocked(useAuthState);
@@ -33,11 +44,21 @@ describe('ApolloProvider', () => {
     });
   });
 
-  it('renders the ApolloProviderOriginal component with the expected props', () => {
-    const mockChildren = <div>Mock Children</div>;
+  it('renders the ApolloProviderOriginal component with the expected props', async () => {
+    const mockChildren = <Text testID="mock-children">Mock Children</Text>;
     render(<ApolloProvider>{mockChildren}</ApolloProvider>);
 
+    await screen.findByTestId('mock-children');
     expect(mockedUseAuthState).toHaveBeenCalled();
+  });
+});
+
+describe('client', () => {
+  const mockedGetIdToken = jest.fn();
+
+  it('executes', () => {
+    const apolloClient = client(mockedGetIdToken);
+    expect(apolloClient).toBeDefined();
   });
 });
 
@@ -325,15 +346,5 @@ describe('errorHandler', () => {
     expect(console.error).toHaveBeenCalledWith(
       `[GraphQL network error]: ${mockNetworkError.toString()}`,
     );
-  });
-});
-
-describe('client', () => {
-  const mockedGetIdToken = jest.fn();
-
-  it('executes', () => {
-    expect(() => {
-      client(mockedGetIdToken);
-    }).not.toThrow();
   });
 });
