@@ -84,6 +84,11 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
+
+    // Read more about it here:
+    // https://eslint.org/blog/2022/07/interesting-bugs-caught-by-no-constant-binary-expression/
+    // https://news.ycombinator.com/item?id=38196644
+    'no-constant-binary-expression': 'error',
   },
   overrides: [
     // Configure function length
