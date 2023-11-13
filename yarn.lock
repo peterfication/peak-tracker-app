@@ -7570,7 +7570,7 @@ __metadata:
   resolution: "PeakTracker@workspace:."
   dependencies:
     "@apollo/client": ^3.8.6
-    "@babel/core": ^7.23.2
+    "@babel/core": ^7.23.3
     "@babel/preset-env": ^7.23.2
     "@babel/runtime": ^7.23.2
     "@graphql-codegen/cli": ^5.0.0
