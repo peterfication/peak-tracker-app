@@ -7861,7 +7861,7 @@ __metadata:
     react-native-encrypted-storage: ^4.0.3
     react-native-gesture-handler: ^2.13.2
     react-native-reanimated: ^3.5.4
-    react-native-safe-area-context: ^4.7.2
+    react-native-safe-area-context: ^4.8.1
     react-native-screens: ^3.25.0
     react-native-ui-lib: ^7.9.0
     react-test-renderer: 18.2.0
@@ -18464,13 +18464,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^4.7.2":
-  version: 4.7.2
-  resolution: "react-native-safe-area-context@npm:4.7.2"
+"react-native-safe-area-context@npm:^4.8.1":
+  version: 4.8.1
+  resolution: "react-native-safe-area-context@npm:4.8.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: a74a9c8b3d8642cab6e92ab12991279d3c0984c8ce09e64a4f5c6b08316001e796678bd3d5fa0e2601a334435c34ee914411a7cf7d8aa0460a49a177093b64ee
+  checksum: fed17b51d0a800489e2dae3f340df9da2ab624b43e31648c423d03748ac2bc15bed82380f1819dbb8e95a02c800d5cbff465a0ff7f3f2a03e35f05440bbc2148
   languageName: node
   linkType: hard
 
