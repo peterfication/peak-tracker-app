@@ -7863,7 +7863,7 @@ __metadata:
     react-native-reanimated: ^3.5.4
     react-native-safe-area-context: ^4.7.2
     react-native-screens: ^3.25.0
-    react-native-ui-lib: ^7.9.0
+    react-native-ui-lib: ^7.13.0
     react-test-renderer: 18.2.0
     typescript: 5.3.2
   languageName: unknown
@@ -18494,9 +18494,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-ui-lib@npm:^7.9.0":
-  version: 7.9.0
-  resolution: "react-native-ui-lib@npm:7.9.0"
+"react-native-ui-lib@npm:^7.13.0":
+  version: 7.13.0
+  resolution: "react-native-ui-lib@npm:7.13.0"
   dependencies:
     babel-plugin-transform-inline-environment-variables: ^0.0.2
     color: ^3.1.0
@@ -18518,7 +18518,7 @@ __metadata:
     react-native: ">=0.64.1"
     react-native-gesture-handler: ">=2.5.0"
     react-native-reanimated: ">=2.0.0"
-  checksum: 5ebc95615e02ed05abae6bd92e2fdd77a434374faf71704493c8012c88fd5465caf82b9dd264545af112f17371b3c252d492cb0171ea454a3a6ea160a55e3db2
+  checksum: 6808c006115f758c25a6839a2f32566adeb18194394ea984df6e668e47637b38fa00d44019fcffdc88c35d60d2c6c3eb7df48e88bb9a3456da31e7e33fe73f95
   languageName: node
   linkType: hard
 
