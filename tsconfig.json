@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["src/*"]
+      "@app/*": ["src/*"],
     },
     "strict": true,
     "alwaysStrict": true,
@@ -24,7 +24,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noFallthroughCasesInSwitch": true,
     "exactOptionalPropertyTypes": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
-  "typeRoots": ["./src/types"]
+  "typeRoots": ["./src/types"],
 }
