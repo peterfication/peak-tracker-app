@@ -33,7 +33,7 @@
     "@react-native-community/slider": "^4.4.3",
     "@react-native/eslint-config": "^0.74.0",
     "@react-native/metro-config": "^0.74.0",
-    "@react-navigation/bottom-tabs": "^6.5.9",
+    "@react-navigation/bottom-tabs": "^6.5.12",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
     "graphql": "^16.8.1",
